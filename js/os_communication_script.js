@@ -1,5 +1,27 @@
-import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
+//==========================================================================================
+//==========================================================================================
+//==================================os_communication_script.js==============================
+//This script contains all functions related to the communication with the OS terminal for
+// the PNode Dashboard, which are responsible for handling the user interactions with the
+// dashboard interface and trigger the corresponding actions.===============================
+//==========================================================================================
+//==========================================================================================
 
+//=========================================================================================
+//====================================Import statements====================================
+//=========================================================================================
+import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
+
+//=========================================================================================
+/**
+ * This function opens a terminal session with the OS of the specified PNode and returns the initial login response from the server, which can be used to display the live console output in the OS web console modal box.
+ * @param {Int} pnodeID The ID of the PNode for which to open the OS terminal session.
+ * @returns 
+ */
+//=========================================================================================
 export function PNodeOpenOSTerminalSession(pnodeID){
     return new Promise((resolve, reject) => {
         const name = fetch(`http://localhost:5000/psystems/os/${pnodeID}/openOSSession`, {
@@ -28,6 +50,13 @@ export function PNodeOpenOSTerminalSession(pnodeID){
     });
 }
 
+//=========================================================================================
+/**
+ * Closes the OS terminal session for the specified PNode.
+ * @param {Int} pnodeID The ID of the PNode for which to close the OS terminal session.
+ * @returns 
+ */
+//=========================================================================================
 export function PNodeCloseOSTerminalSession(pnodeID){
     return new Promise((resolve, reject) => {
         const name = fetch(`http://localhost:5000/psystems/os/${pnodeID}/closeOSSession`, {
@@ -56,6 +85,14 @@ export function PNodeCloseOSTerminalSession(pnodeID){
     });
 }
 
+//=========================================================================================
+/**
+ * This function sends a command input by the user in the OS web console to the server, which queues the command for execution in the OS terminal session of the specified PNode.
+ * @param {Int} pnodeID The ID of the PNode for which to send the command.
+ * @param {String} command The command to send to the OS terminal session.
+ * @returns 
+ */
+//=========================================================================================
 export function PNodeSendCommandToOSTerminalSession(pnodeID, command){
     return new Promise((resolve, reject) => {
         const name = fetch(`http://localhost:5000/psystems/os/${pnodeID}/OSSendCommand`, {
