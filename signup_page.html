@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>POWERENV - Login</title>
+  <link rel="stylesheet" href="css/login_page_style.css" />
+  <link rel="stylesheet" href="fontawesome-free-7.0.0-web\fontawesome-free-7.0.0-web\css\all.css" />
+  <link rel="icon" type="image/png" href=".\media\imgs\POWERENV_LOGO_ICONONLY_TRANSPARENT.png" />
+</head>
+<body>
+  <main class="frame" role="main" aria-labelledby="signup-title">
+    <section class="hero" aria-hidden="true"></section>
+
+    <aside class="panel" role="region" aria-label="Sign up form">
+      <div class="diag" aria-hidden="true"></div>
+
+      <h1 id="signup-title" class="title">SIGN UP</h1>
+      <p class="sub">Welcome to POWERENV sign-up page. Register as a new user in the platform to start working!</p>
+
+      <form id="signupForm" novalidate autocomplete="off">
+        <label for="email">E-mail</label>
+        <input id="email" class="input" type="email" placeholder="you@example.com">
+
+        <label for="password">Password</label>
+        <input id="password" class="input" type="password" placeholder="••••••••••">
+
+        <div class="row" style="margin-top:2px;">
+          <label for="tos" style="display:flex;align-items:center;gap:10px;margin:0">
+            <span class="checkbox checked" id="checkboxWrap" title="Agree to terms">
+              <input id="tos" type="checkbox" checked>
+              <span class="checkmark" aria-hidden="true"></span>
+            </span>
+            <span style="color:var(--muted);font-size:13px">I agree to the terms of service</span>
+          </label>
+        </div>
+
+        <button id="createBtn" class="btn" type="submit">Create Account</button>
+      </form>
+
+      <div class="foot" style="margin-top:22px">
+        <div style="color:var(--muted)">Already a member?</div>
+        <a class="link" href="login_page.html" id="signinLink">Sign in</a>
+      </div>
+    </aside>
+  </main>
+
+  <script src="js/login_tasks_script.js"></script>
+</body>
+</html>

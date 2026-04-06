@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="fontawesome-free-7.0.0-web\fontawesome-free-7.0.0-web\css\all.css" />
+    <link rel="icon" type="image/png" href=".\media\imgs\POWERENV_LOGO_ICONONLY_TRANSPARENT.png" />
+    <title>POWERENV — Dashboard</title>
+  </head>
+  <body onload="switchSection('overview.html', event)">
+    <div class="app">
+      <div id="fullScreenLoadingZone" class="modalZone">
+        <i class="fa-solid fa-spinner fa-spin fa-7x" style="color: var(--accent1);"></i>
+      </div>
+      <div id="modalBoxZone" class="modalZone">
+        <!--consoleModalBox-->
+        <div id="consoleModalBox" class="modalBox" style="width: 50%; height: 80%;">
+          <div class="modalBoxHeader">
+            <span id="modalBoxHeaderText">Default Console</span>
+          </div>
+          <div class="modalBoxContent">
+            <div id="consoleModalBoxConsoleViewport" class="consoleModalBoxConsoleViewport">
+              <p id="consoleModalBoxViewportContent"></p>
+            </div>
+            <form id="commandForm">
+              <input id="consoleModalBoxViewportInput" type="text" placeholder="Type command here" autocomplete="off">
+            </form>
+          </div>
+          <div class="modalBoxBTNZone">
+            <button id="consoleClearBTN" class="btn" onclick="clearConsole()">Clear Console</button>
+            <button id="consoleCloseBTN" class="lightBTN">Close Console</button>
+          </div>
+        </div>
+
+        <!--errorModalBox-->
+        <div id="messageModalBox" class="modalBox">
+          <div class="modalBoxHeader">
+            <span id="messageModalBoxHeading">ERROR MESSAGE</span>
+          </div>
+          <div class="modalBoxContent">
+            <p id="messageModalBoxContentMessage">Unknown Error Occured!!!</p>
+          </div>
+          <div class="modalBoxBTNZone" id="messageModalBoxBTNZone"></div>
+        </div>
+      </div>
+
+      <!--#region TOPBAR-->
+      <header class="topbar">
+        <div class="brand">
+          <img src=".\media\imgs\POWERENV_LOGO_ICONONLY.png" alt="POWERENV_LOGO" style="height:55px; margin-right:8px"/>
+          <div>
+            <h1>POWERENV</h1>
+            <p>IBM PSYSTEMS Hardware Management Interface</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="muted">User: Admin</div>
+          <button class="btn-ghost" onclick="openSettings()">Settings</button>
+        </div>
+      </header>
+      <!--#endregion TOPBAR-->
+
+      <!--Edit Modal Box-->
+      <div id="editBoxZone" class="editBoxZone">
+        <div class="editBox">
+          <div class="editBoxHeader">
+            <h1 id="editBoxHeaderHeading">Add PNode Access Policy</h1>
+          </div>
+          <div class="editBoxContent" id="editBoxContentArea">
+          </div>
+          <div class="editBoxBTNZone">
+            <button class="btn" id="editBoxSaveBTN" style="padding: 12px 12px;">Save Changes</button>
+            <button class="lightBTN" id="editBoxCloseBTN">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="main">
+        <!--#region SIDEBAR-->
+        <aside class="sidebar" id="sidebar">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding: 18px;">
+            <strong style="letter-spacing:0.6px">Navigation</strong>
+            <span class="small muted">v1.0</span>
+          </div>
+
+          <div style="margin-top:8px"></div>
+
+          <div class="nav-item active" id="nav-overview" data-view="overview" onclick="switchSection('overview.html', event)">
+            <!-- CPU icon -->
+            <i class="fa-solid fa-hexagon-nodes fa-xl"></i>
+            <div>Dashboard</div>
+          </div>
+
+          <div id="_hardware_link" class="nav-item" data-view="hardware" onclick="openHardwareSection(event)">
+            <i class="fa-solid fa-server fa-xl"></i>
+            <div>Hardware</div>
+          </div>
+
+          <div class="nav-item" data-view="tasks" onclick="switchSection('tasks.html', event)">
+            <i class="fa-solid fa-list-check fa-xl"></i>
+            <div>Tasks</div>
+          </div>
+
+          <div class="nav-item" data-view="power" onclick="switchSection('power.html', event)">
+            <i class="fa-solid fa-power-off fa-xl"></i>
+            <div>Power</div>
+          </div>
+
+          <div style="flex:1"></div>
+
+          <div style="display:flex;flex-direction:column;gap:8px; padding: 18px;">
+            <div class="footer-note">© POWERENV • 2025</div>
+          </div>
+        </aside>
+        <!--#endregion SIDEBAR-->
+
+        <main class="content" id="main-content"></main>
+      </div>
+    </div>
+
+    <script src="js/scripting.js"></script>
+    <script src="js/DATA_RETRIEVAL/data_handling_main_script.js" type="module"></script>
+    <script src="js/fsp_communication_script.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+:root{
+    --bg: #1a1a1a;
+    --panel:#0f1113;
+    --panel-2: rgba(255,255,255,0.03);
+    --muted:#b6bac0;
+    --red:#8e281f;
+    --input-bg: rgba(255,255,255,0.03);
+    --glass: rgba(255,255,255,0.02);
+    --radius:10px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+html,body{height:100%;margin:0;background:#130509;-webkit-font-smoothing:antialiased; display: flex; justify-content: center; align-items: center;}
+.frame{
+    width: 1100px;
+    max-width: calc(100% - 40px);
+    height: 640px;
+    display:flex;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow: 100px 100px 5% #fafafa;
+    border: 1px solid var(--red);
+}
+
+/* left hero */
+.hero {
+    flex: 1 1 0%;
+    background-image: url("..\\media\\imgs\\POWERENV_LOGIN_BANNER_IMAGE_EDITED.png");
+    background-size: cover;
+    background-position: right;
+    position: relative;
+    min-width: 0;
+    display:flex;
+    align-items:stretch;
+    justify-content:flex-start;
+    border-color: var(--bg);
+    animation: brightnessOscillate 10s infinite ease-in-out;
+}
+
+/* subtle diagonal overlay gradient matching source */
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(45deg, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.7) 100%);
+    mix-blend-mode: multiply;
+    pointer-events:none;
+}
+
+/* right panel */
+.panel {
+    width: 380px;
+    background: linear-gradient(45deg, rgba(0,0,0,0.25) 40%, #1f070ec0 100%);
+    color: #fff;
+    padding: 48px;
+    box-sizing: border-box;
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+}
+.sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 28px;
+    line-height:1.5;
+    max-width: 300px;
+}
+
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+.input {
+    background: var(--input-bg);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding:12px 14px;
+    border-radius:6px;
+    color:#fff;
+    width:100%;
+    box-sizing:border-box;
+    margin-bottom:18px;
+    outline:none;
+    font-size:14px;
+    transition: box-shadow .12s, border-color .12s;
+}
+.input:focus{
+    box-shadow: 0 6px 18px rgba(255, 20, 20, 0.12);
+    border-color: var(--red);
+}
+
+.row {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+}
+.checkbox {
+    width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,0.08);
+    display:inline-flex;align-items:center;justify-content:center;
+    background: rgba(255,255,255,0.015);
+    cursor:pointer;
+}
+.checkbox input{display:none}
+.checkmark{
+    width:12px;height:12px;background:var(--red);border-radius:2px;display:none;
+    box-shadow: 0 2px 6px rgba(20,120,255,0.28);
+}
+.checkbox.checked .checkmark{display:block}
+
+.btn {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding:12px 16px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    width:100%;
+    box-shadow: 0 10px 30px rgba(255, 20, 20, 0.12);
+    transition: transform .08s ease, box-shadow .08s;
+}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{
+    opacity:0.55;cursor:not-allowed;box-shadow:none;
+}
+
+.foot {
+    margin-top:auto;
+    font-size:13px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.link{
+    color: var(--red);
+    text-decoration:none;
+    font-weight:500;
+}
+
+/* small decorative diagonal lines like in the image (purely visual) */
+.diag {
+    position:absolute;
+    left:-160px; top:-60px;
+    width: 380px; height: 400px;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: rotate(-12deg);
+    opacity:0.06;
+    pointer-events:none;
+}
+
+/* responsive */
+@media (max-width: 900px){
+    .frame{flex-direction:column;height:auto}
+    .hero{height:260px}
+    .panel{width:100%;padding:28px}
+}
+
+@keyframes brightnessOscillate {
+  0%   { filter: brightness(100%); }
+  50%  { filter: brightness(194%); }
+  100%  { filter: brightness(100%); }
+}

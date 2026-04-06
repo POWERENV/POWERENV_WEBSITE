@@ -1,0 +1,58 @@
+<body>
+    <section id="hardware" class="view">
+        <div class="grid">
+            <div class="card col-span-12">
+                <div class="card-header">
+                    <h3 style="margin:0 0 12px 0">Hardware Inventory</h3>
+                    <button class="btn" onclick="addHardware()">+ Add Hardware</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hostname</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>IP</th>
+                            <th>Health</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rack-12U-Server01</td>
+                            <td>Server</td>
+                            <td>DC1 / Rack 12U</td>
+                            <td>10.1.12.101</td>
+                            <td><span class="state-pill" style="background:rgba(34,197,94,0.08);color:var(--success)">Healthy</span></td>
+                        </tr>
+                        <tr>
+                            <td>Edge-Switch-3</td>
+                            <td>Switch</td>
+                            <td>Floor 2 / Closet</td>
+                            <td>10.1.2.11</td>
+                            <td><span class="state-pill" style="background:rgba(255,206,84,0.06);color:#ffd166">Degraded</span></td>
+                        </tr>
+                        <tr>
+                            <td>UPS-A</td>
+                            <td>UPS</td>
+                            <td>DC1 / Rack 2U</td>
+                            <td>10.1.12.200</td>
+                            <td><span class="state-pill" style="background:rgba(255,159,67,0.06);color:#ff9f43">Notice</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card col-span-12" style="margin-top:8px">
+                <div class="card-header">
+                    <h3 style="margin:0 0 12px 0">PGrids</h3>
+                    <button class="btn" onclick="addHardware()">+ Create PGrid</button>
+                </div>
+                <p class="muted small">Select a Power Grid from the list below to view details.</p>
+                <div id="device-details" style="margin-top:14px">
+                    <em id="pgridsNoDeviceSelectedWarning" class="muted">No device selected.</em>
+                </div>
+                <div id="pgridsListTileGrid" class="tiled-grid"></div>
+            </div>
+        </div>
+    </section>
+</body>

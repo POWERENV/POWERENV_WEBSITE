@@ -1,0 +1,302 @@
+<body>
+    <section id="hardware" class="view" style="height: 100%; display: flex; flex-direction: row;">
+        <aside class="tree" id="sidebar">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding: 18px;">
+                <strong style="letter-spacing:0.6px">PGrid Tree</strong>
+            </div>
+
+            <div style="margin-top:8px"></div>
+
+            <div id="grid-tree"></div>
+
+            <div style="flex:1"></div>
+        </aside>
+        <main id="content" class="content">
+            <div class="logic-level-top-bar">
+                <div class="logic-level-top-bar-info">
+                    <i class="fa-solid fa-hexagon-nodes-bolt fa-2xl" style="margin-right:8px"></i>
+                    <h2 id="_pnodeName">PG-VALHALLA</h2>
+                    <span class="state-pill" style="background:rgba(255,206,84,0.06);color:#ffd166">
+                        PNode
+                    </span>
+                    <p class="muted small">PNodes Details and Management</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="addHardware()">Edit PNode Settings</button>
+                    <button class="btn-ghost" style="cursor: pointer;" id="reloadSettingsBTN">
+                        <i class="fa-solid fa-arrows-rotate"></i> Reload PNode Settings
+                    </button>
+                    <button class="btn-ghost" style="cursor: pointer;" id="_backToPoolBTN">
+                        <i class="fa-solid fa-arrow-left"></i> Back to PPool Settings
+                    </button>
+                </div>
+            </div>
+            <div class="logic-level-main-content">
+                <div class="logical-level-main-info">
+                    <div>
+                        <p><strong>PNode Name: </strong> <span id="_propsPNodeName"></span></p>
+                        <p><strong>PNode ID: </strong> <span id="_propsPNodeID"></span></p>
+                        <p><strong>Parent PPool Name: </strong> <span id="_propsPNodeParentPPoolName"></span></p>
+                        <p><strong>PNode Creation Datetime: </strong><span id="_propsPNodeCreationDatetime"></span></p>
+                        <p><strong>PNode Last Update Datetime: </strong><span id="_propsPNodeLastUpdateDatetime"></span></p>
+                    </div>
+                    <img class="tile-icon" style="width: 175px;" src="fontawesome-free-7.0.0-web\fontawesome-free-7.0.0-web\svgs\solid\server.svg" />
+                    <div>
+                        <p><strong>Working State: </strong> <span id="_propsPNodeWorkingState"></span></p>
+                        <p><strong>PNode Last Heartbeat Datetime: </strong><span id="_propsPNodeLastHeartBeatDatetime"></span></p>
+                        <p><strong>PNode Attention Led State: </strong><span id="_propsPNodeAttentionLedState"></span></p>
+                        <p><strong>PNode Serial COM Port ID: </strong><span id="_propsPNodeSerialCOMPortID"></span></p>
+                    </div>
+                </div>
+                <div class="tiled-grid" style="margin-top: 75px;">
+                    <div id="systemStateActiveWarning">
+                        <h3>🛈 System state is ACTIVE. ASMI configure actions are disabled.</h3>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 700px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Readme</h3>
+                            <button class="btn" id="changePNodeReadmeBTN">Change PNode Readme</button>
+                        </div>
+                        <div style="max-height: 230px; overflow: auto;">
+                            <p id="_pnodeReadmeTextParagraph"></p>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 200px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Power Actions</h3>
+                        </div>
+                        <div style="max-height: 230px; overflow: auto; display: flex; flex-direction: column; gap: 5px;">
+                            <button class="lightBTN" id="_PNodePowerOnBTN">POWER ON</button>
+                            <button class="lightBTN" id="_PNodePowerOffBTN">POWER OFF</button>
+                            <button class="lightBTN" id="_PNodeRestart">RESTART</button>
+                            <button id="openAsmiWebConsoleBTN" class="lightBTN">OPEN ASMI CONSOLE</button>
+                            <button id="openOSWebConsoleBTN" class="lightBTN">OPEN OS CONSOLE</button>
+                            <button id="turnOFFAttentionLED" class="lightBTN">TURN OFF ATTENTION LED</button>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 770px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Performance Metrics</h3>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Log DateTime</th>
+                                        <th>Driver Name</th>
+                                        <th>Subsystem</th>
+                                        <th>Event Severity</th>
+                                        <th>Action Flags</th>
+                                        <th>Action Status</th>
+                                        <th>Reference Code</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_test"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 500px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Machine Info</h3>
+                        </div>
+                        <div style="max-height: 300px; overflow: auto; display: flex; flex-direction: column; gap: 5px;">
+                            <table>
+                                <tr>
+                                    <td class="tablePropValue"><strong>SYSTEM MODEL NAME: </strong></td>
+                                    <td id="_pnodeSystemModelName">test</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>MACHINE TYPE MODEL: </strong></td>
+                                    <td id="_pnodeMachineTypeModel">test</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>MACHINE SERIAL NUMBER: </strong></td>
+                                    <td id="_pnodeMachineSerialNumber">test</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>SYSTEM PSERIES GENERATION: </strong></td>
+                                    <td id="_pnodeSystemPSeriesGeneration">test</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 500px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Service Processor Info</h3>
+                            <button class="btn" id="changeUserCredentialsBTN" onclick="addHardware()">Change User Credentials</button>
+                        </div>
+                        <div style="max-height: 300px; overflow: auto; display: flex; flex-direction: column; gap: 5px;">
+                            <table>
+                                <tr>
+                                    <td class="tablePropValue"><strong>FSP ID: </strong></td>
+                                    <td id="_pnodeFSPID">test</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>FSP ASMI VERSION: </strong></td>
+                                    <td id="_pnodeFSPVERSION">test</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>FSP ASMI USERNAME: </strong></td>
+                                    <td id="_pnodeFSPUSERNAME">test</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>FSP ASMI PASSWORD: </strong></td>
+                                    <td id="_pnodeFSPPASSWORD">.......</td>
+                                </tr>
+                                <tr>
+                                    <td class="tablePropValue"><strong>FSP ASMI LOCAL DATETIME (LAST UPDATE): </strong></td>
+                                    <td id="_pnodeFSPLocalDateTime"><span>.......</span><button class="lightBTN" id="changeUserCredentialsBTN">Edit</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 800px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Network Interfaces Info</h3>
+                            <button class="btn" id="_pnodeResetNICConfigs">Reset Network Configurations</button>
+                        </div>
+                        <div style="max-height: 300px; overflow: auto; display: flex; flex-direction: column; gap: 5px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>NIC ID</th>
+                                        <th>Name</th>
+                                        <th>MAC Address</th>
+                                        <th>IP Address</th>
+                                        <th>IP Address Type</th>
+                                        <th>Subnet Mask</th>
+                                        <th>Default Gateway</th>
+                                        <th>Hostname</th>
+                                        <th>Domain Name</th>
+                                        <th>1st DNS IP Address</th>
+                                        <th>2nd DNS IP Address</th>
+                                        <th>3rd DNS IP Address</th>
+                                        <th>NIC Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pnodeNICInfo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 800px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Network Access Policies</h3>
+                            <button class="btn" id="_pnodeAddAccessPolicy">Add Access Policy</button>
+                        </div>
+                        <div style="max-height: 500px; overflow: auto; display: flex; flex-direction: column; gap: 5px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Policy Index</th>
+                                        <th>Target IP Address</th>
+                                        <th>Policy Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pnodeETHAccessPoliciesInfo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 700px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Login Audits Overview</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <div class="circular-div">
+                                <p id="_pnodeLoginAuditsCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">Log Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>User</th>
+                                        <th>Log Date</th>
+                                        <th>Success/Failed Login</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pnodeLoginAuditsLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 500px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Operation History</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px; gap: 50px;">
+                            <div class="circular-div">
+                                <p id="_pnodeOperationLogsCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">PNode Op Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;" id="ppoolPNodesSingleOperationHistory">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Operation ID</th>
+                                        <th>Category</th>
+                                        <th>Batch Operation Action Name</th>
+                                        <th>Action Name</th>
+                                        <th>Completion Status</th>
+                                        <th>Datetime</th>
+                                        <th>Source Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pnodesOperationLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1.3; min-width: 1000px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PNode Error Logs Overview</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <div class="circular-div">
+                                <p id="_pnodeErrorLogsOverviewCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">Log Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Log DateTime</th>
+                                        <th>Driver Name</th>
+                                        <th>Subsystem</th>
+                                        <th>Event Severity</th>
+                                        <th>Action Flags</th>
+                                        <th>Action Status</th>
+                                        <th>Reference Code</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pnodeErrorLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 800px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">Logical Partitions</h3>
+                            <button class="btn" id="_configureLPARBTN" onclick="addHardware()">+ Configure LPAR</button>
+                        </div>
+                        <p class="muted small">Select a Power Node from the list below to view details.</p>
+                        <div id="device-details" style="margin-top:14px">
+                            <em id="pnodesNoDeviceSelectedWarning" class="muted">No device selected.</em>
+                        </div>
+                        <div id="_ppoolPNodesTiledList" class="tiled-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+</body>

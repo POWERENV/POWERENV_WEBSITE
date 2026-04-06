@@ -1,0 +1,81 @@
+<body>
+    <section id="overview" class="view">
+        <div class="grid">
+            <div class="card col-span-4">
+                <div class="kpi">
+                    <div>
+                        <div class="label">Uptime</div>
+                        <div class="value">14 days 3:22</div>
+                    </div>
+                    <div class="small muted">since last reboot</div>
+                </div>
+            </div>
+
+            <div class="card col-span-4">
+                <div class="kpi">
+                    <div>
+                        <div class="label">Active Devices</div>
+                        <div class="value">124</div>
+                    </div>
+                    <div class="small muted">monitored</div>
+                </div>
+            </div>
+
+            <div class="card col-span-4">
+                <div class="kpi">
+                    <div>
+                        <div class="label">Alerts</div>
+                        <div class="value" style="color:var(--danger)">3</div>
+                    </div>
+                    <div class="small muted">needs attention</div>
+                </div>
+            </div>
+
+            <div class="card col-span-8" style="margin-top:8px">
+                <h3 style="margin:0 0 12px 0">Recent Events</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Device</th>
+                            <th>Event</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="events-tbody">
+                        <tr>
+                            <td>2025-08-29 22:34</td>
+                            <td>Rack-12U-Server01</td>
+                            <td>Temperature warning</td>
+                            <td><span class="state-pill"
+                                    style="background:rgba(251,113,133,0.12);color:var(--danger)">Warning</span></td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-29 19:10</td>
+                            <td>Edge-Switch-3</td>
+                            <td>Port flapping</td>
+                            <td><span class="state-pill"
+                                    style="background:rgba(255,206,84,0.06);color:#ffd166">Degraded</span></td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-28 14:04</td>
+                            <td>UPS-A</td>
+                            <td>Battery health degraded</td>
+                            <td><span class="state-pill"
+                                    style="background:rgba(255,159,67,0.06);color:#ff9f43">Notice</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card col-span-4" style="margin-top:8px">
+                <h3 style="margin:0 0 12px 0">Quick Actions</h3>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                    <button class="btn" onclick="performAction('scan')">Run Inventory Scan</button>
+                    <button class="btn-ghost" onclick="performAction('sync')">Sync Configurations</button>
+                    <button class="btn-ghost" onclick="performAction('export')">Export Report</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

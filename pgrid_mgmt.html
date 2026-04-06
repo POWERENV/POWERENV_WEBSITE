@@ -1,0 +1,199 @@
+<body id="_body_">
+    <section id="hardware" class="view" style="height: 100%; display: flex; flex-direction: row;">
+        <aside class="tree" id="sidebar">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding: 18px;">
+                <strong style="letter-spacing:0.6px">PGrid Tree</strong>
+            </div>
+
+            <div style="margin-top:8px"></div>
+
+            <div id="grid-tree"></div>
+
+            <div style="flex:1"></div>
+        </aside>
+        <main id="content" class="content">
+            <div class="logic-level-top-bar">
+                <div class="logic-level-top-bar-info">
+                    <i class="fa-solid fa-hexagon-nodes-bolt fa-2xl" style="margin-right:8px"></i>
+                    <h2 id="_pgridName">PG-VALHALLA</h2>
+                    <span class="state-pill" style="background:rgba(255,206,84,0.06);color:#ffd166">
+                        PGrid
+                    </span>
+                    <p class="muted small">PGrid Details and Management</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="addHardware()">Edit PGrid Settings</button>
+                    <button class="btn-ghost" style="cursor: pointer;" id="reloadSettingsBTN">
+                        <i class="fa-solid fa-arrows-rotate"></i> Reload PGrid Settings
+                    </button>
+                    <button class="btn-ghost" style="cursor: pointer;" onclick="switchSection('hardware.html', event); displayPGridsList();">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Hardware
+                    </button>
+                </div>
+            </div>
+            <div class="logic-level-main-content">
+                <div class="logical-level-main-info">
+                    <div>
+                        <p><strong>PGrid Name: </strong> <span id="_propsPGridName"></span></p>
+                        <p><strong>PGrid ID: </strong> <span id="_propsPGridID"></span></p>
+                        <p><strong>PGrid Root Admin: </strong><a href="" class="link" id="_propsPGridOwnerNameLink"></a></p>
+                        <p><strong>PGrid Creation Datetime: </strong><span id="_propsPGridCreationDatetime"></span></p>
+                        <p><strong>PGrid Last Update Datetime: </strong><span id="_propsPGridLastUpdateDatetime"></span></p>
+                    </div>
+                    <img class="tile-icon" style="width: 175px;" src="fontawesome-free-7.0.0-web\fontawesome-free-7.0.0-web\svgs\solid\hexagon-nodes-bolt.svg" />
+                    <div>
+                        <p><strong>PPools Count: </strong> <span id="_propsPGridPPoolsCount"></span></p>
+                        <p><strong>Total PNodes Count: </strong> <span id="_propsPGridPNodesCount"></span></p>
+                        <p><strong>Active PNodes Count: </strong> <span id="_propsPGridActivePNodesCount"></span></p>
+                    </div>
+                </div>
+                <div class="tiled-grid" style="margin-top: 75px;">
+                    <div class="card" style="flex: 1; min-width: 800px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PGrid Access Policies</h3>
+                            <button class="btn" onclick="addHardware()">+ Add Access Policy</button>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Creation Date</th>
+                                        <th>Last Update Date</th>
+                                        <th>Name</th>
+                                        <th>User</th>
+                                        <th>Permissions</th>
+                                        <th>Enabled</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pgridAccessPoliciesLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 470px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PGrid Access Audits</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <div class="circular-div">
+                                <p id="_pgridAccessAuditsCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">Log Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Log Date and Time</th>
+                                        <th>User</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pgridAccessAuditsLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 700px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PGrid Nodes Login Audits Overview</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <div class="circular-div">
+                                <p id="_pgridPnodesLoginAuditsCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">Log Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Source PNode</th>
+                                        <th>Source PPool</th>
+                                        <th>User</th>
+                                        <th>Log Date</th>
+                                        <th>Success/Failed Login</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pgridLoginAuditsLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 770px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PGrid Error Logs Overview</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <div class="circular-div">
+                                <p id="_pgridPnodesErrorLogsOverviewCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">Log Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Source PNode</th>
+                                        <th>Source PPool</th>
+                                        <th>Log DateTime</th>
+                                        <th>Driver Name</th>
+                                        <th>Subsystem</th>
+                                        <th>Event Severity</th>
+                                        <th>Action Flags</th>
+                                        <th>Action Status</th>
+                                        <th>Reference Code</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pgridErrorLogs"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 470px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PGrid Attention LED Signed Nodes</h3>
+                        </div>
+
+                        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+                            <div class="circular-div">
+                                <p id="_pgridAttentionLedSignedNodesCount" style="margin: 0px; font-size: 50px;">NaN</p>
+                                <p style="margin: 0px;">Log Count</p>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 230px; overflow: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Source PNode</th>
+                                        <th>Source PPool</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="_pgridAttentionLedSignedNodesList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card" style="flex: 1; min-width: 800px;">
+                        <div class="card-header">
+                            <h3 style="margin:0 0 12px 0">PPools</h3>
+                            <button class="btn" onclick="addHardware()">+ Create PPool</button>
+                        </div>
+                        <p class="muted small">Select a Power Pool from the list below to view details.</p>
+                        <div id="device-details" style="margin-top:14px">
+                            <em id="ppoolsNoDeviceSelectedWarning" class="muted">No device selected.</em>
+                        </div>
+                        <div id="_pgridPNodesTiledList" class="tiled-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+</body>
