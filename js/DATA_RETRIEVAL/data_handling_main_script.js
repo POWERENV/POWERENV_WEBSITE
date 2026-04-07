@@ -1,6 +1,6 @@
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
-import * as pnodeDataDisplayScript from  "./pnode_data_display_script.js"
+import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
 
 var tree = {
     objName: "",

@@ -1,4 +1,13 @@
-import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/pnode_data_display_script.js"
+//=========================================================================================
+//====================================Import statements====================================
+//=========================================================================================
+
+import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
+import * as pnodeEditors from  "./DATA_RETRIEVAL/PNODE/pnode_editors.js"
+
+//=========================================================================================
+//=========================================================================================
+//=========================================================================================
 
 //#region POWER_MGMT
 export function PNodePowerOn(pnodeCOMID)
@@ -18,11 +27,11 @@ export function PNodePowerOn(pnodeCOMID)
 
             if(LOGS.statusMessage == "System powered on successfully.")
             {
-                pnodeDataDisplayScript.showSuccessMessage(LOGS.statusMessage);
+                pnodeEditors.showSuccessMessage(LOGS.statusMessage);
                 resolve(LOGS.statusMessage);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -46,11 +55,11 @@ export function PNodePowerOff(pnodeCOMID)
 
             if(LOGS.statusMessage == "System powered off successfully.")
             {
-                pnodeDataDisplayScript.showSuccessMessage(LOGS.statusMessage);
+                pnodeEditors.showSuccessMessage(LOGS.statusMessage);
                 resolve(LOGS.statusMessage);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -74,11 +83,11 @@ export function PNodeRestart(pnodeCOMID)
 
             if(LOGS.statusMessage == "System restarted successfully.")
             {
-                pnodeDataDisplayScript.showSuccessMessage(LOGS.statusMessage);
+                pnodeEditors.showSuccessMessage(LOGS.statusMessage);
                 resolve(LOGS.statusMessage);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -102,11 +111,11 @@ export function PNodeTurnOffAttentionLED(pnodeCOMID)
 
             if(LOGS.statusMessage == "Atention LED powered off.")
             {
-                pnodeDataDisplayScript.showSuccessMessage(LOGS.statusMessage);
+                pnodeEditors.showSuccessMessage(LOGS.statusMessage);
                 resolve(LOGS.statusMessage);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -136,7 +145,7 @@ export function PNodeOpenASMISession(pnodeCOMID)
                 resolve(LOGS.packetData);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -163,7 +172,7 @@ export function PNodeCloseASMISession(pnodeCOMID)
                 resolve(LOGS.statusMessage);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -191,7 +200,7 @@ export function PNodeSendASMICommand(pnodeCOMID, command)
                 resolve(LOGS.packetData);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
         });
@@ -227,10 +236,10 @@ export function PNodeInsertETHAccessPolicy(pnodeCOMID, ipAddress, policyType, po
             if(LOGS.statusMessage == "Allowed IP addresses edited successfully." || LOGS.statusMessage == "Denied IP addresses edited successfully.")
             {
                 resolve(LOGS.packetData);
-                pnodeDataDisplayScript.displayPNodesDashboardData(pnodeCOMID, _ppoolID, _pgridID, 1);
+                pnodeEditors.displayPNodesDashboardData(pnodeCOMID, _ppoolID, _pgridID, 1);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
@@ -264,10 +273,10 @@ export function PNodeUpdateNetworkConfigs(pnodeCOMID, ethIndex, changedPropertie
             {
                 resolve(LOGS.packetData);
                 document.getElementById("fullScreenLoadingZone").style.display = "none";
-                pnodeDataDisplayScript.displayPNodesDashboardData(pnodeCOMID, _ppoolID, _pgridID, 1);
+                pnodeEditors.displayPNodesDashboardData(pnodeCOMID, _ppoolID, _pgridID, 1);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
@@ -297,10 +306,10 @@ export function PNodeUpdateReadmeText(pnodeID, ppoolID, pgridID, newReadmeTXT){
             if(LOGS.statusMessage == "PNode Readme successfully received!")
             {
                 resolve(LOGS.packetData);
-                pnodeDataDisplayScript.displayPNodesDashboardData(pnodeID, ppoolID, pgridID, 1);
+                pnodeEditors.displayPNodesDashboardData(pnodeID, ppoolID, pgridID, 1);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
@@ -329,10 +338,10 @@ export function PNodeUpdateFSPLocalDateTime(pnodeID, newDateTime, ppoolID, pgrid
             if(LOGS.statusMessage == "System date and time set successfully!")
             {
                 resolve(LOGS.packetData);
-                pnodeDataDisplayScript.displayPNodesDashboardData(pnodeID, ppoolID, pgridID, 1);
+                pnodeEditors.displayPNodesDashboardData(pnodeID, ppoolID, pgridID, 1);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 

@@ -38,6 +38,7 @@ export function PNodeOpenOSTerminalSession(pnodeID){
 
             if(LOGS.statusMessage == "OS session established with success!")
             {
+                // Perform any necessary actions upon successful session establishment
                 resolve(LOGS.packetData);
             }
             else{
