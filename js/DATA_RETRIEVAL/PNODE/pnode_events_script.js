@@ -18,6 +18,7 @@ import * as osCommunicationScript from  "../../os_communication_script.js"
 //=========================================================================================
 
 var signalRWSSConnection;
+var telnetSessionID;
 
 //=========================================================================================
 /**
@@ -102,7 +103,7 @@ export async function openOSCommandTerminal(dashboardData)
     let loginResponse = await osCommunicationScript.PNodeOpenOSTerminalSession(dashboardData.pnode_full_info.pnode_id);
 
     document.getElementById("consoleCloseBTN").addEventListener("click", async () => {
-        let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(dashboardData.pnode_full_info.pnode_id);
+        let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
         hideASMIConsoleBox();
     });
 
@@ -114,18 +115,21 @@ export async function openOSCommandTerminal(dashboardData)
         osCommandInputSubmitEvent(e, dashboardData);
     });
 
-    const telnetSessionID = Number(loginResponse);
+    telnetSessionID = Number(loginResponse);
     signalRWSSConnection = new signalR.HubConnectionBuilder()
         .withUrl(`http://localhost:5000/osTerminal?sessionId=${telnetSessionID}`)
         .build();
 
     signalRWSSConnection.on("ReceiveTerminalOutput", (data) => {
-        console.log(data);
+        document.getElementById("consoleModalBoxViewportContent").innerText += data;
+        document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
     });
 
     signalRWSSConnection.start()
         .then(() => console.log("Connected!"))
         .catch(err => console.error(err));
+
+    osCommandInputSubmitEvent(null, dashboardData);
 }
 
 //=========================================================================================
@@ -137,16 +141,22 @@ export async function openOSCommandTerminal(dashboardData)
 //=========================================================================================
 export async function osCommandInputSubmitEvent(e, dashboardData)
 {
-    e.preventDefault();
+    if(e != null) e.preventDefault();
 
     let ipt = document.getElementById("consoleModalBoxViewportInput").value;
-    let commandResponse = await osCommunicationScript.PNodeSendCommandToOSTerminalSession(dashboardData.pnode_full_info.pnode_id, ipt);
+    let commandResponse = await osCommunicationScript.PNodeSendCommandToOSTerminalSession(telnetSessionID, (ipt == "" || ipt == "exit") ? "echo" : ipt);
     let ttyViewport = document.getElementById("consoleModalBoxConsoleViewport");
 
     commandResponse = commandResponse.replaceAll('\r\n\r', '\n');
-    document.getElementById("consoleModalBoxViewportContent").innerText += commandResponse;
     ttyViewport.scrollTo(0, ttyViewport.scrollHeight);
     document.getElementById("consoleModalBoxViewportInput").value = "";
+
+    document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
+
+    if(ipt == "exit"){
+        let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
+        hideASMIConsoleBox();
+    }
 }
 
 export async function osTerminalContentRealTimeUpdate(dashboardData)

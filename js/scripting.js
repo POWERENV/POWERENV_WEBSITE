@@ -101,7 +101,7 @@ function showOSConsoleBox(dashboardData)
     document.getElementById("modalBoxZone").style.display = "flex";
     document.getElementById("consoleModalBox").style.display = "flex";
     document.getElementById("modalBoxHeaderText").innerText = "PNODE OS LIVE WEB CONSOLE";
-    document.getElementById("consoleModalBoxViewportContent").innerText = "testOS>_";
+    document.getElementById("consoleModalBoxViewportContent").innerText = "#";
 }
 
 function hideASMIConsoleBox()

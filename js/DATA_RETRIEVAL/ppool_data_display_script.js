@@ -15,6 +15,8 @@ import * as mainScript from "./data_handling_main_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
 import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
+import * as ppoolDataEditScript from "./ppool_data_edit_script.js"
+import * as editorComponents from "./editor_components.js"
 
 //=========================================================================================
 //=========================================================================================
@@ -55,6 +57,15 @@ export async function displayPPoolDashboardData(pgridID, ppoolID, e)
         await pgridDataDisplayScript.displayPGridDashboardData(pgridID, e, false);
     });
 
+    document.getElementById("changePPoolReadmeBTN").addEventListener("click", () => {
+        const changesSaveOperation = () => {
+            const newReadmeTXT = document.getElementById('readmeTextTextArea').value;
+            ppoolDataEditScript.PPoolUpdateReadmeText(ppoolID, pgridID, newReadmeTXT);
+        };
+        const readmeTextEditorBox = new editorComponents.configurationEditWizzard('Edit Readme Text', dashboardData, changesSaveOperation);
+        readmeTextEditorBox.insertTextArea('readmeTextTextArea', 'Readme Text', 'Write Readme Text', dashboardData.ppoolFullInfo.ppool_readme_text, null);
+    });
+
     displayPPoolsPnodesListInfo(dashboardData);
     displayPPoolPNodesLoginAudits(dashboardData);
     displayPPoolAttentionLEDMarkedPNodes(dashboardData);
@@ -81,7 +92,7 @@ function displayPPoolMainInfo(dashboardData, _pgridID, e)
     document.getElementById("_propsPPoolTag").innerText = dashboardData.ppoolFullInfo.ppool_tag;
     document.getElementById("_propsPPoolPNodesCount").innerText = dashboardData.ppoolFullInfo.ppool_pnodes_count;
     document.getElementById("_propsPPoolActivePNodesCount").innerText = dashboardData.ppoolFullInfo.ppool_active_pnodes_count;
-    document.getElementById("_pnodeReadmeTextParagraph").innerText = dashboardData.ppoolFullInfo.ppool_readme_text;
+    document.getElementById("_ppoolReadmeTextParagraph").innerText = dashboardData.ppoolFullInfo.ppool_readme_text;
     document.getElementById("reloadSettingsBTN").addEventListener("click", async () => {
         await displayPPoolDashboardData(_pgridID, dashboardData.ppoolFullInfo.ppool_id, e);
     });

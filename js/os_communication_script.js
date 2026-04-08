@@ -11,6 +11,7 @@
 //====================================Import statements====================================
 //=========================================================================================
 import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
+import * as pnodeEditors from "./DATA_RETRIEVAL/editor_components.js"
 //=========================================================================================
 //=========================================================================================
 //=========================================================================================
@@ -42,7 +43,7 @@ export function PNodeOpenOSTerminalSession(pnodeID){
                 resolve(LOGS.packetData);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
@@ -53,14 +54,14 @@ export function PNodeOpenOSTerminalSession(pnodeID){
 
 //=========================================================================================
 /**
- * Closes the OS terminal session for the specified PNode.
- * @param {Int} pnodeID The ID of the PNode for which to close the OS terminal session.
+ * Closes a specified OS terminal session.
+ * @param {Int} sessionID The ID of the session which we want to close.
  * @returns 
  */
 //=========================================================================================
-export function PNodeCloseOSTerminalSession(pnodeID){
+export function PNodeCloseOSTerminalSession(sessionID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/os/${pnodeID}/closeOSSession`, {
+        const name = fetch(`http://localhost:5000/psystems/os/${sessionID}/closeOSSession`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
@@ -77,7 +78,7 @@ export function PNodeCloseOSTerminalSession(pnodeID){
                 resolve(LOGS.packetData);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
@@ -88,15 +89,15 @@ export function PNodeCloseOSTerminalSession(pnodeID){
 
 //=========================================================================================
 /**
- * This function sends a command input by the user in the OS web console to the server, which queues the command for execution in the OS terminal session of the specified PNode.
- * @param {Int} pnodeID The ID of the PNode for which to send the command.
+ * This function sends a command input by the user in the OS web console to the server, which queues the command for execution in the specified OS terminal session.
+ * @param {Int} sessionID The ID of the session which we want to send the command to.
  * @param {String} command The command to send to the OS terminal session.
  * @returns 
  */
 //=========================================================================================
-export function PNodeSendCommandToOSTerminalSession(pnodeID, command){
+export function PNodeSendCommandToOSTerminalSession(sessionID, command){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/os/${pnodeID}/OSSendCommand`, {
+        const name = fetch(`http://localhost:5000/psystems/os/${sessionID}/OSSendCommand`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -114,7 +115,7 @@ export function PNodeSendCommandToOSTerminalSession(pnodeID, command){
                 resolve(LOGS.packetData);
             }
             else{
-                pnodeDataDisplayScript.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 

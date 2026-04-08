@@ -5,7 +5,7 @@
 import * as mainScript from "../data_handling_main_script.js"
 import * as dataRetrievalScript from "../data_retrieval_script.js"
 import * as pnodeEventsScript from  "./pnode_events_script.js"
-import * as pnodeEditors from "./pnode_editors.js"
+import * as pnodeEditors from "../editor_components.js"
 import * as ppoolDataDisplayScript from  "../ppool_data_display_script.js"
 import * as fspCommunicationScript from  "../../fsp_communication_script.js"
 import * as osCommunicationScript from  "../../os_communication_script.js"

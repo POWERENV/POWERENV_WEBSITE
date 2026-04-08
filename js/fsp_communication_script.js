@@ -3,7 +3,7 @@
 //=========================================================================================
 
 import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
-import * as pnodeEditors from  "./DATA_RETRIEVAL/PNODE/pnode_editors.js"
+import * as pnodeEditors from  "./DATA_RETRIEVAL/editor_components.js"
 
 //=========================================================================================
 //=========================================================================================
@@ -38,10 +38,10 @@ export function PNodePowerOn(pnodeCOMID)
     });
 }
 
-export function PNodePowerOff(pnodeCOMID)
+export function PNodePowerOff(pnodeID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/power/${pnodeCOMID}/poweroff`, {
+        const name = fetch(`http://localhost:5000/psystems/power/${pnodeID}/poweroff`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -306,7 +306,7 @@ export function PNodeUpdateReadmeText(pnodeID, ppoolID, pgridID, newReadmeTXT){
             if(LOGS.statusMessage == "PNode Readme successfully received!")
             {
                 resolve(LOGS.packetData);
-                pnodeEditors.displayPNodesDashboardData(pnodeID, ppoolID, pgridID, 1);
+                pnodeDataDisplayScript.displayPNodesDashboardData(pnodeID, ppoolID, pgridID, 1);
             }
             else{
                 pnodeEditors.showErrorMessage(LOGS.statusMessage);
