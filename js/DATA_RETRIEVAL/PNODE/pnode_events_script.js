@@ -117,7 +117,7 @@ export async function openOSCommandTerminal(dashboardData)
 
     telnetSessionID = Number(loginResponse);
     signalRWSSConnection = new signalR.HubConnectionBuilder()
-        .withUrl(`http://{window.location.host}/osTerminal?sessionId=${telnetSessionID}`)
+        .withUrl(`http://${window.location.host}/osTerminal?sessionId=${telnetSessionID}`)
         .build();
 
     signalRWSSConnection.on("ReceiveTerminalOutput", (data) => {
