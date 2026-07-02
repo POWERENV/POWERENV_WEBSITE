@@ -1,6 +1,6 @@
 export function getPGridsInfoList(){
     return new Promise((resolve, reject) => {
-        const name = fetch("http://{window.location.host}/psystems/backend/data/getPGridsList", {
+        const name = fetch(`http://{window.location.host}/psystems/backend/data/getPGridsList`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
