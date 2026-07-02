@@ -13,7 +13,7 @@ import * as pnodeEditors from  "./DATA_RETRIEVAL/editor_components.js"
 export function PNodePowerOn(pnodeCOMID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/power/${pnodeCOMID}/poweron`, {
+        const name = fetch(`http://{window.location.host}/psystems/power/${pnodeCOMID}/poweron`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export function PNodePowerOn(pnodeCOMID)
 export function PNodePowerOff(pnodeID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/power/${pnodeID}/poweroff`, {
+        const name = fetch(`http://{window.location.host}/psystems/power/${pnodeID}/poweroff`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export function PNodePowerOff(pnodeID)
 export function PNodeRestart(pnodeCOMID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/power/${pnodeCOMID}/restart`, {
+        const name = fetch(`http://{window.location.host}/psystems/power/${pnodeCOMID}/restart`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -97,7 +97,7 @@ export function PNodeRestart(pnodeCOMID)
 export function PNodeTurnOffAttentionLED(pnodeCOMID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/power/${pnodeCOMID}/atentionLedOff`, {
+        const name = fetch(`http://{window.location.host}/psystems/power/${pnodeCOMID}/atentionLedOff`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export function PNodeTurnOffAttentionLED(pnodeCOMID)
 export function PNodeOpenASMISession(pnodeCOMID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/fsp/${pnodeCOMID}/openASMISession`, {
+        const name = fetch(`http://{window.location.host}/psystems/fsp/${pnodeCOMID}/openASMISession`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -155,7 +155,7 @@ export function PNodeOpenASMISession(pnodeCOMID)
 export function PNodeCloseASMISession(pnodeCOMID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/fsp/${pnodeCOMID}/closeASMISession`, {
+        const name = fetch(`http://{window.location.host}/psystems/fsp/${pnodeCOMID}/closeASMISession`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -182,7 +182,7 @@ export function PNodeCloseASMISession(pnodeCOMID)
 export function PNodeSendASMICommand(pnodeCOMID, command)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/fsp/${pnodeCOMID}/sendASMICommand`, {
+        const name = fetch(`http://{window.location.host}/psystems/fsp/${pnodeCOMID}/sendASMICommand`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -213,7 +213,7 @@ export function PNodeSendASMICommand(pnodeCOMID, command)
 export function PNodeInsertETHAccessPolicy(pnodeCOMID, ipAddress, policyType, policyIndex, _ppoolID, _pgridID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/network/${pnodeCOMID}/${policyType == "ALLOW" ? "editAllowedIPAddresses" : "editDeniedIPAddresses"}`, {
+        const name = fetch(`http://{window.location.host}/psystems/network/${pnodeCOMID}/${policyType == "ALLOW" ? "editAllowedIPAddresses" : "editDeniedIPAddresses"}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -251,7 +251,7 @@ export function PNodeInsertETHAccessPolicy(pnodeCOMID, ipAddress, policyType, po
 export function PNodeUpdateNetworkConfigs(pnodeCOMID, ethIndex, changedProperties, newValues, IPAddressType, _ppoolID, _pgridID)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/network/${pnodeCOMID}/editNetworkInterfaceConfigs/bulkData`, {
+        const name = fetch(`http://{window.location.host}/psystems/network/${pnodeCOMID}/editNetworkInterfaceConfigs/bulkData`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -290,7 +290,7 @@ export function PNodeUpdateNetworkConfigs(pnodeCOMID, ethIndex, changedPropertie
 
 export function PNodeUpdateReadmeText(pnodeID, ppoolID, pgridID, newReadmeTXT){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/backend/data/pnode${pnodeID}/changeReadme`, {
+        const name = fetch(`http://{window.location.host}/psystems/backend/data/pnode${pnodeID}/changeReadme`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -323,7 +323,7 @@ export function PNodeUpdateReadmeText(pnodeID, ppoolID, pgridID, newReadmeTXT){
 
 export function PNodeUpdateFSPLocalDateTime(pnodeID, newDateTime, ppoolID, pgridID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://localhost:5000/psystems/datetime/${pnodeID}/setdatetime/${newDateTime}`, {
+        const name = fetch(`http://{window.location.host}/psystems/datetime/${pnodeID}/setdatetime/${newDateTime}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
