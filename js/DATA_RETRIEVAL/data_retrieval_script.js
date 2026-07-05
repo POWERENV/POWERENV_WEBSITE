@@ -1,6 +1,6 @@
 export function getPGridsInfoList(){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://${window.location.host}/psystems/backend/data/getPGridsList`, {
+        const name = fetch(`https://${window.location.host}/psystems/backend/data/getPGridsList`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export function getPGridsInfoList(){
 
 export function getPGridDashboardData(pgridID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://${window.location.host}/psystems/backend/data/pgrid${pgridID}`, {
+        const name = fetch(`https://${window.location.host}/psystems/backend/data/pgrid${pgridID}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export function getPGridDashboardData(pgridID){
 
 export function getPPoolDashboardData(pgridID, ppoolID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://${window.location.host}/psystems/backend/data/pgrid${pgridID}/ppool${ppoolID}`, {
+        const name = fetch(`https://${window.location.host}/psystems/backend/data/pgrid${pgridID}/ppool${ppoolID}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export function getPPoolDashboardData(pgridID, ppoolID){
 
 export function getPNodeDashboardData(pgridID, ppoolID, pnodeID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://${window.location.host}/psystems/backend/data/pgrid${pgridID}/ppool${ppoolID}/pnode${pnodeID}`, {
+        const name = fetch(`https://${window.location.host}/psystems/backend/data/pgrid${pgridID}/ppool${ppoolID}/pnode${pnodeID}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

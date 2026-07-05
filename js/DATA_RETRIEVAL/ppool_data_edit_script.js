@@ -19,7 +19,7 @@ import * as editorComponents from  "../DATA_RETRIEVAL/editor_components.js"
 
 export function PPoolUpdateReadmeText(ppoolID, pgridID, newReadmeTXT){
     return new Promise((resolve, reject) => {
-        const name = fetch(`http://${window.location.host}/psystems/backend/data/ppool${ppoolID}/changeReadme`, {
+        const name = fetch(`https://${window.location.host}/psystems/backend/data/ppool${ppoolID}/changeReadme`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
