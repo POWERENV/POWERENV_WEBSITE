@@ -11,6 +11,7 @@
 //====================================Import statements====================================
 //=========================================================================================
 
+import * as genericScript from "../scripting.js"
 import * as mainScript from "./data_handling_main_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
@@ -35,11 +36,11 @@ import * as editorComponents from "./editor_components.js"
 export async function displayPPoolDashboardData(pgridID, ppoolID, e)
 {
     let dashboardData = await dataRetrievalScript.getPPoolDashboardData(pgridID, ppoolID);
-    await switchCustomSection('ppool_mgmt.html', 'content', 'content');
+    await genericScript.switchCustomSection('ppool_mgmt.html', 'content', 'content');
     document.getElementById('content').scrollTop = 0;
 
     displayPPoolMainInfo(dashboardData, pgridID, e);
-    resetElementEventListeners('_singleOperationBTN');
+    genericScript.resetElementEventListeners('_singleOperationBTN');
 
     //Assign Event Listeners to single/batch Operations View Switch Buttons
     document.getElementById('_singleOperationBTN').addEventListener('click', () => {
@@ -286,7 +287,7 @@ function toggleSingleNBatchOperationsTableView(_clickedBTNID)
             break;
     }
     
-    toggle2SideBTN(['_singleOperationBTN', '_batchOperationBTN'], _clickedBTNID);
+    genericScript.toggle2SideBTN(['_singleOperationBTN', '_batchOperationBTN'], _clickedBTNID);
 }
 
 //#endregion PPOOLS

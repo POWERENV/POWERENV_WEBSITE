@@ -2,6 +2,7 @@
 //====================================Import statements====================================
 //=========================================================================================
 
+import * as genericScript from "../../scripting.js"
 import * as mainScript from "../data_handling_main_script.js"
 import * as dataRetrievalScript from "../data_retrieval_script.js"
 import * as pnodeEventsScript from  "./pnode_events_script.js"
@@ -28,7 +29,7 @@ import * as osCommunicationScript from  "../../os_communication_script.js"
 export async function displayPNodesDashboardData(_pnodeID, _ppoolID, _pgridID, e)
 {
     let dashboardData = await dataRetrievalScript.getPNodeDashboardData(_pgridID, _ppoolID, _pnodeID);
-    await switchCustomSection('pnode_mgmt.html', 'content', 'content');
+    await genericScript.switchCustomSection('pnode_mgmt.html', 'content', 'content');
 
     mainScript.updateActiveTreeNode(dashboardData.pnode_full_info.pnode_nickname);
 
@@ -232,19 +233,6 @@ function displayPNodesNetworkInterfacesInfo(dashboardData, _ppoolID, _pgridID)
     }
 }
 
-//=========================================================================================
-/**
- * This function toggles a dropdown list box visibility, usualy when a button is clicked.
- * @param {Event} e The event object from the click event that triggered the function, used to prevent default behavior.
- * @param {String} listOBJ The ID of the dropdown list HTML element to toggle visibility on.
-*/
-//=========================================================================================
-function toggleDropDownListVisibility(e, listOBJ){
-    let dropdownDisplay = document.getElementById(listOBJ).style.display;
-    document.getElementById(listOBJ).style.display = dropdownDisplay == 'block' ? 'none' : 'block';
-    if(e != null && e != undefined) e.preventDefault();
-}
-
 //#endregion NETWORK INTERFACE CARDS
 
 //#region NETWORK ACCESS POLICIES
@@ -257,7 +245,7 @@ function toggleDropDownListVisibility(e, listOBJ){
  * @param {String} _pgridID The ID of the pnode's parent grid, used for edit operations.
 */
 //=========================================================================================
-function displayPNodesETHAccessPoliciesInfo(dashboardData, _ppoolID, _pgridID)
+export function displayPNodesETHAccessPoliciesInfo(dashboardData, _ppoolID, _pgridID)
 {
     let numAllowedPolicies = 0;
     let numDeniedPolicies = 0;
@@ -300,7 +288,7 @@ function displayPNodesETHAccessPoliciesInfo(dashboardData, _ppoolID, _pgridID)
         requestAnimationFrame(() => {
             // DOM updates applied
             if(dashboardData.pnode_full_info.pnodeActivenessState == true) {
-                disableButton(`rmAccessPolicy_${i}`);
+                genericScript.disableButton(`rmAccessPolicy_${i}`);
             }
 
             document.getElementById(`rmAccessPolicy_${i}`).addEventListener('click', () => {

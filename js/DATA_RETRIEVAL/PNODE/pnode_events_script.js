@@ -10,6 +10,7 @@
 //=========================================================================================
 //====================================Import statements====================================
 //=========================================================================================
+import * as genericScript from "../../scripting.js"
 import * as fspCommunicationScript from  "../../fsp_communication_script.js"
 import * as osCommunicationScript from  "../../os_communication_script.js"
 //import * as signalR from "https://cdn.jsdelivr.net/npm/@microsoft/signalr@7.0.5/dist/esm/signalr.js"
@@ -51,10 +52,10 @@ export async function openASMIWebConsole(dashboardData)
         await closeASMIWebConsole(dashboardData);
     });
 
-    showASMIConsoleBox(loginResponse);
+     genericScript.showASMIConsoleBox(loginResponse);
     document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
 
-    resetElementEventListeners("commandForm");
+    genericScript.resetElementEventListeners("commandForm");
     document.getElementById("commandForm").addEventListener("submit", async (e) => {
         await ASMICommandInputSubmitEvent(e, dashboardData);
     });
@@ -69,7 +70,7 @@ export async function openASMIWebConsole(dashboardData)
 export async function closeASMIWebConsole(dashboardData)
 {
     let logoutResponse = await fspCommunicationScript.PNodeCloseASMISession(dashboardData.pnode_full_info.pnode_id);
-    hideASMIConsoleBox();
+    genericScript.hideASMIConsoleBox();
 }
 
 //=========================================================================================
@@ -104,20 +105,20 @@ export async function openOSCommandTerminal(dashboardData)
 
     document.getElementById("consoleCloseBTN").addEventListener("click", async () => {
         let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
-        hideASMIConsoleBox();
+        genericScript.hideASMIConsoleBox();
     });
 
-    showOSConsoleBox(dashboardData);
+    genericScript.showOSConsoleBox(dashboardData);
     document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
 
-    resetElementEventListeners("commandForm");
+    genericScript.resetElementEventListeners("commandForm");
     document.getElementById("commandForm").addEventListener("submit", async (e) => {
-        osCommandInputSubmitEvent(e, dashboardData);
+        await osCommandInputSubmitEvent(e, dashboardData);
     });
 
     telnetSessionID = Number(loginResponse);
     signalRWSSConnection = new signalR.HubConnectionBuilder()
-        .withUrl(`https://${window.location.host}/osTerminal?sessionId=${telnetSessionID}`)
+        .withUrl(`${config.baseAPIURL}/osTerminal?sessionId=${telnetSessionID}`)
         .build();
 
     signalRWSSConnection.on("ReceiveTerminalOutput", (data) => {
@@ -129,7 +130,7 @@ export async function openOSCommandTerminal(dashboardData)
         .then(() => console.log("Connected!"))
         .catch(err => console.error(err));
 
-    osCommandInputSubmitEvent(null, dashboardData);
+    await osCommandInputSubmitEvent(null, dashboardData);
 }
 
 //=========================================================================================
@@ -155,7 +156,7 @@ export async function osCommandInputSubmitEvent(e, dashboardData)
 
     if(ipt == "exit"){
         let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
-        hideASMIConsoleBox();
+        genericScript.hideASMIConsoleBox();
     }
 }
 
@@ -200,10 +201,10 @@ export function setUpPNodePowerActionsEventListeners(dashboardData)
     }
 
     if(dashboardData.pnode_full_info.pnodeActivenessState == true){
-        disableButton("changeUserCredentialsBTN");
-        disableButton("_pnodeResetNICConfigs");
-        disableButton("_pnodeAddAccessPolicy");
-        disableButton("_configureLPARBTN");
+        genericScript.disableButton("changeUserCredentialsBTN");
+        genericScript.disableButton("_pnodeResetNICConfigs");
+        genericScript.disableButton("_pnodeAddAccessPolicy");
+        genericScript.disableButton("_configureLPARBTN");
         document.getElementById('systemStateActiveWarning').style.display = 'block';
     }
     document.getElementById("_pnodeResetNICConfigs").addEventListener("click", () => {

@@ -12,6 +12,7 @@
 //=========================================================================================
 import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
 import * as pnodeEditors from "./DATA_RETRIEVAL/editor_components.js"
+import * as config from "../../config.js"
 //=========================================================================================
 //=========================================================================================
 //=========================================================================================
@@ -25,7 +26,7 @@ import * as pnodeEditors from "./DATA_RETRIEVAL/editor_components.js"
 //=========================================================================================
 export function PNodeOpenOSTerminalSession(pnodeID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`https://${window.location.host}/psystems/os/${pnodeID}/openOSSession`, {
+        const name = fetch(`${config.baseAPIURL}/psystems/os/${pnodeID}/openOSSession`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +62,7 @@ export function PNodeOpenOSTerminalSession(pnodeID){
 //=========================================================================================
 export function PNodeCloseOSTerminalSession(sessionID){
     return new Promise((resolve, reject) => {
-        const name = fetch(`https://${window.location.host}/psystems/os/${sessionID}/closeOSSession`, {
+        const name = fetch(`${config.baseAPIURL}/psystems/os/${sessionID}/closeOSSession`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
@@ -97,7 +98,7 @@ export function PNodeCloseOSTerminalSession(sessionID){
 //=========================================================================================
 export function PNodeSendCommandToOSTerminalSession(sessionID, command){
     return new Promise((resolve, reject) => {
-        const name = fetch(`https://${window.location.host}/psystems/os/${sessionID}/OSSendCommand`, {
+        const name = fetch(`${config.baseAPIURL}/psystems/os/${sessionID}/OSSendCommand`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

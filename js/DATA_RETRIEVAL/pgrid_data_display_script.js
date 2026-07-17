@@ -1,3 +1,4 @@
+import * as genericScript from "../scripting.js"
 import * as mainScript from "./data_handling_main_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
@@ -35,10 +36,10 @@ export async function displayPGridDashboardData(pgridID, e, generateWholeContent
     let dashboardData = await dataRetrievalScript.getPGridDashboardData(pgridID);
 
     if(generateWholeContent == true){
-        await switchCustomSection('pgrid_mgmt.html', 'main-content', '_body_');
+        await genericScript.switchCustomSection('pgrid_mgmt.html', 'main-content', '_body_');
     }
     else{
-        await switchCustomSection('pgrid_mgmt.html', 'content', 'content');
+        await genericScript.switchCustomSection('pgrid_mgmt.html', 'content', 'content');
         document.getElementById('content').scrollTop = 0;
     }
     

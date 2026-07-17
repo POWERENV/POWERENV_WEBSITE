@@ -1,11 +1,12 @@
+import * as config from "../../config.js"
 //#region dynamicContentManagement
 
-function switchDIVContent(_targetDIVObjID, _newDIVContentOBJ)
+export function switchDIVContent(_targetDIVObjID, _newDIVContentOBJ)
 {
     document.getElementById(_targetDIVObjID).innerHTML = _newDIVContentOBJ;
 }
 
-function switchSection(page, e){
+export function switchSection(page, e) {
     return new Promise((resolve, reject) => {
         const response = fetch(page, {
             method: "GET",
@@ -34,7 +35,7 @@ function switchSection(page, e){
     });
 }
 
-function switchCustomSection(_targetPage, _targetObjID, _newContentID)
+export function switchCustomSection(_targetPage, _targetObjID, _newContentID)
 {
     return new Promise((resolve, reject) => {
         const response = fetch(_targetPage, {
@@ -55,7 +56,7 @@ function switchCustomSection(_targetPage, _targetObjID, _newContentID)
     });
 }
 
-function toggle2SideBTN(_btnList, _clickedBTNID)
+export function toggle2SideBTN(_btnList, _clickedBTNID)
 {
     let btnList = [];
     let clickedBTNID = document.getElementById(_clickedBTNID);
@@ -81,13 +82,13 @@ function toggle2SideBTN(_btnList, _clickedBTNID)
     document.getElementById("errorModalBoxContentMessage").innerText = errorMessage;
 }*/
 
-function hideErrorMessage()
+export function hideErrorMessage()
 {
     document.getElementById("errorModalBox").style.display = "none";
     document.getElementById("modalBoxZone").style.display = "none";
 }
 
-function showASMIConsoleBox(loginResponse)
+export function showASMIConsoleBox(loginResponse)
 {
     loginResponse = loginResponse.replaceAll('\r\n\r', '\n');
     document.getElementById("modalBoxZone").style.display = "flex";
@@ -96,7 +97,7 @@ function showASMIConsoleBox(loginResponse)
     document.getElementById("consoleModalBoxViewportContent").innerText = loginResponse;
 }
 
-function showOSConsoleBox(dashboardData)
+export function showOSConsoleBox(dashboardData)
 {
     document.getElementById("modalBoxZone").style.display = "flex";
     document.getElementById("consoleModalBox").style.display = "flex";
@@ -104,31 +105,31 @@ function showOSConsoleBox(dashboardData)
     document.getElementById("consoleModalBoxViewportContent").innerText = "#";
 }
 
-function hideASMIConsoleBox()
+export function hideASMIConsoleBox()
 {
     document.getElementById("consoleModalBox").style.display = "none";
     document.getElementById("modalBoxZone").style.display = "none";
 }
 
-function clearConsole()
+export function clearConsole()
 {
     document.getElementById("consoleModalBoxViewportContent").innerText = "Console was cleared!\n";
 }
 
-function closeEditBox()
+export function closeEditBox()
 {
     document.getElementById("editBoxZone").style.display = "none";
     if(document.getElementById('editBoxIPAddressTypeDropdownList') != (undefined && null)) document.getElementById('editBoxIPAddressTypeDropdownList').style.display = 'none';
     document.getElementById("editBoxCloseBTN").removeEventListener("click", closeEditBox);
 }
 
-function disableButton(buttonID){
+export function disableButton(buttonID){
     document.getElementById(buttonID).disabled = true;
     document.getElementById(buttonID).style.opacity = '70%';
     document.getElementById(buttonID).style.cursor = 'default';
 }
 
-function resetElementEventListeners(targetOBJID) {
+export function resetElementEventListeners(targetOBJID) {
     const element = document.getElementById(targetOBJID);
     const clone = element.cloneNode(true);
     element.parentNode.replaceChild(clone, element);
@@ -136,19 +137,36 @@ function resetElementEventListeners(targetOBJID) {
 
 //#endregion ModalBoxes
 
-function performAction(name){
+export function performAction(name){
     alert('Action: ' + name + ' initiated (demo)');
 }
 
-function performPower(action){
+export function performPower(action){
     const ok = confirm('Confirm ' + action + ' for selected device?');
     if(ok) alert('Power action: ' + action + ' queued (demo)');
 }
 
-function addHardware(){
+export function addHardware(){
     alert('Open add-hardware dialog (demo)');
 }
 
-function openSettings(){
+export function openSettings(){
     alert('Open Settings (demo)');
+}
+
+if (typeof window !== "undefined") {
+    window.switchSection = switchSection;
+    window.clearConsole = clearConsole;
+    window.openSettings = openSettings;
+    window.performAction = performAction;
+    window.performPower = performPower;
+    window.addHardware = addHardware;
+    window.toggle2SideBTN = toggle2SideBTN;
+    window.hideErrorMessage = hideErrorMessage;
+    window.showASMIConsoleBox = showASMIConsoleBox;
+    window.showOSConsoleBox = showOSConsoleBox;
+    window.hideASMIConsoleBox = hideASMIConsoleBox;
+    window.closeEditBox = closeEditBox;
+    window.disableButton = disableButton;
+    window.resetElementEventListeners = resetElementEventListeners;
 }

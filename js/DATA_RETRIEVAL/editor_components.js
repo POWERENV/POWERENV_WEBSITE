@@ -6,6 +6,8 @@
 //==========================================================================================
 //==========================================================================================
 
+import * as genericScript from "../scripting.js"
+
 //=========================================================================================
 /**
  * This class represents a message modal box, shown when a warning, error or information should be presented to the user.
@@ -141,8 +143,8 @@ export class configurationEditWizzard {
         this.textAreaIDs = [];
         this.dropdownFieldIDs = [];
         
-        document.getElementById("editBoxCloseBTN").addEventListener("click", closeEditBox);
-        resetElementEventListeners("editBoxSaveBTN");
+        document.getElementById("editBoxCloseBTN").addEventListener("click", genericScript.closeEditBox);
+        genericScript.resetElementEventListeners("editBoxSaveBTN");
 
         if(changesSaveOperation != null) {
             document.getElementById("editBoxSaveBTN").style.display = 'block';
@@ -150,8 +152,8 @@ export class configurationEditWizzard {
                 this.getFieldStructValues();
                 changesSaveOperation(e, this);
                 document.getElementById("fullScreenLoadingZone").style.display = "flex";
-                resetElementEventListeners("editBoxSaveBTN");
-                closeEditBox();
+                genericScript.resetElementEventListeners("editBoxSaveBTN");
+                genericScript.closeEditBox();
             });
         } else {
             document.getElementById("editBoxSaveBTN").style.display = 'none';
@@ -240,4 +242,17 @@ export class configurationEditWizzard {
             }
         });
     }
+}
+
+//=========================================================================================
+/**
+ * This function toggles a dropdown list box visibility, usualy when a button is clicked.
+ * @param {Event} e The event object from the click event that triggered the function, used to prevent default behavior.
+ * @param {String} listOBJ The ID of the dropdown list HTML element to toggle visibility on.
+*/
+//=========================================================================================
+export function toggleDropDownListVisibility(e, listOBJ) {
+    let dropdownDisplay = document.getElementById(listOBJ).style.display;
+    document.getElementById(listOBJ).style.display = dropdownDisplay == 'block' ? 'none' : 'block';
+    if(e != null && e != undefined) e.preventDefault();
 }

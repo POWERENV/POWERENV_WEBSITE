@@ -10,6 +10,7 @@
 
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
 import * as editorComponents from  "../DATA_RETRIEVAL/editor_components.js"
+import * as config from "../../../config.js"
 
 //=========================================================================================
 //=========================================================================================
@@ -19,7 +20,7 @@ import * as editorComponents from  "../DATA_RETRIEVAL/editor_components.js"
 
 export function PPoolUpdateReadmeText(ppoolID, pgridID, newReadmeTXT){
     return new Promise((resolve, reject) => {
-        const name = fetch(`https://${window.location.host}/psystems/backend/data/ppool${ppoolID}/changeReadme`, {
+        const name = fetch(`${config.baseAPIURL}/psystems/backend/data/ppool${ppoolID}/changeReadme`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

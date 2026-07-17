@@ -1,3 +1,4 @@
+import * as genericScript from "../scripting.js";
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
 import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
@@ -12,7 +13,7 @@ var tree = {
 // #region dataDisplayMethods
 
 export function openHardwareSection(event){
-    switchSection('hardware.html', event);
+    genericScript.switchSection('hardware.html', event);
     pgridDataDisplayScript.displayPGridsList();
 }
 
