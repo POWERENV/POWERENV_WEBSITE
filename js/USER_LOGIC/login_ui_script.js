@@ -1,3 +1,5 @@
+import * as userAuth from './user_auth.js';
+
 // Basic JS to mimic the behavior: toggle checkbox UI and handle submit
 (function(){
   const checkboxWrap = document.getElementById('checkboxWrap');
@@ -19,9 +21,8 @@
   });
 
   // Submit handler: simple validation and fake network response
-  form.addEventListener('submit', function(e){
+  form.addEventListener('submit', async function(e){
     e.preventDefault();
-    btn.disabled = true;
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
@@ -37,15 +38,6 @@
       return;
     }
 
-    // fake "creating" state
-    btn.textContent = 'Creating…';
-    setTimeout(()=> {
-      btn.textContent = 'Create Account';
-      btn.disabled = false;
-      alert('Account created (demo).');
-      // for demo, clear password
-      document.getElementById('password').value = '';
-      window.location.href = "index.html?userid=xvein1";
-    }, 900);
+    const loginResponse = await userAuth.login(email, password);
   });
 })();

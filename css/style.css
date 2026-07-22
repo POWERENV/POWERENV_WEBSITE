@@ -26,6 +26,75 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+#usernameSpan {
+    color: white;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+#userEmail {
+    margin-top: 5px;
+}
+
+.profileModalBoxOptions {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.profileModalBoxOptions ul {
+    list-style-type: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: none;
+}
+
+.profileModalBoxOptions li {
+    margin-bottom: 10px;
+}
+
+.profileModalBoxOptions li button {
+    width: 100%;
+    border-color: #310d18;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.profileModalBoxOptions li button:hover {
+    border-color: #310d18ab;
+    background-color: #130509af;
+}
+
+#userProfileButton {
+    border-radius: 50%;
+    background-color: var(--bg);
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    outline: 0px;
+    border: 0px;
+    cursor: pointer;
+    padding: 0px;
+}
+
+#userProfileButton:hover {
+    opacity: 90%;
+}
+
+#profileModalBox {
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    margin-top: 64px;
+    margin-left: calc(100% - 300px);
+    padding: 10px;
+    padding-top: 30px;
+    background-color: #111211;
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5); /* Includes spread radius */
+}
+
 #systemStateActiveWarning {
     display: none;
     width: 100%;
@@ -47,6 +116,18 @@ body {
     height: 100vh;
     background-color: rgba(10, 10, 10, 0.7);
     z-index: 10;
+}
+
+#transparentModalBoxZone {
+    position: fixed;
+    display: none; /*default: flex*/
+    justify-content: center;
+    align-items: start;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    z-index: 10;
+    cursor: pointer;
 }
 
 .modalBox {

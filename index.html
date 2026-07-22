@@ -44,6 +44,20 @@
           <div class="modalBoxBTNZone" id="messageModalBoxBTNZone"></div>
         </div>
       </div>
+      <div id="transparentModalBoxZone">
+        <!--ProfileModalMenu-->
+        <div id="profileModalBox" class="modalBox">
+          <span id="usernameSpan">Admin</span>
+          <span id="userEmail">test@test.com</span>
+          <nav class="profileModalBoxOptions">
+            <ul>
+              <li><button class="btn-ghost" onclick="openSettings()">Profile</button></li>
+              <li><button class="btn-ghost" onclick="openSettings()">Settings</button></li>
+              <li><button class="btn-ghost" id="logoutBTN">Logout</button></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
 
       <!--#region TOPBAR-->
       <header class="topbar">
@@ -55,8 +69,7 @@
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:14px">
-          <div class="muted">User: Admin</div>
-          <button class="btn-ghost" onclick="openSettings()">Settings</button>
+          <button id="userProfileButton"></button>
         </div>
       </header>
       <!--#endregion TOPBAR-->
@@ -110,7 +123,7 @@
           <div style="flex:1"></div>
 
           <div style="display:flex;flex-direction:column;gap:8px; padding: 18px;">
-            <div class="footer-note">© POWERENV • 2025</div>
+            <div class="footer-note">© POWERENV • 2026</div>
           </div>
         </aside>
         <!--#endregion SIDEBAR-->

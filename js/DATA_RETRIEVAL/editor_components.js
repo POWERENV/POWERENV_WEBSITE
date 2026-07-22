@@ -24,7 +24,7 @@ export class messageModalBox {
     constructor (messageBoxHeader, messageBoxContent){
         document.getElementById("modalBoxZone").style.display = "flex";
         document.getElementById('messageModalBox').style.display = 'flex';
-        document.getElementById("messageModalBoxContentMessage").innerText = messageBoxContent;
+        document.getElementById("messageModalBoxContentMessage").innerHTML = messageBoxContent;
         document.getElementById('messageModalBoxHeading').innerHTML = messageBoxHeader;
         document.getElementById('messageModalBoxBTNZone').innerHTML = '';
         this.actionButtons = [];

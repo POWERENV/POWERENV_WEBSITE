@@ -1,5 +1,39 @@
 import * as config from "../../config.js"
+import * as userAuth from "./USER_LOGIC/user_auth.js"
+
 //#region dynamicContentManagement
+
+(async () => {
+    
+    if(window.location.href.includes("index.html") || window.location.href[window.location.href.length - 1] == '/' || window.location.href[window.location.href.length - 1] == '\\') {
+        const _whoami_ = await userAuth.whoami();
+        if(_whoami_.statusMessage == "User is authenticated."){
+            document.getElementById("usernameSpan").innerText = _whoami_.packetData.username.toUpperCase();
+            document.getElementById("userEmail").innerText = _whoami_.packetData.email.toUpperCase();
+
+            if(_whoami_.packetData.profilePicture != null && _whoami_.packetData.profilePicture != "") {
+                document.getElementById("userProfileButton").style.backgroundImage = `url(../USER_DATA/user_1/PROFILE_PICS/${_whoami_.packetData.profilePicture}?r=${Math.random()})`;
+            }
+            else {
+                document.getElementById("userProfileButton").innerHTML += '<i class="fa-solid fa-user fa-2x" style="margin: 0px; color: var(--accent);"></i>';
+            }
+            
+            document.getElementById("userProfileButton").addEventListener("click", () => {
+                document.getElementById("transparentModalBoxZone").style.display = "flex";
+                document.getElementById("profileModalBox").style.display = "flex";
+            });
+
+            document.getElementById("transparentModalBoxZone").addEventListener("click", (e) => {
+                if(e.target != document.getElementById("transparentModalBoxZone")) return;
+                document.getElementById("transparentModalBoxZone").style.display = "none";
+            });
+
+            document.getElementById("logoutBTN").addEventListener("click", async () => {
+                await userAuth.logout();
+            });
+        }
+    }
+})();
 
 export function switchDIVContent(_targetDIVObjID, _newDIVContentOBJ)
 {
