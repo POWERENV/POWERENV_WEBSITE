@@ -5,6 +5,8 @@
     --accent: #b33939;
     --accent1: #c0362a;
     --accent-2: #d35400;
+    --scrollbar-thumb-accent: #e24e3b;
+    --scrollbar-thumb-accent-hover: #e24e3bb6;
     --border: rgba(255,255,255,0.1);
     --glass: rgba(255, 255, 255, 0.03);
     --card: #181818;
@@ -788,17 +790,17 @@ th {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #e24e3b;        /* POWERENV red */
+  background: var(--scrollbar-thumb-accent);        /* POWERENV red */
   border-radius: 10px;
   border: 2px solid #111;     /* creates padding effect around thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #e24e3bb6;        /* brighter red on hover */
+  background: var(--scrollbar-thumb-accent-hover);        /* brighter red on hover */
 }
 
 /* Firefox support */
 * {
   scrollbar-width: thin;                  /* makes it slimmer */
-  scrollbar-color: #e24e3b #111;          /* thumb / track */
+  scrollbar-color: var(--scrollbar-thumb-accent) #111;          /* thumb / track */
 }

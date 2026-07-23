@@ -9,21 +9,47 @@
   <link rel="icon" type="image/png" href=".\media\imgs\POWERENV_LOGO_ICONONLY_TRANSPARENT.png" />
 </head>
 <body>
+  <div id="modalBoxZone" class="modalZone">
+    <!--errorModalBox-->
+    <div id="messageModalBox" class="modalBox">
+      <div class="modalBoxHeader">
+        <span id="messageModalBoxHeading">ERROR MESSAGE</span>
+      </div>
+      <div class="modalBoxContent">
+        <p id="messageModalBoxContentMessage">Unknown Error Occured!!!</p>
+      </div>
+      <div class="modalBoxBTNZone" id="messageModalBoxBTNZone"></div>
+    </div>
+  </div>
   <main class="frame" role="main" aria-labelledby="signup-title">
     <section class="hero" aria-hidden="true"></section>
 
-    <aside class="panel" role="region" aria-label="Sign up form">
+    <aside class="panel" role="region" aria-label="Sign up form" style="overflow-y: auto;">
       <div class="diag" aria-hidden="true"></div>
 
       <h1 id="signup-title" class="title">SIGN UP</h1>
       <p class="sub">Welcome to POWERENV sign-up page. Register as a new user in the platform to start working!</p>
 
       <form id="signupForm" novalidate autocomplete="off">
+        <div style="display: flex; flex-direction: row; gap: 10px;">
+          <div>
+            <label for="email">First Name</label>
+            <input id="firstName" class="input" type="fname" placeholder="John">
+          </div>
+          <div>
+            <label for="email">Last Name</label>
+            <input id="lastName" class="input" type="lname" placeholder="Doe">
+          </div>
+        </div>
+        
         <label for="email">E-mail</label>
         <input id="email" class="input" type="email" placeholder="you@example.com">
 
         <label for="password">Password</label>
         <input id="password" class="input" type="password" placeholder="••••••••••">
+
+        <label for="password">Confirm Password</label>
+        <input id="confirmPassword" class="input" type="password" placeholder="••••••••••">
 
         <div class="row" style="margin-top:2px;">
           <label for="tos" style="display:flex;align-items:center;gap:10px;margin:0">
@@ -45,6 +71,6 @@
     </aside>
   </main>
 
-  <script src="js/login_tasks_script.js"></script>
+  <script src="js/USER_LOGIC/login_ui_script.js" type="module"></script>
 </body>
 </html>

@@ -9,6 +9,18 @@
   <link rel="icon" type="image/png" href=".\media\imgs\POWERENV_LOGO_ICONONLY_TRANSPARENT.png" />
 </head>
 <body>
+  <div id="modalBoxZone" class="modalZone">
+    <!--errorModalBox-->
+    <div id="messageModalBox" class="modalBox">
+      <div class="modalBoxHeader">
+        <span id="messageModalBoxHeading">ERROR MESSAGE</span>
+      </div>
+      <div class="modalBoxContent">
+        <p id="messageModalBoxContentMessage">Unknown Error Occured!!!</p>
+      </div>
+      <div class="modalBoxBTNZone" id="messageModalBoxBTNZone"></div>
+    </div>
+  </div>
   <main class="frame" role="main" aria-labelledby="signup-title">
     <section class="hero" aria-hidden="true"></section>
 
@@ -18,22 +30,12 @@
       <h1 id="signup-title" class="title">LOGIN</h1>
       <p class="sub">Welcome to POWERENV login page. Provide your username (email) and password to start working!</p>
 
-      <form id="signupForm" novalidate autocomplete="off">
+      <form id="signupForm" novalidate>
         <label for="email">E-mail</label>
         <input id="email" class="input" type="email" placeholder="you@example.com">
 
         <label for="password">Password</label>
         <input id="password" class="input" type="password" placeholder="••••••••••">
-
-        <div class="row" style="margin-top:2px;">
-          <label for="tos" style="display:flex;align-items:center;gap:10px;margin:0">
-            <span class="checkbox checked" id="checkboxWrap" title="Agree to terms">
-              <input id="tos" type="checkbox" checked>
-              <span class="checkmark" aria-hidden="true"></span>
-            </span>
-            <span style="color:var(--muted);font-size:13px">I agree to the terms of service</span>
-          </label>
-        </div>
 
         <button id="createBtn" class="btn" type="submit">Login</button>
       </form>

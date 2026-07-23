@@ -34,9 +34,44 @@ export async function login(email, password) {
       .then((json) => {
         var LOGS = json;
 
-        if (
-          LOGS.statusMessage == "Login successful. Session backed by Redis."
-        ) {
+        if (LOGS.statusMessage == "Login successful. Session backed by Redis.") {
+          resolve(LOGS.packetData);
+          window.location.href = "index.html";
+        } else {
+          pnodeEditors.showErrorMessage(LOGS.statusMessage);
+          reject(LOGS.statusMessage);
+        }
+      });
+  });
+}
+
+export async function signup(firstName, lastName, email, password) {
+  return new Promise((resolve, reject) => {
+    const name = fetch(
+      `${config.baseAPIURL}/psystems/backend/user/auth/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: `{
+                    "FirstName": "${firstName}",
+                    "LastName": "${lastName}",
+                    "Email": "${email}",
+                    "Password": "${password}"
+                }`,
+      },
+    )
+      .then((res) => {
+        return res.text();
+      })
+      .then((data) => {
+        return JSON.parse(data);
+      })
+      .then((json) => {
+        var LOGS = json;
+
+        if (LOGS.statusMessage == "Signup successful. Session backed by Redis.") {
           resolve(LOGS.packetData);
           window.location.href = "index.html";
         } else {
