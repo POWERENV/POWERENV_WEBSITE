@@ -34,12 +34,19 @@ export async function login(email, password) {
       .then((json) => {
         var LOGS = json;
 
-        if (LOGS.statusMessage == "Login successful. Session backed by Redis.") {
-          resolve(LOGS.packetData);
-          window.location.href = "index.html";
-        } else {
-          pnodeEditors.showErrorMessage(LOGS.statusMessage);
-          reject(LOGS.statusMessage);
+        switch(LOGS.statusMessage) {
+          case "Login successful. Session backed by Redis.":
+            resolve(LOGS.packetData);
+            window.location.href = "index.html";
+            break;
+          case "Unauthorized: Invalid email or password.":
+            pnodeEditors.showErrorMessage("Incorrect email or password.");
+            reject(LOGS.statusMessage);
+            break;
+          default:
+            pnodeEditors.showErrorMessage(LOGS.statusMessage);
+            reject(LOGS.statusMessage);
+            break;
         }
       });
   });
@@ -71,12 +78,15 @@ export async function signup(firstName, lastName, email, password) {
       .then((json) => {
         var LOGS = json;
 
-        if (LOGS.statusMessage == "Signup successful. Session backed by Redis.") {
-          resolve(LOGS.packetData);
-          window.location.href = "index.html";
-        } else {
-          pnodeEditors.showErrorMessage(LOGS.statusMessage);
-          reject(LOGS.statusMessage);
+        switch(LOGS.statusMessage){
+          case "Signup successful. Session backed by Redis.":
+            resolve(LOGS.packetData);
+            window.location.href = "index.html";
+            break;
+          default:
+            pnodeEditors.showErrorMessage(LOGS.statusMessage);
+            reject(LOGS.statusMessage);
+            break;
         }
       });
   });

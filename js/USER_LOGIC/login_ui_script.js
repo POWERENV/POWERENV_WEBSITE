@@ -1,4 +1,5 @@
 import * as userAuth from './user_auth.js';
+import * as pnodeEditors from "../DATA_RETRIEVAL/editor_components.js";
 
 // Basic JS to mimic the behavior: toggle checkbox UI and handle submit
 (function(){
@@ -30,16 +31,23 @@ import * as userAuth from './user_auth.js';
       const lastName = document.getElementById('lastName').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
 
       // minimal checks
       if(!firstName || !lastName || !email || !password) {
-        alert('Please fill in all form fields.');
+        pnodeEditors.showErrorMessage('Please fill in all form fields.');
         btn.disabled = false;
         return;
       }
       
-      if(!checkbox.checked){
-        alert('You must agree to the terms of service to continue.');
+      if(!checkbox.checked) {
+        pnodeEditors.showErrorMessage('You must agree with the terms of service to continue.');
+        btn.disabled = false;
+        return;
+      }
+
+      if(password != confirmPassword) {
+        pnodeEditors.showErrorMessage("Password and Confirm Password fields don't match!");
         btn.disabled = false;
         return;
       }
@@ -56,7 +64,7 @@ import * as userAuth from './user_auth.js';
 
       // minimal checks
       if(!email || !password){
-        alert('Please fill in email and password.');
+        pnodeEditors.showErrorMessage('Please fill in email and password.');
         btn.disabled = false;
         return;
       }

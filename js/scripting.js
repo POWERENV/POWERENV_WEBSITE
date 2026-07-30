@@ -1,10 +1,10 @@
 import * as config from "../../config.js"
 import * as userAuth from "./USER_LOGIC/user_auth.js"
+import * as userDataRetrieval from "./USER_LOGIC/user_data_retrieval_script.js"
 
 //#region dynamicContentManagement
 
-(async () => {
-    
+(async () => {    
     if(window.location.href.includes("index.html") || window.location.href[window.location.href.length - 1] == '/' || window.location.href[window.location.href.length - 1] == '\\') {
         const _whoami_ = await userAuth.whoami();
         if(_whoami_.statusMessage == "User is authenticated."){
@@ -26,11 +26,49 @@ import * as userAuth from "./USER_LOGIC/user_auth.js"
             document.getElementById("transparentModalBoxZone").addEventListener("click", (e) => {
                 if(e.target != document.getElementById("transparentModalBoxZone")) return;
                 document.getElementById("transparentModalBoxZone").style.display = "none";
+                document.getElementById("profileModalBox").style.display = "none";
+                document.getElementById("inboxModalBox").style.display = "none";
             });
 
             document.getElementById("logoutBTN").addEventListener("click", async () => {
                 await userAuth.logout();
             });
+
+            document.getElementById("inboxButton").addEventListener("click", () => {
+                document.getElementById("transparentModalBoxZone").style.display = "flex";
+                document.getElementById("inboxModalBox").style.display = "flex";
+            });
+
+            const notificationsData = await userDataRetrieval.getUserNotificationsData(_whoami_.packetData.userId);
+
+            if(notificationsData.length == 0){
+                document.getElementById("inboxModalBoxNotificationsList").innerHTML += "<u>Inbox empty!</u><br>";
+            }
+            else {
+                for(let i = 0; i < notificationsData.length; i++) {
+                    document.getElementById("inboxModalBoxNotificationsList").innerHTML += `<li class="inboxModalBoxNotificationItem" id="notification_${i}">
+                        <div>
+                            <span>${notificationsData[i].title}</span>
+                            <p>${notificationsData[i].description}</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row; gap: 10px; align-items: start; margin-top: 15px; width: 100%;">
+                            <button class="ghost-btn" id="notificationResolve_${i}"><i class="fa-solid fa-check fa-xl"></i> RESOLVE</button>
+                        </div>
+                    </li>`;
+
+                    requestAnimationFrame(() => {
+                        document.getElementById(`notificationResolve_${i}`).addEventListener("click", async () => {
+                            userDataRetrieval.markNotificationAsResolved(_whoami_.packetData.userId, notificationsData[i].notificationId);
+                            
+                            document.getElementById("inboxModalBoxNotificationsList").removeChild(document.getElementById(`notification_${i}`));
+
+                            if(notificationsData.length - 1 == 0) {
+                                document.getElementById("inboxModalBoxNotificationsList").innerHTML += "<u>Inbox empty!</u><br>";
+                            }
+                        });
+                    });
+                }
+            }
         }
     }
 })();
@@ -49,20 +87,24 @@ export function switchSection(page, e) {
             }
         }).then(res => {
             return res.text();
-        }).then(data => {
-            // when fetch-api gets the data from the requested html file, we parse it to html code and replace the main-content div with the new content
-            const el = ((e.currentTarget || e.target).classList != undefined) ? (e.currentTarget || e.target) : (document.getElementById('nav-overview'));
+        }).then(data => {            
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, "text/html");
-            
             const pageContent = doc.getElementsByTagName("body")[0].innerHTML;
-            document.getElementById("main-content").innerHTML = pageContent;
 
+            document.getElementById("main-content").innerHTML = pageContent;
+            
+            const pageSidebarLinkName = pageToSidebarTabMap.get(page);
             const navItems = document.getElementsByClassName('nav-item');
-            for(let i = 0; i < navItems.length; i++){
-                navItems[i].classList.remove('active');
+            
+            for(let i = 0; i < navItems.length; i++) {
+                if(navItems[i].innerText == pageSidebarLinkName) {
+                    navItems[i].classList.add('active');
+                }
+                else {
+                    navItems[i].classList.remove('active');
+                }
             }
-            el.classList.add('active');
 
             resolve("SUCCESS");
         });
@@ -204,3 +246,10 @@ if (typeof window !== "undefined") {
     window.disableButton = disableButton;
     window.resetElementEventListeners = resetElementEventListeners;
 }
+
+const pageToSidebarTabMap = new Map([
+    ["overview.html", "Dashboard"],
+    ["hardware.html", "Hardware"],
+    ["tasks.html", "Events & Logging"],
+    ["power.html", "Power"]
+]);

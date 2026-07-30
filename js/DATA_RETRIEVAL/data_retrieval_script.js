@@ -1,5 +1,30 @@
 import * as config from "../../../config.js"
 
+export async function getRecentActivity() {
+    return new Promise((resolve, reject) => {
+        const name = fetch(`${config.baseAPIURL}/psystems/backend/data/getRecentActivity`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            return res.text();
+        } ).then(data => {
+            return JSON.parse(data);
+        } ).then(json => {
+            var LOGS = json;
+
+            if(LOGS.statusMessage == "Recent activity data successfully received!")
+            {
+                resolve(LOGS.packetData);
+            }
+            else{
+                reject(`Promise Rejected! HTTP Request Fault! Error message: ${LOGS.statusMessage}`);
+            }
+        });
+    });
+}
+
 export function getPGridsInfoList(){
     return new Promise((resolve, reject) => {
         const name = fetch(`${config.baseAPIURL}/psystems/backend/data/getPGridsList`, {

@@ -28,7 +28,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-#usernameSpan {
+#usernameSpan, #inboxSpan {
     color: white;
     font-size: 150%;
     font-weight: bold;
@@ -36,6 +36,66 @@ body {
 
 #userEmail {
     margin-top: 5px;
+}
+
+.inboxModalBoxNotifications {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 20px;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.inboxModalBoxNotificationItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    padding-top: 20px;
+    padding-left: 15px;
+    background-color: var(--bg);
+    border-top: 1px solid var(--muted);
+    margin-top: 5px;
+}
+
+.inboxModalBoxNotificationItem div {
+    width: 100%;
+}
+
+.inboxModalBoxNotificationItem div span {
+    font-size: large;
+    font-weight: bold;
+}
+
+.inboxModalBoxNotificationItem div p {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.inboxModalBoxNotificationItem button {
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--muted);
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.inboxModalBoxNotificationItem button i {
+    color: var(--accent);
+}
+
+.inboxModalBoxNotificationItem button:hover {
+    opacity: 90%;
 }
 
 .profileModalBoxOptions {
@@ -66,6 +126,18 @@ body {
     background-color: #130509af;
 }
 
+#inboxButton {
+    cursor: pointer;
+}
+
+#inboxButton:hover {
+    opacity: 90%;
+}
+
+#inboxButton i {
+    color: var(--accent);
+}
+
 #userProfileButton {
     border-radius: 50%;
     background-color: var(--bg);
@@ -82,7 +154,7 @@ body {
     opacity: 90%;
 }
 
-#profileModalBox {
+#profileModalBox, #inboxModalBox {
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -95,6 +167,14 @@ body {
     border-radius: 5px;
     width: 300px;
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.5); /* Includes spread radius */
+}
+
+#inboxModalBox{
+    padding: 0px;
+    padding-top: 20px;
+    max-height: 300px;
+    width: 500px;
+    margin-left: calc(100% - 500px);
 }
 
 #systemStateActiveWarning {

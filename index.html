@@ -57,6 +57,12 @@
             </ul>
           </nav>
         </div>
+
+        <!--InboxModalMenu-->
+        <div id="inboxModalBox" class="modalBox">
+          <span id="inboxSpan">Inbox</span>
+          <ul id="inboxModalBoxNotificationsList" class="inboxModalBoxNotifications"></ul>
+        </div>
       </div>
 
       <!--#region TOPBAR-->
@@ -69,6 +75,7 @@
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:14px">
+          <button class="btn-ghost" id="inboxButton"><i class="fa-solid fa-inbox fa-xl"></i></button>
           <button id="userProfileButton"></button>
         </div>
       </header>
@@ -110,9 +117,9 @@
             <div>Hardware</div>
           </div>
 
-          <div class="nav-item" data-view="tasks" onclick="switchSection('tasks.html', event)">
+          <div class="nav-item" data-view="tasks" onclick="openEventsSection(event)">
             <i class="fa-solid fa-list-check fa-xl"></i>
-            <div>Tasks</div>
+            <div>Events & Logging</div>
           </div>
 
           <div class="nav-item" data-view="power" onclick="switchSection('power.html', event)">

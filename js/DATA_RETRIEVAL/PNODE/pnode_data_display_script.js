@@ -340,10 +340,12 @@ function displayPNodesOperationHistory(dashboardData)
     for(let i = 0; i < dashboardData.pnodeSingleOperationHistory.length; i++){
         const operationCompletionStatusBKG = dashboardData.pnodeSingleOperationHistory[i].operationCompletionStatus == 'SUCCESS' ? 'rgba(34,197,94,0.08)' : 'rgba(255,165,0,0.08)';
         const operationCompletionStatusTextColor = dashboardData.pnodeSingleOperationHistory[i].operationCompletionStatus == 'SUCCESS' ? 'var(--success)' : '#ff9f43';
+        const opeartionBatchOperationName = dashboardData.pnodeSingleOperationHistory[i].operationBatchOperationName != -1 ? dashboardData.pnodeSingleOperationHistory[i].operationBatchOperationName : "<i>NON EXISTING</i>";
+        
         const tableRow = `<tr>
                             <td>LOG-${dashboardData.pnodeSingleOperationHistory[i].operationID}</td>
                             <td>${dashboardData.pnodeSingleOperationHistory[i].operationCatName}</td>
-                            <td>${dashboardData.pnodeSingleOperationHistory[i].operationBatchOperationName}</td>
+                            <td>${opeartionBatchOperationName}</td>
                             <td>${dashboardData.pnodeSingleOperationHistory[i].operationAction}</td>
                             <td><span class="state-pill" style="background:${operationCompletionStatusBKG}; color:${operationCompletionStatusTextColor}">${dashboardData.pnodeSingleOperationHistory[i].operationCompletionStatus}</span></td>
                             <td>${dashboardData.pnodeSingleOperationHistory[i].operationDateTime}</td>

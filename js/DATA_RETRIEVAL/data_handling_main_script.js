@@ -2,6 +2,8 @@ import * as genericScript from "../scripting.js";
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
 import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
+import * as dataRetrievalScript from "./data_retrieval_script.js"
+import * as userDataRetrieval from "./../USER_LOGIC/user_data_retrieval_script.js"
 
 var tree = {
     objName: "",
@@ -12,12 +14,100 @@ var tree = {
 
 // #region dataDisplayMethods
 
-export function openHardwareSection(event){
+export function openHardwareSection(event) {
     genericScript.switchSection('hardware.html', event);
+    displayRecentActivity();
     pgridDataDisplayScript.displayPGridsList();
 }
 
+async function displayRecentActivity() {
+    const recentActivityData = await dataRetrievalScript.getRecentActivity();
+
+    for(let i = 0; i < recentActivityData.length; i++) {
+        let colorHEX = "";
+
+        switch(recentActivityData[i].globalEventSeverityLevel){
+            case "INFORMATIONAL":
+                colorHEX = "#2269c5"
+                break;
+            case "WARNING":
+                colorHEX = "#ffd166"
+                break;
+            case "HIGH IMPACT":
+                colorHEX = "#ff9f43"
+                break;
+            case "CRITICAL":
+                colorHEX = "#fb7185"
+                break;
+        }
+
+        document.getElementById("RecentActivityTableContent").innerHTML += `<tr>
+            <td>${recentActivityData[i].globalEventId}</td>
+            <td><span class="state-pill" style="background:${colorHEX}11;color:${colorHEX}">${recentActivityData[i].globalEventSeverityLevel}</span></td>
+            <td>${recentActivityData[i].globalEventTitle}</td>
+            <td>${recentActivityData[i].globalEventDescription}</td>
+            <td>${recentActivityData[i].globalEventTriggeredAt.replace("T", " ")}</td>
+            <td>${recentActivityData[i].notificationTargetUsername}</td>
+            <td>${recentActivityData[i].notificationAcknowledgementTimestamp.replace("T", " ")}</td>
+            <td>${recentActivityData[i].notificationResolvedTimestamp.replace("T", " ")}</td>
+        </tr>`;
+    }
+}
+
 window.openHardwareSection = openHardwareSection;
+
+export function openEventsSection(event) {
+    genericScript.switchSection('tasks.html', event);
+    displayGlobalEventsActivity();
+    //pgridDataDisplayScript.displayPGridsList();
+}
+
+async function displayGlobalEventsActivity() {
+    const recentActivityData = await userDataRetrieval.getUserGlobalEventsData();
+
+    for(let i = 0; i < recentActivityData.length; i++) {
+        let colorHEX = "";
+
+        switch(recentActivityData[i].globalEventSeverityLevel){
+            case "INFORMATIONAL":
+                colorHEX = "#2269c5"
+                break;
+            case "WARNING":
+                colorHEX = "#ffd166"
+                break;
+            case "HIGH IMPACT":
+                colorHEX = "#ff9f43"
+                break;
+            case "CRITICAL":
+                colorHEX = "#fb7185"
+                break;
+        }
+
+        let notificationResolvedTimestamp = recentActivityData[i].notificationResolvedTimestamp.replace("T", " ");
+        let notificationAcknowledgementTimestamp = recentActivityData[i].notificationAcknowledgementTimestamp.replace("T", " ");
+
+        if(notificationAcknowledgementTimestamp == "2001-01-01 00:00:00") {
+            notificationAcknowledgementTimestamp = "EVENT IS NOT ACKNOWLEDGED"
+        }
+
+        if(notificationResolvedTimestamp == "2001-01-01 00:00:00") {
+            notificationResolvedTimestamp = "EVENT IS NOT RESOLVED"
+        }
+
+        document.getElementById("GlobalEventsTableContent").innerHTML += `<tr>
+            <td>${recentActivityData[i].globalEventId}</td>
+            <td><span class="state-pill" style="background:${colorHEX}11;color:${colorHEX}">${recentActivityData[i].globalEventSeverityLevel}</span></td>
+            <td>${recentActivityData[i].globalEventTitle}</td>
+            <td>${recentActivityData[i].globalEventDescription}</td>
+            <td>${recentActivityData[i].globalEventTriggeredAt.replace("T", " ")}</td>
+            <td>${recentActivityData[i].notificationTargetUsername}</td>
+            <td>${notificationAcknowledgementTimestamp}</td>
+            <td>${notificationResolvedTimestamp}</td>
+        </tr>`;
+    }
+}
+
+window.openEventsSection = openEventsSection;
 
 export function displayPGridTreeStructureInfo(dashboardData)
 {
