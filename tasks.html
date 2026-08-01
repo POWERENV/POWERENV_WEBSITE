@@ -2,25 +2,56 @@
     <section id="tasks" class="view">
         <div class="tiled-grid">
             <div class="card col-span-12" style="width: 100%;">
-                <h3 style="margin:0 0 12px 0">Global Application Events</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Event ID</th>
-                            <th>Severity Level</th>
-                            <th>Event Title</th>
-                            <th>Event Description</th>
-                            <th>Event Trigger Timestamp</th>
-                            <th>Event Target Username</th>
-                            <th>Event Acknowledgement Date</th>
-                            <th>Event Resolved Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="GlobalEventsTableContent"></tbody>
-                </table>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: start;">
+                    <h3 style="margin:0 0 12px 0">Global Application Events</h3>
+
+                    <div class="viewSwitchButton" id="globalEventsViewSwitchButton">
+                        <button id="_eventLogsBTN" class="sideOutlineButton leftSide sbActive">Event Logs</button>
+                        <button id="_eventTypeDistributionBTN" class="sideOutlineButton rightSide">Event Distribution</button>
+                    </div>
+                </div>
+                <div style="max-height: 500px; margin-bottom: 40px; overflow: auto;" id="eventLogsView">
+                    <h4>Aplication Event Logs</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Event ID</th>
+                                <th>Severity Level</th>
+                                <th>Event Title</th>
+                                <th>Event Description</th>
+                                <th>Event Trigger Timestamp</th>
+                                <th>Event Target Username</th>
+                                <th>Event Acknowledgement Date</th>
+                                <th>Event Resolved Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="GlobalEventsTableContent"></tbody>
+                    </table>
+                    <p id="emptyGlobalEventsListMessage" style="text-align: center; padding: 20px; color: var(--warning);">EMPTY LIST</p>
+                </div>
+                
+                <div style="display: none; max-height: 500px; margin-bottom: 40px;" id="eventDistributionView">
+                    <h4>Event Type Distribution</h4>
+                    <canvas id="eventDistributionViewCanvas"></canvas>
+                </div>
             </div>
 
-            <div class="card" style="flex: 1;">
+            <div class="card" style="flex: 1; min-width: 1500px;">
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: start;">
+                    <h3 style="margin:0 0 12px 0">Event Logging Cadence</h3>
+
+                    <div class="viewSwitchButton" id="eventsCadenceViewSwitchButton">
+                        <button id="_30daysBTN" class="sideOutlineButton leftSide sbActive">30 Days</button>
+                        <button id="_7daysBTN" class="sideOutlineButton middleSide">7 Days</button>
+                        <button id="_1dayBTN" class="sideOutlineButton rightSide">1 Day</button>
+                    </div>
+                </div>
+                <div style="max-height: 300px; margin-top: 50px; margin-bottom: 40px;" id="eventCadenceView">
+                    <canvas id="eventCadenceViewCanvas"></canvas>
+                </div>
+            </div>
+
+            <div class="card" style="flex: 1; min-width: 800px;">
                 <h3 style="margin:0 0 12px 0">Notifications</h3>
                 <table>
                     <thead>
@@ -39,7 +70,7 @@
                 </table>
             </div>
 
-            <div class="card" style="flex: 1;">
+            <div class="card" style="flex: 1; min-width: 1000px;">
                 <h3 style="margin:0 0 12px 0">Scheduled Batch Operations</h3>
                 <table>
                     <thead>

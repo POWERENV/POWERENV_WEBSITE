@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href=".\media\imgs\POWERENV_LOGO_ICONONLY_TRANSPARENT.png" />
     <title>POWERENV — Dashboard</title>
   </head>
-  <body onload="switchSection('overview.html', event)">
+  <body>
     <div class="app">
       <div id="fullScreenLoadingZone" class="modalZone">
         <i class="fa-solid fa-spinner fa-spin fa-7x" style="color: var(--accent1);"></i>
@@ -106,23 +106,22 @@
 
           <div style="margin-top:8px"></div>
 
-          <div class="nav-item active" id="nav-overview" data-view="overview" onclick="switchSection('overview.html', event)">
-            <!-- CPU icon -->
+          <div id="nav-overview" class="nav-item active" data-view="overview">
             <i class="fa-solid fa-hexagon-nodes fa-xl"></i>
             <div>Dashboard</div>
           </div>
 
-          <div id="_hardware_link" class="nav-item" data-view="hardware" onclick="openHardwareSection(event)">
+          <div id="_hardware_link" class="nav-item" data-view="hardware">
             <i class="fa-solid fa-server fa-xl"></i>
             <div>Hardware</div>
           </div>
 
-          <div class="nav-item" data-view="tasks" onclick="openEventsSection(event)">
+          <div id="_events_and_logging_link" class="nav-item" data-view="tasks">
             <i class="fa-solid fa-list-check fa-xl"></i>
             <div>Events & Logging</div>
           </div>
 
-          <div class="nav-item" data-view="power" onclick="switchSection('power.html', event)">
+          <div id="_power_link" class="nav-item" data-view="power">
             <i class="fa-solid fa-power-off fa-xl"></i>
             <div>Power</div>
           </div>
@@ -140,6 +139,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
-    <script src="js/DATA_RETRIEVAL/PNODE/pnode_data_display_script.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/script_module_aggregation.js" type="module"></script>
   </body>
 </html>

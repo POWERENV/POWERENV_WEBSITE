@@ -808,6 +808,18 @@ th {
     color: #b33939;
 }
 
+.viewSwitchButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    gap: 0px;
+}
+
+#ppoolOperationViewSwitchButton {
+    margin-top: 20px;
+}
+
 .sideOutlineButton {
     padding: 10px 12px;
     border: 1px solid var(--accent);
@@ -816,8 +828,6 @@ th {
     font-weight: 500;
     cursor: pointer;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 .sbActive {
@@ -831,10 +841,23 @@ th {
     border-right-width: 1px;
 }
 
+.middleSide {
+    border-left-width: 1px;
+}
+
 .rightSide {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-left-width: 1px;
+}
+
+#globalEventsViewSwitchButton {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+#eventDistributionViewCanvas {
+    width: 100%;
 }
 
 #_pnodeErrorLogs tr:hover {
