@@ -2,6 +2,9 @@ import * as genericScript from "../scripting.js";
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as userDataRetrieval from "./../USER_LOGIC/user_data_retrieval_script.js"
 
+let globalEventsDistributionGraphInstance = null;
+let globalEventsCadenceStatsGraphInstance = null;
+
 export async function openEventsSection(event) {
     genericScript.switchSection('tasks.html', event);
     const globalEventsInfo = await userDataRetrieval.getUserGlobalEventsData();
@@ -9,7 +12,7 @@ export async function openEventsSection(event) {
     const eventTypesDistribution = globalEventsInfo.globalEventsDistribution;
     const eventCadenceStats = globalEventsInfo.globalEventsCadenceStats;
 
-    assingGlobalApplicationEventsEventListeners();
+    assignGlobalApplicationEventsEventListeners();
     displayGlobalEventsActivity(activityData);
     displayGlobalEventsDistributionGraph(eventTypesDistribution);
     displayGlobalEventsCadenceStatsGraph(eventCadenceStats);
@@ -65,10 +68,10 @@ function displayGlobalEventsActivity(recentActivityData) {
 function displayGlobalEventsDistributionGraph(eventTypesDistribution) {
     const eventDistributionChartCanvas2DContext = document.getElementById('eventDistributionViewCanvas').getContext('2d');
     
-    new Chart(eventDistributionChartCanvas2DContext, {
+    globalEventsDistributionGraphInstance = new Chart(eventDistributionChartCanvas2DContext, {
         type: 'bar',
         data: {
-            labels: ['INFORMATIONAL', 'WARNING', 'HIGH IMPACT', 'CRITICAL'],
+            labels: [`INFORMATIONAL (${eventTypesDistribution.informationalEventsCount})`, `WARNING (${eventTypesDistribution.warningEventsCount})`, `HIGH IMPACT (${eventTypesDistribution.highImpactEventsCount})`, `CRITICAL (${eventTypesDistribution.criticalEventsCount})`],
             datasets: [{
                 label: 'EVENT COUNT',
                 data: [
@@ -95,7 +98,7 @@ function displayGlobalEventsDistributionGraph(eventTypesDistribution) {
     });
 }
 
-function assingGlobalApplicationEventsEventListeners() { 
+function assignGlobalApplicationEventsEventListeners() { 
     document.getElementById("_eventLogsBTN").addEventListener("click", () => {
         document.getElementById("eventLogsView").style.display = "block";
         document.getElementById("_eventLogsBTN").classList.add("sbActive");
@@ -109,22 +112,56 @@ function assingGlobalApplicationEventsEventListeners() {
         document.getElementById("eventDistributionView").style.display = "block";
         document.getElementById("_eventTypeDistributionBTN").classList.add("sbActive");
     });
+
+    document.getElementById("_30daysBTN").addEventListener("click", () => {
+        changeGlobalEventsCadenceGraphInterval(30);
+
+        document.getElementById("_30daysBTN").classList.add("sbActive");
+        document.getElementById("_7daysBTN").classList.remove("sbActive");
+        document.getElementById("_1dayBTN").classList.remove("sbActive");
+    });
+
+    document.getElementById("_7daysBTN").addEventListener("click", () => {
+        changeGlobalEventsCadenceGraphInterval(7);
+
+        document.getElementById("_30daysBTN").classList.remove("sbActive");
+        document.getElementById("_7daysBTN").classList.add("sbActive");
+        document.getElementById("_1dayBTN").classList.remove("sbActive");
+    });
+
+    document.getElementById("_1dayBTN").addEventListener("click", () => {
+        changeGlobalEventsCadenceGraphInterval(1);
+
+        document.getElementById("_30daysBTN").classList.remove("sbActive");
+        document.getElementById("_7daysBTN").classList.remove("sbActive");
+        document.getElementById("_1dayBTN").classList.add("sbActive");
+    });
 }
 
-function displayGlobalEventsCadenceStatsGraph(eventCadenceStats) {
+function displayGlobalEventsCadenceStatsGraph(eventCadenceStats, timeScaleUnit = "day") {
     const eventCadenceCanvas = document.getElementById('eventCadenceViewCanvas').getContext('2d');
 
     let DataSet = []
     let TimestampLabels = []
 
     for(let i = 0; i < eventCadenceStats.length; i++) {
-        TimestampLabels.push(eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0]);
+        let timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
+
+        switch(timeScaleUnit) {
+            case "day":
+                timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
+                break;
+            case "hour":
+                timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("T")[1].split(":")[0];
+                break;
+        }
+
+        TimestampLabels.push(timestampLabel);
+
         DataSet.push(eventCadenceStats[i].eventCadence);
     }
 
-    console.log(TimestampLabels);
-
-    new Chart(eventCadenceCanvas, {
+    globalEventsCadenceStatsGraphInstance = new Chart(eventCadenceCanvas, {
         type: 'line',
         data: {
             labels: TimestampLabels,
@@ -142,7 +179,7 @@ function displayGlobalEventsCadenceStatsGraph(eventCadenceStats) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: false,
+            animation: true,
             plugins: {
                 legend: {
                     display: false
@@ -157,4 +194,18 @@ function displayGlobalEventsCadenceStatsGraph(eventCadenceStats) {
             }
         }
     });
+}
+
+async function changeGlobalEventsCadenceGraphInterval(interval) {
+    if(globalEventsCadenceStatsGraphInstance != null) {
+        globalEventsCadenceStatsGraphInstance.destroy();
+        globalEventsCadenceStatsGraphInstance = null;
+    }
+
+    let timeScaleUnit = "day";
+
+    if(interval == 1) timeScaleUnit = "hour";
+
+    const globalEventsCadenceStats = await userDataRetrieval.getUserGlobalEventsCadenceStatsData(interval, timeScaleUnit);
+    displayGlobalEventsCadenceStatsGraph(globalEventsCadenceStats, timeScaleUnit);
 }
