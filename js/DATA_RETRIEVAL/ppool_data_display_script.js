@@ -246,13 +246,13 @@ function displayPPoolBatchOperationHistory(dashboardData)
     document.getElementById("_ppoolBatchOperationLogsCount").innerText = ppoolOperationLogsData.ppoolsBatchOperationHistory.length;
     for(let i = 0; i< ppoolOperationLogsData.ppoolsBatchOperationHistory.length; i++){
         document.getElementById("_ppoolBatchOperationLogs").innerHTML += `<tr>
-                            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationID}</td>
-                            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationCatName}</td>
-                            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationSourcePPoolName}</td>
-                            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationAction}</td>
-                            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationDateTime}</td>
-                            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationSourceUserName}</td>
-                        </tr>`;
+            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationID}</td>
+            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationCatName}</td>
+            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationSourcePPoolName}</td>
+            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationAction}</td>
+            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationDateTime}</td>
+            <td>${ppoolOperationLogsData.ppoolsBatchOperationHistory[i].batchOperationSourceUserName}</td>
+        </tr>`;
     }
 }
 

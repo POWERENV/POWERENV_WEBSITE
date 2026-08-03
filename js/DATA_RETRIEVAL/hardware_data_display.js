@@ -1,11 +1,16 @@
 import * as genericScript from "../scripting.js";
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
+import * as eventsAndLoggingDataDisplayScript from "./events_and_logging_data_display.js"
 
-export function openHardwareSection(event) {
+export async function openHardwareSection(event) {
     genericScript.switchSection('hardware.html', event);
-    displayRecentActivity();
-    pgridDataDisplayScript.displayPGridsList();
+    await displayRecentActivity();
+    await pgridDataDisplayScript.displayPGridsList();
+
+    document.getElementById("viewFullEventActivityButton").addEventListener("click", (e) => {
+        eventsAndLoggingDataDisplayScript.openEventsSection(e);
+    });
 }
 
 async function displayRecentActivity() {

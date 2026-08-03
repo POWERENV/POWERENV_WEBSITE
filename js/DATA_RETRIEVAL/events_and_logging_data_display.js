@@ -11,11 +11,15 @@ export async function openEventsSection(event) {
     const activityData = globalEventsInfo.notificationsListInfo;
     const eventTypesDistribution = globalEventsInfo.globalEventsDistribution;
     const eventCadenceStats = globalEventsInfo.globalEventsCadenceStats;
+    const notificationLogsData = globalEventsInfo.userNotifications;
+    const scheduledBatchOperationsData = globalEventsInfo.userScheduledBatchOperations;
 
     assignGlobalApplicationEventsEventListeners();
     displayGlobalEventsActivity(activityData);
     displayGlobalEventsDistributionGraph(eventTypesDistribution);
     displayGlobalEventsCadenceStatsGraph(eventCadenceStats);
+    displayNotificationLogsData(notificationLogsData);
+    displayScheduledBatchOperationsData(scheduledBatchOperationsData);
 }
 
 function displayGlobalEventsActivity(recentActivityData) {
@@ -80,9 +84,9 @@ function displayGlobalEventsDistributionGraph(eventTypesDistribution) {
                     eventTypesDistribution.highImpactEventsCount,
                     eventTypesDistribution.criticalEventsCount
                 ],
-                backgroundColor: '#b33939',
-                borderRadius: 5,
-                hoverBackgroundColor: '#c0362a'
+                backgroundColor: '#ff9f43',
+                borderRadius: 2,
+                hoverBackgroundColor: '#ff9f43aa'
             }]
         },
         options: {
@@ -92,6 +96,21 @@ function displayGlobalEventsDistributionGraph(eventTypesDistribution) {
             plugins: {
                 legend: {
                     display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: 'transparent'
+                    }
+                },
+                y: {
+                    grid: {
+                        color: '#2b2b2b'
+                    },
+                    ticks: {
+                        padding: 20
+                    },
                 }
             }
         }
@@ -130,7 +149,7 @@ function assignGlobalApplicationEventsEventListeners() {
     });
 
     document.getElementById("_1dayBTN").addEventListener("click", () => {
-        changeGlobalEventsCadenceGraphInterval(1);
+        changeGlobalEventsCadenceGraphInterval(0);
 
         document.getElementById("_30daysBTN").classList.remove("sbActive");
         document.getElementById("_7daysBTN").classList.remove("sbActive");
@@ -143,22 +162,25 @@ function displayGlobalEventsCadenceStatsGraph(eventCadenceStats, timeScaleUnit =
 
     let DataSet = []
     let TimestampLabels = []
+    const repeatCount = eventCadenceStats.length == 1 ? 2 : 1;
 
-    for(let i = 0; i < eventCadenceStats.length; i++) {
-        let timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
+    for(let k = 0; k < repeatCount; k++) {
+        for(let i = 0; i < eventCadenceStats.length; i++) {
+            let timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
 
-        switch(timeScaleUnit) {
-            case "day":
-                timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
-                break;
-            case "hour":
-                timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("T")[1].split(":")[0];
-                break;
+            switch(timeScaleUnit) {
+                case "day":
+                    timestampLabel = `${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0]}/${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[1]}/${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[0]}`;
+                    break;
+                case "hour":
+                    timestampLabel = `${eventCadenceStats[i].hourlyIntervalTimestamp.split("T")[1].split(":")[0]}h`;
+                    break;
+            }
+
+            TimestampLabels.push(timestampLabel);
+
+            DataSet.push(eventCadenceStats[i].eventCadence);
         }
-
-        TimestampLabels.push(timestampLabel);
-
-        DataSet.push(eventCadenceStats[i].eventCadence);
     }
 
     globalEventsCadenceStatsGraphInstance = new Chart(eventCadenceCanvas, {
@@ -188,9 +210,24 @@ function displayGlobalEventsCadenceStatsGraph(eventCadenceStats, timeScaleUnit =
             scales: {
                 x: {
                     ticks: {
-                        autoSkip: false
+                        autoSkip: false,
+                        color: 'transparent'
                     }
+                },
+                y: {
+                    grid: {
+                        color: '#2b2b2b'
+                    },
+                    ticks: {
+                        padding: 20,
+                        stepSize: 5
+                    },
                 }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false,
+                axis: 'x'
             }
         }
     });
@@ -204,8 +241,72 @@ async function changeGlobalEventsCadenceGraphInterval(interval) {
 
     let timeScaleUnit = "day";
 
-    if(interval == 1) timeScaleUnit = "hour";
+    if(interval == 0) timeScaleUnit = "hour";
 
     const globalEventsCadenceStats = await userDataRetrieval.getUserGlobalEventsCadenceStatsData(interval, timeScaleUnit);
     displayGlobalEventsCadenceStatsGraph(globalEventsCadenceStats, timeScaleUnit);
+}
+
+function displayNotificationLogsData(notificationLogsData) {
+    if(notificationLogsData.length > 0) {
+        document.getElementById("emptyNotificationLogsMessage").style.display = "none";
+    }
+
+    for(let i = 0; i < notificationLogsData.length; i++) {
+        let colorHEX = "";
+
+        switch(notificationLogsData[i].severityLevel) {
+            case "INFORMATIONAL":
+                colorHEX = "#2269c5"
+                break;
+            case "WARNING":
+                colorHEX = "#ffd166"
+                break;
+            case "HIGH IMPACT":
+                colorHEX = "#ff9f43"
+                break;
+            case "CRITICAL":
+                colorHEX = "#fb7185"
+                break;
+        }
+
+        let notificationResolvedTimestamp = notificationLogsData[i].notificationResolvedDatetime.replace("T", " ");
+        let notificationAcknowledgementTimestamp = notificationLogsData[i].notificationAcknowledgementDatetime.replace("T", " ");
+
+        if(notificationAcknowledgementTimestamp == "2001-01-01 00:00:00") {
+            notificationAcknowledgementTimestamp = "EVENT IS NOT ACKNOWLEDGED"
+        }
+
+        if(notificationResolvedTimestamp == "2001-01-01 00:00:00") {
+            notificationResolvedTimestamp = "EVENT IS NOT RESOLVED"
+        }
+
+        document.getElementById("NotificationLogsTableContent").innerHTML += `<tr>
+            <td>${notificationLogsData[i].notificationId}</td>
+            <td><span class="state-pill" style="background:${colorHEX}11;color:${colorHEX}">${notificationLogsData[i].severityLevel}</span></td>
+            <td>${notificationLogsData[i].title}</td>
+            <td>${notificationLogsData[i].description}</td>
+            <td>${notificationLogsData[i].triggeredAt.replace("T", " ")}</td>
+            <td>${notificationLogsData[i].notificationTargetUsername}</td>
+            <td>${notificationAcknowledgementTimestamp}</td>
+            <td>${notificationResolvedTimestamp}</td>
+        </tr>`;
+    }
+}
+
+function displayScheduledBatchOperationsData(scheduledBatchOperationsData) {
+    if(scheduledBatchOperationsData.length > 0) {
+        document.getElementById("emptyScheduledBatchOperationsMessage").style.display = "none";
+    }
+
+    for(let i = 0; i < scheduledBatchOperationsData.length; i++) {
+        document.getElementById("ScheduledBatchOperationsTableContent").innerHTML += `<tr>
+            <td>${scheduledBatchOperationsData[i].batchOperationID}</td>
+            <td>${scheduledBatchOperationsData[i].batchOperationCatName}</td>
+            <td>${scheduledBatchOperationsData[i].batchOperationSourcePPoolName}</td>
+            <td>${scheduledBatchOperationsData[i].batchOperationAction}</td>
+            <td>${scheduledBatchOperationsData[i].batchOperationDateTime}</td>
+            <td>${scheduledBatchOperationsData[i].batchOperationSourceUserName}</td>
+        </tr>`;
+    }
 }

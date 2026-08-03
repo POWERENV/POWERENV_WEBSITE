@@ -30,7 +30,7 @@
                     <p id="emptyGlobalEventsListMessage" style="text-align: center; padding: 20px; color: var(--warning);">EMPTY LIST</p>
                 </div>
                 
-                <div style="display: none; height: 300px; margin-bottom: 40px;" id="eventDistributionView">
+                <div style="display: none; height: 480px; margin-bottom: 40px;" id="eventDistributionView">
                     <h4>Event Type Distribution</h4>
                     <canvas id="eventDistributionViewCanvas"></canvas>
                 </div>
@@ -46,47 +46,51 @@
                         <button id="_1dayBTN" class="sideOutlineButton rightSide">1 Day</button>
                     </div>
                 </div>
-                <div style="max-height: 300px; margin-top: 50px; margin-bottom: 40px;" id="eventCadenceView">
+                <div style="height: 300px; margin-top: 50px; margin-bottom: 40px;" id="eventCadenceView">
                     <canvas id="eventCadenceViewCanvas"></canvas>
                 </div>
             </div>
 
             <div class="card" style="flex: 1; min-width: 800px;">
                 <h3 style="margin:0 0 12px 0">Notifications</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Event ID</th>
-                            <th>Severity Level</th>
-                            <th>Event Title</th>
-                            <th>Event Description</th>
-                            <th>Event Trigger Timestamp</th>
-                            <th>Event Target Username</th>
-                            <th>Event Acknowledgement Date</th>
-                            <th>Event Resolved Date</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div style="max-height: 500px; margin-bottom: 40px; overflow: auto;" id="eventLogsView">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Event ID</th>
+                                <th>Severity Level</th>
+                                <th>Event Title</th>
+                                <th>Event Description</th>
+                                <th>Event Trigger Timestamp</th>
+                                <th>Event Target Username</th>
+                                <th>Event Acknowledgement Date</th>
+                                <th>Event Resolved Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="NotificationLogsTableContent"></tbody>
+                    </table>
+                    <p id="emptyNotificationLogsMessage" style="text-align: center; padding: 20px; color: var(--warning);">EMPTY LIST</p>
+                </div>
             </div>
 
             <div class="card" style="flex: 1; min-width: 1000px;">
                 <h3 style="margin:0 0 12px 0">Scheduled Batch Operations</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Event ID</th>
-                            <th>Severity Level</th>
-                            <th>Event Title</th>
-                            <th>Event Description</th>
-                            <th>Event Trigger Timestamp</th>
-                            <th>Event Target Username</th>
-                            <th>Event Acknowledgement Date</th>
-                            <th>Event Resolved Date</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div style="max-height: 500px; margin-bottom: 40px; overflow: auto;" id="eventLogsView">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Batch Operation ID</th>
+                                <th>Category</th>
+                                <th>Source PPool</th>
+                                <th>Action Name</th>
+                                <th>Datetime</th>
+                                <th>Source Username</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ScheduledBatchOperationsTableContent"></tbody>
+                    </table>
+                    <p id="emptyScheduledBatchOperationsMessage" style="text-align: center; padding: 20px; color: var(--warning);">EMPTY LIST</p>
+                </div>
             </div>
         </div>
     </section>
