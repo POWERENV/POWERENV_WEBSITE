@@ -211,7 +211,7 @@ function displayGlobalEventsCadenceStatsGraph(eventCadenceStats, timeScaleUnit =
                 x: {
                     ticks: {
                         autoSkip: false,
-                        color: 'transparent'
+                        padding: 20
                     }
                 },
                 y: {

@@ -13,6 +13,7 @@
 import * as genericScript from "../../scripting.js"
 import * as fspCommunicationScript from  "../../fsp_communication_script.js"
 import * as osCommunicationScript from  "../../os_communication_script.js"
+import * as editorComponents from  "../editor_components.js"
 //import * as signalR from "https://cdn.jsdelivr.net/npm/@microsoft/signalr@7.0.5/dist/esm/signalr.js"
 //=========================================================================================
 //=========================================================================================
@@ -48,15 +49,9 @@ export async function openASMIWebConsole(dashboardData)
 {
     let loginResponse = await fspCommunicationScript.PNodeOpenASMISession(dashboardData.pnode_full_info.pnode_id);
 
-    document.getElementById("consoleCloseBTN").addEventListener("click", async () => {
+    editorComponents.showASMIConsoleBox(loginResponse, async () => {
         await closeASMIWebConsole(dashboardData);
-    });
-
-     genericScript.showASMIConsoleBox(loginResponse);
-    document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
-
-    genericScript.resetElementEventListeners("commandForm");
-    document.getElementById("commandForm").addEventListener("submit", async (e) => {
+    }, async (e) => {
         await ASMICommandInputSubmitEvent(e, dashboardData);
     });
 }
@@ -70,7 +65,6 @@ export async function openASMIWebConsole(dashboardData)
 export async function closeASMIWebConsole(dashboardData)
 {
     let logoutResponse = await fspCommunicationScript.PNodeCloseASMISession(dashboardData.pnode_full_info.pnode_id);
-    genericScript.hideASMIConsoleBox();
 }
 
 //=========================================================================================
@@ -84,7 +78,7 @@ export async function ASMICommandInputSubmitEvent(e, dashboardData)
     e.preventDefault();
 
     let ipt = document.getElementById("consoleModalBoxViewportInput").value;
-    let commandResponse = await fspCommunicationScript.PNodeSendASMICommand(dashboardData.pnode_full_info.pnodeSerialCOMPortId, ipt);
+    let commandResponse = await fspCommunicationScript.PNodeSendASMICommand(dashboardData.pnode_full_info.pnode_id, ipt);
     let ttyViewport = document.getElementById("consoleModalBoxConsoleViewport");
 
     commandResponse.commandResult = commandResponse.commandResult.replaceAll('\r\n\r', '\n');
@@ -103,17 +97,14 @@ export async function openOSCommandTerminal(dashboardData)
 {
     let loginResponse = await osCommunicationScript.PNodeOpenOSTerminalSession(dashboardData.pnode_full_info.pnode_id);
 
-    document.getElementById("consoleCloseBTN").addEventListener("click", async () => {
-        let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
-        genericScript.hideASMIConsoleBox();
-    });
-
-    genericScript.showOSConsoleBox(dashboardData);
-    document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
-
-    genericScript.resetElementEventListeners("commandForm");
-    document.getElementById("commandForm").addEventListener("submit", async (e) => {
+    editorComponents.showOSConsoleBox(dashboardData, async () => {
+        await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
+    }, async (e) => {
         await osCommandInputSubmitEvent(e, dashboardData);
+        if(ipt == "exit") {
+            await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
+            hideASMIConsoleBox();
+        }
     });
 
     telnetSessionID = Number(loginResponse);
@@ -153,11 +144,6 @@ export async function osCommandInputSubmitEvent(e, dashboardData)
     document.getElementById("consoleModalBoxViewportInput").value = "";
 
     document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
-
-    if(ipt == "exit"){
-        let logoutResponse = await osCommunicationScript.PNodeCloseOSTerminalSession(telnetSessionID);
-        genericScript.hideASMIConsoleBox();
-    }
 }
 
 export async function osTerminalContentRealTimeUpdate(dashboardData)

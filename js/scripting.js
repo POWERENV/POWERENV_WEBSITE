@@ -7,7 +7,7 @@ import * as userDataRetrieval from "./USER_LOGIC/user_data_retrieval_script.js"
 (async () => {    
     if(window.location.href.includes("index.html") || window.location.href[window.location.href.length - 1] == '/' || window.location.href[window.location.href.length - 1] == '\\') {
         const _whoami_ = await userAuth.whoami();
-        if(_whoami_.statusMessage == "User is authenticated."){
+        if(_whoami_.statusMessage == "User is authenticated.") {
             document.getElementById("usernameSpan").innerText = _whoami_.packetData.username.toUpperCase();
             document.getElementById("userEmail").innerText = _whoami_.packetData.email.toUpperCase();
 
@@ -151,54 +151,6 @@ export function toggle2SideBTN(_btnList, _clickedBTNID)
 
 //#region ModalBoxes
 
-/*function showErrorMessage(errorMessage)
-{
-    document.getElementById("modalBoxZone").style.display = "flex";
-    document.getElementById("errorModalBox").style.display = "flex";
-    document.getElementById("errorModalBoxContentMessage").innerText = errorMessage;
-}*/
-
-export function hideErrorMessage()
-{
-    document.getElementById("errorModalBox").style.display = "none";
-    document.getElementById("modalBoxZone").style.display = "none";
-}
-
-export function showASMIConsoleBox(loginResponse)
-{
-    loginResponse = loginResponse.replaceAll('\r\n\r', '\n');
-    document.getElementById("modalBoxZone").style.display = "flex";
-    document.getElementById("consoleModalBox").style.display = "flex";
-    document.getElementById("modalBoxHeaderText").innerText = "PNODE ASMI LIVE WEB CONSOLE";
-    document.getElementById("consoleModalBoxViewportContent").innerText = loginResponse;
-}
-
-export function showOSConsoleBox(dashboardData)
-{
-    document.getElementById("modalBoxZone").style.display = "flex";
-    document.getElementById("consoleModalBox").style.display = "flex";
-    document.getElementById("modalBoxHeaderText").innerText = "PNODE OS LIVE WEB CONSOLE";
-    document.getElementById("consoleModalBoxViewportContent").innerText = "#";
-}
-
-export function hideASMIConsoleBox()
-{
-    document.getElementById("consoleModalBox").style.display = "none";
-    document.getElementById("modalBoxZone").style.display = "none";
-}
-
-export function clearConsole()
-{
-    document.getElementById("consoleModalBoxViewportContent").innerText = "Console was cleared!\n";
-}
-
-export function closeEditBox()
-{
-    document.getElementById("editBoxZone").style.display = "none";
-    if(document.getElementById('editBoxIPAddressTypeDropdownList') != (undefined && null)) document.getElementById('editBoxIPAddressTypeDropdownList').style.display = 'none';
-    document.getElementById("editBoxCloseBTN").removeEventListener("click", closeEditBox);
-}
-
 export function disableButton(buttonID){
     document.getElementById(buttonID).disabled = true;
     document.getElementById(buttonID).style.opacity = '70%';
@@ -232,19 +184,10 @@ export function openSettings(){
 
 if (typeof window !== "undefined") {
     window.switchSection = switchSection;
-    window.clearConsole = clearConsole;
     window.openSettings = openSettings;
     window.performAction = performAction;
     window.performPower = performPower;
     window.addHardware = addHardware;
-    window.toggle2SideBTN = toggle2SideBTN;
-    window.hideErrorMessage = hideErrorMessage;
-    window.showASMIConsoleBox = showASMIConsoleBox;
-    window.showOSConsoleBox = showOSConsoleBox;
-    window.hideASMIConsoleBox = hideASMIConsoleBox;
-    window.closeEditBox = closeEditBox;
-    window.disableButton = disableButton;
-    window.resetElementEventListeners = resetElementEventListeners;
 }
 
 const pageToSidebarTabMap = new Map([

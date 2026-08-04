@@ -21,7 +21,7 @@ export class messageModalBox {
      * @param {String} messageBoxHeader Text to be shown in the message box header.
      * @param {String} messageBoxContent Text to be shown in the messange box content area.
      */
-    constructor (messageBoxHeader, messageBoxContent){
+    constructor (messageBoxHeader, messageBoxContent) {
         document.getElementById("modalBoxZone").style.display = "flex";
         document.getElementById('messageModalBox').style.display = 'flex';
         document.getElementById("messageModalBoxContentMessage").innerHTML = messageBoxContent;
@@ -99,10 +99,108 @@ export function showSuccessMessage(message) {
 
 //=========================================================================================
 /**
+ * This class represents a console modal box.
+*/
+//=========================================================================================
+export class consoleModalBox {
+    actionButtons;
+
+    /**
+     * messageModalBox class constructor - appends all the main components related the modal box.
+     * @param {String} messageBoxHeader Text to be shown in the message box header.
+     */
+    constructor (messageBoxHeader, loginResponse, closeConsoleAction, commandSubmitAction) {
+        loginResponse = loginResponse.replaceAll('\r\n\r', '\n');
+        document.getElementById("modalBoxZone").style.display = "flex";
+        document.getElementById("consoleModalBox").style.display = "flex";
+        document.getElementById("modalBoxHeaderText").innerText = messageBoxHeader;
+        document.getElementById("consoleModalBoxViewportContent").innerText = loginResponse;
+
+        genericScript.resetElementEventListeners("consoleCloseBTN");
+        genericScript.resetElementEventListeners("consoleClearBTN");
+        genericScript.resetElementEventListeners("commandForm");
+
+        document.getElementById("consoleCloseBTN").addEventListener("click", closeConsoleAction);
+        document.getElementById("consoleClearBTN").addEventListener("click", this.clearConsole);
+        document.getElementById("commandForm").addEventListener("submit", commandSubmitAction);
+
+        document.getElementById("consoleModalBoxConsoleViewport").scrollTo(0, document.getElementById("consoleModalBoxConsoleViewport").scrollHeight);
+    }
+
+    clearConsole() {
+        document.getElementById("consoleModalBoxViewportContent").innerText = "Console was cleared!\n";
+    }
+
+    /**
+     * This method hides the message modal box and its background overlay, effectively closing the modal.
+     */
+    hideMessageBox() {
+        document.getElementById("consoleModalBox").style.display = "none";
+        document.getElementById("modalBoxZone").style.display = "none";
+    }
+}
+
+export function showASMIConsoleBox(loginResponse, additionalCloseAction = null, commandSubmitAction)
+{
+    const _consoleModalBox = new consoleModalBox('PNODE ASMI LIVE WEB CONSOLE', loginResponse, () => {
+        hideASMIConsoleBox();
+        additionalCloseAction != null ? additionalCloseAction() : null;
+    }, commandSubmitAction);
+}
+
+export function showOSConsoleBox(dashboardData, additionalCloseAction = null, commandSubmitAction)
+{
+    const _consoleModalBox = new consoleModalBox('PNODE OS LIVE WEB CONSOLE', '#', () => {
+        hideASMIConsoleBox();
+        additionalCloseAction != null ? additionalCloseAction() : null;
+    }, commandSubmitAction);
+}
+
+export function hideASMIConsoleBox()
+{
+    document.getElementById("consoleModalBox").style.display = "none";
+    document.getElementById("modalBoxZone").style.display = "none";
+}
+
+//=========================================================================================
+/**
+ * This class represents a centered settings modal box.
+*/
+//=========================================================================================
+export class centeredSettingsModalBox {
+    actionButtons;
+
+    /**
+     * messageModalBox class constructor - appends all the main components related the modal box.
+     * @param {String} messageBoxHeader Text to be shown in the message box header.
+     */
+    constructor (_headerText, _contentHTML, settingsSaveAction) {
+        document.getElementById("modalBoxZone").style.display = "flex";
+        document.getElementById("centeredSettingsModalBox").style.display = "flex";
+        document.getElementById("settingsModalBoxHeaderText").innerText = _headerText;
+        document.getElementById("centeredSettingsModalBoxContent").innerHTML = _contentHTML;
+
+        genericScript.resetElementEventListeners("settingsSaveBTN");
+
+        document.getElementById("settingsSaveBTN").addEventListener("click", settingsSaveAction);
+        document.getElementById("settingsCloseBTN").addEventListener("click", this.hideSettingsBox);
+    }
+
+    /**
+     * This method hides the message modal box and its background overlay, effectively closing the modal.
+     */
+    hideSettingsBox() {
+        document.getElementById("centeredSettingsModalBox").style.display = "none";
+        document.getElementById("modalBoxZone").style.display = "none";
+    }
+}
+
+//=========================================================================================
+/**
  * This class represents a side-panel editor wizzard, enabling the user to edit multiple properties of several domains of the machine systems.
 */
 //=========================================================================================
-export class configurationEditWizzard {
+export class sideConfigurationEditWizzard {
     inputFieldIDs;
     textAreaIDs;
     dropdownFieldIDs;
@@ -127,7 +225,7 @@ export class configurationEditWizzard {
     }
     
     /**
-     * configurationEditWizzard class constructor - Makes initial setup to all components related with the editor wizzard, making it ready for the user to use it.
+     * sideConfigurationEditWizzard class constructor - Makes initial setup to all components related with the editor wizzard, making it ready for the user to use it.
      * @param {String} wizzardHeadding Text to be shown in the edit wizzard header.
      * @param {Object} dashboardData The dashboardData object related to the current machine, used to fill the editor with the current values of the properties to be edited.
      * @param {Function|null} changesSaveOperation A function that will be executed when the user clicks the save button, responsible for processing the changes made by the user and send them to the server API. If null, the save button will be hidden, making the wizzard only a viewer.
@@ -143,7 +241,7 @@ export class configurationEditWizzard {
         this.textAreaIDs = [];
         this.dropdownFieldIDs = [];
         
-        document.getElementById("editBoxCloseBTN").addEventListener("click", genericScript.closeEditBox);
+        document.getElementById("editBoxCloseBTN").addEventListener("click", closeEditBox);
         genericScript.resetElementEventListeners("editBoxSaveBTN");
 
         if(changesSaveOperation != null) {
@@ -153,7 +251,7 @@ export class configurationEditWizzard {
                 changesSaveOperation(e, this);
                 document.getElementById("fullScreenLoadingZone").style.display = "flex";
                 genericScript.resetElementEventListeners("editBoxSaveBTN");
-                genericScript.closeEditBox();
+                closeEditBox();
             });
         } else {
             document.getElementById("editBoxSaveBTN").style.display = 'none';
@@ -242,6 +340,13 @@ export class configurationEditWizzard {
             }
         });
     }
+}
+
+export function closeEditBox()
+{
+    document.getElementById("editBoxZone").style.display = "none";
+    if(document.getElementById('editBoxIPAddressTypeDropdownList') != (undefined && null)) document.getElementById('editBoxIPAddressTypeDropdownList').style.display = 'none';
+    document.getElementById("editBoxCloseBTN").removeEventListener("click", closeEditBox);
 }
 
 //=========================================================================================

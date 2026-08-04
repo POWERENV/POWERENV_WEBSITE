@@ -2,6 +2,9 @@ import * as genericScript from "../scripting.js"
 import * as mainScript from "./data_handling_main_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
+import * as editorComponents from  "./editor_components.js"
+import * as pgridDataEditScript from './pgrid_data_edit_script.js';
+import * as hardwareDataDisplay from './hardware_data_display.js'
 
 // #region PGRIDS
 
@@ -42,7 +45,39 @@ export async function displayPGridDashboardData(pgridID, e, generateWholeContent
         await genericScript.switchCustomSection('pgrid_mgmt.html', 'content', 'content');
         document.getElementById('content').scrollTop = 0;
     }
+
+    const centeredSettingsModalBoxContent = `<div>
+        <h2>General</h2>
+        <div class="centeredSettingsModalBoxSectionContent">
+            <div class="centeredSettingsModalBoxSectionItem">
+                <h3>PGrid Name:</h3>
+                <input type="text" value="${dashboardData.pgridFullInfo.pgrid_name}" spellcheck="false" />
+            </div>
+            <div class="centeredSettingsModalBoxSectionItem">
+                <h3 style="height: 100px;">PGrid Readme Text:</h3>
+                <textarea spellcheck="false">${dashboardData.pgridFullInfo.pgrid_readme_text}</textarea>
+            </div>
+        </div>
+    </div>
     
+    <div style="margin-top: 300px;">
+        <h2 style="color: var(--accent);">Danger Zone</h2>
+        <div class="centeredSettingsModalBoxSectionContent">
+            <div class="centeredSettingsModalBoxSectionItem" style="width: 20%;">
+                <button id="pgridDeleteBTN">DELETE PGRID</button>
+            </div>
+        </div>
+    </div>`;
+
+    document.getElementById("editPGridSettingsBTN").addEventListener("click", () => {
+        const PGridSettingsModalBox = new editorComponents.centeredSettingsModalBox("Edit PGrid Settings", centeredSettingsModalBoxContent, () => {});
+
+        document.getElementById("pgridDeleteBTN").addEventListener("click", async (event) => {
+            await pgridDataEditScript.DeletePGrid(dashboardData.pgridFullInfo.pgrid_id.substring(3));
+            PGridSettingsModalBox.hideSettingsBox();
+            hardwareDataDisplay.openHardwareSection(event);
+        });
+    });
 
     displayPGridMainInfo(dashboardData, e);
 

@@ -2,6 +2,8 @@ import * as genericScript from "../scripting.js";
 import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as eventsAndLoggingDataDisplayScript from "./events_and_logging_data_display.js"
+import * as pgridDataEditScript from './pgrid_data_edit_script.js';
+import * as editorComponents from '../DATA_RETRIEVAL/editor_components.js';
 
 export async function openHardwareSection(event) {
     genericScript.switchSection('hardware.html', event);
@@ -10,6 +12,10 @@ export async function openHardwareSection(event) {
 
     document.getElementById("viewFullEventActivityButton").addEventListener("click", (e) => {
         eventsAndLoggingDataDisplayScript.openEventsSection(e);
+    });
+
+    document.getElementById("createPGridButton").addEventListener("click", () => {
+        createNewPGrid();
     });
 }
 
@@ -49,4 +55,17 @@ async function displayRecentActivity() {
             <td>${recentActivityData[i].notificationResolvedTimestamp.replace("T", " ")}</td>
         </tr>`;
     }
+}
+
+function createNewPGrid() {
+    const pgridCreationWizzardSubmitAction = async () => {
+        const pgridName = document.getElementById("pgridNameField").value;
+        const pgridReadmeTXT = document.getElementById("pgridReadmeTextField").value;
+        await pgridDataEditScript.CreateNewPGrid(pgridName, pgridReadmeTXT);
+        openHardwareSection(null);
+    };
+    const pgridCreationWizzard = new editorComponents.sideConfigurationEditWizzard("PGrid Creation Wizzard", "", pgridCreationWizzardSubmitAction);
+
+    pgridCreationWizzard.insertInputField("pgridNameField", "PGrid Name", "Sample PGrid", "");
+    pgridCreationWizzard.insertTextArea("pgridReadmeTextField", "PGrid Readme Text", "Sample PGrid Readme", "", "200px");
 }

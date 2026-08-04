@@ -63,7 +63,7 @@ export async function displayPPoolDashboardData(pgridID, ppoolID, e)
             const newReadmeTXT = document.getElementById('readmeTextTextArea').value;
             ppoolDataEditScript.PPoolUpdateReadmeText(ppoolID, pgridID, newReadmeTXT);
         };
-        const readmeTextEditorBox = new editorComponents.configurationEditWizzard('Edit Readme Text', dashboardData, changesSaveOperation);
+        const readmeTextEditorBox = new editorComponents.sideConfigurationEditWizzard('Edit Readme Text', dashboardData, changesSaveOperation);
         readmeTextEditorBox.insertTextArea('readmeTextTextArea', 'Readme Text', 'Write Readme Text', dashboardData.ppoolFullInfo.ppool_readme_text, null);
     });
 

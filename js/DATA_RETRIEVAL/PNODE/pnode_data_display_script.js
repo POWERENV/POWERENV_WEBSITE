@@ -46,7 +46,7 @@ export async function displayPNodesDashboardData(_pnodeID, _ppoolID, _pgridID, e
             const newReadmeTXT = document.getElementById('readmeTextTextArea').value;
             fspCommunicationScript.PNodeUpdateReadmeText(_pnodeID, _ppoolID, _pgridID, newReadmeTXT);
         };
-        const readmeTextEditorBox = new pnodeEditors.configurationEditWizzard('Edit Readme Text', dashboardData, changesSaveOperation);
+        const readmeTextEditorBox = new pnodeEditors.sideConfigurationEditWizzard('Edit Readme Text', dashboardData, changesSaveOperation);
         readmeTextEditorBox.insertTextArea('readmeTextTextArea', 'Readme Text', 'Write Readme Text', dashboardData.pnode_full_info.pnode_readme_text, null);
     });
 
@@ -105,7 +105,7 @@ function displayPNodesFSPInfo(dashboardData)
 
 //=========================================================================================
 /**
- * This function opens a configurationEditWizzard side-panel for editing the pnode's ASMI local date and time.
+ * This function opens a sideConfigurationEditWizzard side-panel for editing the pnode's ASMI local date and time.
  * @param {Object} dashboardData The object containing all data retrieved for the pnode, used to fill in the displayed information.
 */
 //=========================================================================================
@@ -116,7 +116,7 @@ function editPNodeASMIDateTimeEvent(dashboardData)
         fspCommunicationScript.PNodeUpdateFSPLocalDateTime(dashboardData.pnode_full_info.pnode_id, newLocalDateTime, dashboardData.pnode_full_info.pnode_parent_ppool_id, dashboardData.pnode_full_info.pnode_parent_pgrid_id);
     };
 
-    let fspLocalDateTimeEditorBox = new pnodeEditors.configurationEditWizzard('Edit FSP ASMI Local DateTime', dashboardData, changesSaveOperation);
+    let fspLocalDateTimeEditorBox = new pnodeEditors.sideConfigurationEditWizzard('Edit FSP ASMI Local DateTime', dashboardData, changesSaveOperation);
     fspLocalDateTimeEditorBox.insertInputField('editBoxLocalDateTimeInput', 'FSP ASMI LOCAL DATETIME (YYYY-MM-DD HH:MM:SS):', 'YYYY-MM-DD HH:MM:SS', dashboardData.pnodeFSPInfo.pnode_fsp_asmi_local_datetime);
 }
 
@@ -213,7 +213,7 @@ function displayPNodesNetworkInterfacesInfo(dashboardData, _ppoolID, _pgridID)
                         }
                     };
                     
-                    let networkInterfaceCardEditWizzard = new pnodeEditors.configurationEditWizzard('Edit NIC Settings', dashboardData, changesSaveOperation);
+                    let networkInterfaceCardEditWizzard = new pnodeEditors.sideConfigurationEditWizzard('Edit NIC Settings', dashboardData, changesSaveOperation);
                     networkInterfaceCardEditWizzard.insertDropdownField('editBoxIPAddressTypeBTN', 'editBoxIPAddressTypeDropdownList', 'Select NIC IP Address Type:', ['STATIC', 'DYNAMIC'], dashboardData.pnodeNICInfo[i].pnode_nic_ip_address_type.toUpperCase(), [ipAddressTypeDPDClickAction, {instance : networkInterfaceCardEditWizzard}]);
                     networkInterfaceCardEditWizzard.insertInputField('editBoxHostnameInput', 'NIC HOSTNAME:', '<empty>', dashboardData.pnodeNICInfo[i].pnode_nic_hostname);
                     networkInterfaceCardEditWizzard.insertInputField('editBoxDomainNameInput', 'NIC DOMAIN NAME:', '<empty>', dashboardData.pnodeNICInfo[i].pnode_nic_domain_name);
@@ -261,7 +261,7 @@ export function displayPNodesETHAccessPoliciesInfo(dashboardData, _ppoolID, _pgr
         }
     }
 
-    //Adding click event for creating new access policies, using the configurationEditWizzard
+    //Adding click event for creating new access policies, using the sideConfigurationEditWizzard
     document.getElementById("_pnodeAddAccessPolicy").addEventListener("click", () => {
         const changesSaveOperation = (e, instance) => {
             const pnodeCOMID = dashboardData.pnode_full_info.pnode_id;
@@ -269,7 +269,7 @@ export function displayPNodesETHAccessPoliciesInfo(dashboardData, _ppoolID, _pgr
             fspCommunicationScript.PNodeInsertETHAccessPolicy(pnodeCOMID, instance.struct_inputFields.editBoxIPAddressInput, instance.struct_dropdownFields.editBoxIPAddressTypeBTN, policyIndex);
         };
 
-        let ethAccessPolicyWizard = new pnodeEditors.configurationEditWizzard('Add Network Access Policy', dashboardData, changesSaveOperation);
+        let ethAccessPolicyWizard = new pnodeEditors.sideConfigurationEditWizzard('Add Network Access Policy', dashboardData, changesSaveOperation);
         
         ethAccessPolicyWizard.insertInputField('editBoxIPAddressInput', 'Enter Target IP Address:', 'Enter Target IP Address', '');
         ethAccessPolicyWizard.insertDropdownField('editBoxIPAddressTypeBTN', 'editBoxIPAddressTypeDropdownList', 'Select Policy Type:', ['ALLOW', 'DENY']);
@@ -399,7 +399,7 @@ function displayPNodesErrorLogs(dashboardData)
         requestAnimationFrame(() => {
             const currentLine = document.getElementById(`ErrorLogRow-${i}`);
             currentLine.addEventListener('click', () => {
-                const errorLogDetailsSidePanel = new pnodeEditors.configurationEditWizzard('Error Log Details', dashboardData, null);
+                const errorLogDetailsSidePanel = new pnodeEditors.sideConfigurationEditWizzard('Error Log Details', dashboardData, null);
                 errorLogDetailsSidePanel.insertInputField('errorLogID', 'ID:', '<empty>', currentLine.children[0].innerHTML);
                 errorLogDetailsSidePanel.insertInputField('errorLogDateTime', 'DateTime:', '<empty>', currentLine.children[1].innerHTML);
                 errorLogDetailsSidePanel.insertInputField('errorLogDriverName', 'Driver Name:', '<empty>', currentLine.children[2].innerHTML);

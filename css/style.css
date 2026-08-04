@@ -270,6 +270,61 @@ body {
     padding-left: 10px;
 }
 
+.centeredSettingsModalBoxSectionContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.centeredSettingsModalBoxSectionItem {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background-color: #222222;
+}
+
+.centeredSettingsModalBoxSectionItem h3 {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    padding-left: 20px;
+    margin: 0px;
+    width: 300px;
+    height: 70px;
+}
+
+.centeredSettingsModalBoxSectionItem input, .centeredSettingsModalBoxSectionItem textarea {
+    width: 100%;
+    color: white;
+    border: 0px;
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+    font-size: large;
+    background-color: transparent;
+}
+
+.centeredSettingsModalBoxSectionItem input:focus, .centeredSettingsModalBoxSectionItem textarea:focus {
+    outline: none;
+    background-color: #3b3b3b;
+    border-bottom: 1px solid var(--accent);
+}
+
+.centeredSettingsModalBoxSectionItem button {
+    width: 100%;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    padding: 20px;
+    font-size: large;
+    font-weight: bold;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.centeredSettingsModalBoxSectionItem button:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
 #editBoxZone{
     display: none;
     position: fixed;

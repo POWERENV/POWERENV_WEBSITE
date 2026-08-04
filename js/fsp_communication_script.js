@@ -183,7 +183,7 @@ export function PNodeCloseASMISession(pnodeCOMID)
 export function PNodeSendASMICommand(pnodeCOMID, command)
 {
     return new Promise((resolve, reject) => {
-        const name = fetch(`${config.baseAPIURL}/psystems/fsp/${pnodeCOMID}/sendASMICommand`, {
+        const name = fetch(`${config.baseAPIURL}/psystems/fsp/pnode${pnodeCOMID}/sendASMICommand`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

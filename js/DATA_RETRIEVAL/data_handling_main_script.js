@@ -115,8 +115,8 @@ function toggleTreeBreadcrumb(id, currTreeNode)
 function toggleTreeBreadcrumbChildrenVisibility(currTreeNode, _visibility)
 {
     document.getElementById(`${currTreeNode.objName}-Chevron`).classList = _visibility == "flex" ? "fa-solid fa-chevron-down" : "fa-solid fa-chevron-right";
-    for(let i = 0; i < currTreeNode.children.length; i++){
-        document.getElementById(currTreeNode.children[i].objName).style = `display: ${_visibility};`;        
+    for(let i = 0; i < currTreeNode.children.length; i++) {
+        document.getElementById(currTreeNode.children[i].objName).style = `display: ${_visibility};`;
 
         if(currTreeNode.children[i].children.length != 0 && _visibility == "none"){
             toggleTreeBreadcrumbChildrenVisibility(currTreeNode.children[i], _visibility);
