@@ -4,6 +4,7 @@ import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
 import * as editorComponents from  "./editor_components.js"
 import * as pgridDataEditScript from './pgrid_data_edit_script.js';
+import * as ppoolDataEditScript from "./ppool_data_edit_script.js"
 import * as hardwareDataDisplay from './hardware_data_display.js'
 
 // #region PGRIDS
@@ -31,7 +32,6 @@ export async function displayPGridsList()
             });
         });
     }
-    //Finish this method: list pgrids as rects on the tiled-grid in the hardware section
 }
 
 export async function displayPGridDashboardData(pgridID, e, generateWholeContent)
@@ -91,6 +91,10 @@ export async function displayPGridDashboardData(pgridID, e, generateWholeContent
     displayPGridPPoolsListInfo(dashboardData);
     if(generateWholeContent == true) mainScript.displayPGridTreeStructureInfo(dashboardData);
     mainScript.updateActiveTreeNode(dashboardData.pgridFullInfo.pgrid_name);
+
+    document.getElementById("pgridCreatePPoolBTN").addEventListener("click", () => {
+        createNewPPool(dashboardData, e);
+    });
 }
 
 function displayPGridMainInfo(dashboardData, e)
@@ -222,6 +226,22 @@ function displayPGridPPoolsListInfo(dashboardData)
             });
         });
     }
+}
+
+function createNewPPool(dashboardData, event) {
+    const ppoolCreationWizzardSubmitAction = async () => {
+        const ppoolName = document.getElementById("ppoolNameField").value;
+        const ppoolTag = document.getElementById("ppoolTagField").value;
+        const ppoolReadmeTXT = document.getElementById("ppoolReadmeTextField").value;
+        await ppoolDataEditScript.CreateNewPPool(ppoolName, ppoolTag, ppoolReadmeTXT, dashboardData.pgridFullInfo.pgrid_id.substring(3));
+        displayPGridDashboardData(dashboardData.pgridFullInfo.pgrid_id.substring(3), event, true);
+    };
+
+    const ppoolCreationWizzard = new editorComponents.sideConfigurationEditWizzard("PPool Creation Wizzard", "", ppoolCreationWizzardSubmitAction);
+
+    ppoolCreationWizzard.insertInputField("ppoolNameField", "PPool Name", "Sample PPool", "");
+    ppoolCreationWizzard.insertInputField("ppoolTagField", "PPool Tag", "Sample Tag", "");
+    ppoolCreationWizzard.insertTextArea("ppoolReadmeTextField", "PPool Readme Text", "Sample PPool Readme", "", "200px");
 }
 
 // #endregion PGRIDS

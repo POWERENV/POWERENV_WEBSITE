@@ -39,6 +39,40 @@ export async function displayPPoolDashboardData(pgridID, ppoolID, e)
     await genericScript.switchCustomSection('ppool_mgmt.html', 'content', 'content');
     document.getElementById('content').scrollTop = 0;
 
+    const centeredSettingsModalBoxContent = `<div>
+        <h2>General</h2>
+        <div class="centeredSettingsModalBoxSectionContent">
+            <div class="centeredSettingsModalBoxSectionItem">
+                <h3>PPool Name:</h3>
+                <input type="text" value="${dashboardData.ppoolFullInfo.ppool_name}" spellcheck="false" />
+            </div>
+            <div class="centeredSettingsModalBoxSectionItem">
+                <h3 style="height: 100px;">PPool Readme Text:</h3>
+                <textarea spellcheck="false">${dashboardData.ppoolFullInfo.ppool_readme_text}</textarea>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 300px;">
+        <h2 style="color: var(--accent);">Danger Zone</h2>
+        <div class="centeredSettingsModalBoxSectionContent">
+            <div class="centeredSettingsModalBoxSectionItem" style="width: 20%;">
+                <button id="ppoolDeleteBTN">DELETE PPOOL</button>
+            </div>
+        </div>
+    </div>`;
+
+    document.getElementById("editPPoolSettingsBTN").addEventListener("click", () => {
+        const PPoolSettingsModalBox = new editorComponents.centeredSettingsModalBox("Edit PPool Settings", centeredSettingsModalBoxContent, () => {});
+
+        document.getElementById("ppoolDeleteBTN").addEventListener("click", async (event) => {
+            console.log(dashboardData.ppoolFullInfo.ppool_id);
+            await ppoolDataEditScript.DeletePPool(dashboardData.ppoolFullInfo.ppool_id);
+            PPoolSettingsModalBox.hideSettingsBox();
+            await pgridDataDisplayScript.displayPGridDashboardData(pgridID, e, true);
+        });
+    });
+
     displayPPoolMainInfo(dashboardData, pgridID, e);
     genericScript.resetElementEventListeners('_singleOperationBTN');
 

@@ -10,23 +10,25 @@ import * as config from "../../../config.js"
 //=========================================================================================
 
 export async function CreateNewPGrid(pgridName, pgridReadmeTXT) {
+    const requestBody = {
+        pgrid_id: "string",
+        pgrid_name: pgridName,
+        pgrid_creation_datetime: "string",
+        pgrid_last_update_datetime: "string",
+        pgrid_owner: "string",
+        pgrid_readme_text: pgridReadmeTXT,
+        pgrid_ppools_count: 0,
+        pgrid_pnodes_count: 0,
+        pgrid_active_pnodes_count: 0
+    };
+
     return new Promise((resolve, reject) => {
         const name = fetch(`${config.baseAPIURL}/psystems/backend/data/createNewPGrid`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: `{
-                "pgrid_id": "string",
-                "pgrid_name": "${pgridName}",
-                "pgrid_creation_datetime": "string",
-                "pgrid_last_update_datetime": "string",
-                "pgrid_owner": "string",
-                "pgrid_readme_text": "${pgridReadmeTXT}",
-                "pgrid_ppools_count": 0,
-                "pgrid_pnodes_count": 0,
-                "pgrid_active_pnodes_count": 0
-            }`
+            body: JSON.stringify(requestBody)
         }).then(res => {
             return res.text();
         } ).then(data => {
