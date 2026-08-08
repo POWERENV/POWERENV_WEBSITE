@@ -1,5 +1,5 @@
 import * as config from "../../../config.js";
-import * as pnodeEditors from "../DATA_RETRIEVAL/editor_components.js";
+import * as pnodeEditors from "../INFRASTRUCTURE_MONITORING_LOGIC/editor_components.js";
 
 export async function getUserNotificationsData(UserID) {
   return new Promise((resolve, reject) => {

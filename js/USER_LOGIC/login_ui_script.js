@@ -1,5 +1,5 @@
 import * as userAuth from './user_auth.js';
-import * as pnodeEditors from "../DATA_RETRIEVAL/editor_components.js";
+import * as pnodeEditors from "../INFRASTRUCTURE_MONITORING_LOGIC/editor_components.js";
 
 // Basic JS to mimic the behavior: toggle checkbox UI and handle submit
 (function(){

@@ -1,9 +1,9 @@
 import * as genericScript from "../scripting.js";
-import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
+import * as pgridDataDisplayScript from  "./PGRID/pgrid_data_display_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
 import * as eventsAndLoggingDataDisplayScript from "./events_and_logging_data_display.js"
-import * as pgridDataEditScript from './pgrid_data_edit_script.js';
-import * as editorComponents from '../DATA_RETRIEVAL/editor_components.js';
+import * as pgridDataEditScript from './PGRID/pgrid_data_edit_script.js';
+import * as editorComponents from './editor_components.js';
 
 export async function openHardwareSection(event) {
     genericScript.switchSection('hardware.html', event);

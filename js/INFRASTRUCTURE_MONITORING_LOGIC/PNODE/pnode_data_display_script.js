@@ -7,9 +7,9 @@ import * as mainScript from "../data_handling_main_script.js"
 import * as dataRetrievalScript from "../data_retrieval_script.js"
 import * as pnodeEventsScript from  "./pnode_events_script.js"
 import * as pnodeEditors from "../editor_components.js"
-import * as ppoolDataDisplayScript from  "../ppool_data_display_script.js"
-import * as fspCommunicationScript from  "../../fsp_communication_script.js"
-import * as osCommunicationScript from  "../../os_communication_script.js"
+import * as ppoolDataDisplayScript from  "../PPOOL/ppool_data_display_script.js"
+import * as fspCommunicationScript from  "../fsp_communication_script.js"
+import * as osCommunicationScript from  "../os_communication_script.js"
 
 //=========================================================================================
 //=========================================================================================
@@ -93,11 +93,11 @@ function displayPNodesMainInfo(dashboardData)
 //=========================================================================================
 function displayPNodesFSPInfo(dashboardData)
 {
-    document.getElementById("_pnodeFSPID").innerText = dashboardData.pnodeFSPInfo.pnode_fsp_id;
-    document.getElementById("_pnodeFSPVERSION").innerText = dashboardData.pnodeFSPInfo.pnode_fsp_asmi_version;
-    document.getElementById("_pnodeFSPUSERNAME").innerText = dashboardData.pnodeFSPInfo.pnode_fsp_asmi_username;
-    document.getElementById("_pnodeFSPPASSWORD").innerText = dashboardData.pnodeFSPInfo.pnode_fsp_asmi_password_hash;
-    document.getElementById("_pnodeFSPLocalDateTime").getElementsByTagName('span')[0].innerText = dashboardData.pnodeFSPInfo.pnode_fsp_asmi_local_datetime;
+    document.getElementById("_pnodeFSPID").innerText = dashboardData.pnodeFSPInfo.fspid;
+    document.getElementById("_pnodeFSPVERSION").innerText = dashboardData.pnodeFSPInfo.fspasmiUsername;
+    document.getElementById("_pnodeFSPUSERNAME").innerText = dashboardData.pnodeFSPInfo.fspasmiPasswordHash;
+    document.getElementById("_pnodeFSPPASSWORD").innerText = dashboardData.pnodeFSPInfo.fspasmiVersion;
+    document.getElementById("_pnodeFSPLocalDateTime").getElementsByTagName('span')[0].innerText = dashboardData.pnodeFSPInfo.fspasmiLocalTime;
     document.getElementById("_pnodeFSPLocalDateTime").getElementsByTagName('button')[0].addEventListener('click', () => {
         editPNodeASMIDateTimeEvent(dashboardData);
     });
@@ -117,7 +117,7 @@ function editPNodeASMIDateTimeEvent(dashboardData)
     };
 
     let fspLocalDateTimeEditorBox = new pnodeEditors.sideConfigurationEditWizzard('Edit FSP ASMI Local DateTime', dashboardData, changesSaveOperation);
-    fspLocalDateTimeEditorBox.insertInputField('editBoxLocalDateTimeInput', 'FSP ASMI LOCAL DATETIME (YYYY-MM-DD HH:MM:SS):', 'YYYY-MM-DD HH:MM:SS', dashboardData.pnodeFSPInfo.pnode_fsp_asmi_local_datetime);
+    fspLocalDateTimeEditorBox.insertInputField('editBoxLocalDateTimeInput', 'FSP ASMI LOCAL DATETIME (YYYY-MM-DD HH:MM:SS):', 'YYYY-MM-DD HH:MM:SS', dashboardData.pnodeFSPInfo.fspasmiLocalTime);
 }
 
 //=========================================================================================

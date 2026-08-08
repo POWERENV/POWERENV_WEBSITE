@@ -2,9 +2,9 @@
 //====================================Import statements====================================
 //=========================================================================================
 
-import * as pnodeDataDisplayScript from  "./DATA_RETRIEVAL/PNODE/pnode_data_display_script.js"
-import * as pnodeEditors from  "./DATA_RETRIEVAL/editor_components.js"
-import * as config from "../../config.js"
+import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
+import * as pnodeEditors from  "./editor_components.js"
+import * as config from "../../../config.js"
 
 //=========================================================================================
 //=========================================================================================

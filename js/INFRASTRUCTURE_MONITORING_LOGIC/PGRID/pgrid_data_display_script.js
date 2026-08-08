@@ -1,11 +1,11 @@
-import * as genericScript from "../scripting.js"
-import * as mainScript from "./data_handling_main_script.js"
-import * as dataRetrievalScript from "./data_retrieval_script.js"
-import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
-import * as editorComponents from  "./editor_components.js"
+import * as genericScript from "../../scripting.js"
+import * as mainScript from "../data_handling_main_script.js"
+import * as dataRetrievalScript from "../data_retrieval_script.js"
+import * as ppoolDataDisplayScript from  "../PPOOL/ppool_data_display_script.js"
+import * as editorComponents from  "../editor_components.js"
 import * as pgridDataEditScript from './pgrid_data_edit_script.js';
-import * as ppoolDataEditScript from "./ppool_data_edit_script.js"
-import * as hardwareDataDisplay from './hardware_data_display.js'
+import * as ppoolDataEditScript from "../PPOOL/ppool_data_edit_script.js"
+import * as hardwareDataDisplay from '../hardware_data_display.js'
 
 // #region PGRIDS
 

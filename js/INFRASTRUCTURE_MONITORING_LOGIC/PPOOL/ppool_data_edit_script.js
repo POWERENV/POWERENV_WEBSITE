@@ -9,8 +9,8 @@
 //=========================================================================================
 
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
-import * as editorComponents from  "../DATA_RETRIEVAL/editor_components.js"
-import * as config from "../../../config.js"
+import * as editorComponents from  "../editor_components.js"
+import * as config from "../../../../config.js"
 
 //=========================================================================================
 //=========================================================================================

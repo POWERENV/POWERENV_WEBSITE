@@ -11,8 +11,8 @@
 //====================================Import statements====================================
 //=========================================================================================
 import * as genericScript from "../../scripting.js"
-import * as fspCommunicationScript from  "../../fsp_communication_script.js"
-import * as osCommunicationScript from  "../../os_communication_script.js"
+import * as fspCommunicationScript from  "../fsp_communication_script.js"
+import * as osCommunicationScript from  "../os_communication_script.js"
 import * as editorComponents from  "../editor_components.js"
 //import * as signalR from "https://cdn.jsdelivr.net/npm/@microsoft/signalr@7.0.5/dist/esm/signalr.js"
 //=========================================================================================

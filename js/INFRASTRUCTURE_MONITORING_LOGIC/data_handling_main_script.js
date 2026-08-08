@@ -1,9 +1,9 @@
 import * as genericScript from "../scripting.js";
-import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
-import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
+import * as pgridDataDisplayScript from  "./PGRID/pgrid_data_display_script.js"
+import * as ppoolDataDisplayScript from  "./PPOOL/ppool_data_display_script.js"
 import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
 import * as dataRetrievalScript from "./data_retrieval_script.js"
-import * as userDataRetrieval from "./../USER_LOGIC/user_data_retrieval_script.js"
+import * as userDataRetrieval from "../USER_LOGIC/user_data_retrieval_script.js"
 
 var tree = {
     objName: "",

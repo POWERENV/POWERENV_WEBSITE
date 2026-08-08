@@ -11,13 +11,13 @@
 //====================================Import statements====================================
 //=========================================================================================
 
-import * as genericScript from "../scripting.js"
-import * as mainScript from "./data_handling_main_script.js"
-import * as dataRetrievalScript from "./data_retrieval_script.js"
-import * as pgridDataDisplayScript from  "./pgrid_data_display_script.js"
-import * as pnodeDataDisplayScript from  "./PNODE/pnode_data_display_script.js"
+import * as genericScript from "../../scripting.js"
+import * as mainScript from "../data_handling_main_script.js"
+import * as dataRetrievalScript from "../data_retrieval_script.js"
+import * as pgridDataDisplayScript from  "../PGRID/pgrid_data_display_script.js"
+import * as pnodeDataDisplayScript from  "../PNODE/pnode_data_display_script.js"
 import * as ppoolDataEditScript from "./ppool_data_edit_script.js"
-import * as editorComponents from "./editor_components.js"
+import * as editorComponents from "../editor_components.js"
 
 //=========================================================================================
 //=========================================================================================

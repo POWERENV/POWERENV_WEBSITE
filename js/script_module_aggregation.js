@@ -1,6 +1,6 @@
-import * as pnodeDataDisplayScript from './DATA_RETRIEVAL/PNODE/pnode_data_display_script.js'
-import * as eventsAndLoggingDataDisplay from './DATA_RETRIEVAL/events_and_logging_data_display.js'
-import * as hardwareDataDisplay from './DATA_RETRIEVAL/hardware_data_display.js'
+import * as pnodeDataDisplayScript from './INFRASTRUCTURE_MONITORING_LOGIC/PNODE/pnode_data_display_script.js'
+import * as eventsAndLoggingDataDisplay from './INFRASTRUCTURE_MONITORING_LOGIC/events_and_logging_data_display.js'
+import * as hardwareDataDisplay from './INFRASTRUCTURE_MONITORING_LOGIC/hardware_data_display.js'
 
 switchSection('overview.html', event);
 

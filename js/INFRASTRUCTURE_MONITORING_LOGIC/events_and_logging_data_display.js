@@ -1,6 +1,6 @@
 import * as genericScript from "../scripting.js";
 import * as dataRetrievalScript from "./data_retrieval_script.js"
-import * as userDataRetrieval from "./../USER_LOGIC/user_data_retrieval_script.js"
+import * as userDataRetrieval from "../USER_LOGIC/user_data_retrieval_script.js"
 
 let globalEventsDistributionGraphInstance = null;
 let globalEventsCadenceStatsGraphInstance = null;
