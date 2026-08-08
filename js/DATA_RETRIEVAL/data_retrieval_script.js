@@ -53,6 +53,8 @@ export function getPGridsInfoList(){
 // #region dataRetrievalMethods
 
 export function getPGridDashboardData(pgridID){
+    document.getElementById("fullScreenLoadingZone").style.display = "flex";
+
     return new Promise((resolve, reject) => {
         const name = fetch(`${config.baseAPIURL}/psystems/backend/data/pgrid${pgridID}`, {
             method: "GET",
@@ -70,14 +72,18 @@ export function getPGridDashboardData(pgridID){
             {
                 resolve(LOGS.packetData);
             }
-            else{
+            else {
                 reject("Promise Rejected! HTTP Request Fault!");
             }
+
+            document.getElementById("fullScreenLoadingZone").style.display = "none";
         });
     });
 }
 
 export function getPPoolDashboardData(pgridID, ppoolID){
+    document.getElementById("fullScreenLoadingZone").style.display = "flex";
+
     return new Promise((resolve, reject) => {
         const name = fetch(`${config.baseAPIURL}/psystems/backend/data/pgrid${pgridID}/ppool${ppoolID}`, {
             method: "GET",
@@ -95,14 +101,18 @@ export function getPPoolDashboardData(pgridID, ppoolID){
             {
                 resolve(LOGS.packetData);
             }
-            else{
+            else {
                 reject("Promise Rejected! HTTP Request Fault!");
             }
+
+            document.getElementById("fullScreenLoadingZone").style.display = "none";
         });
     });
 }
 
 export function getPNodeDashboardData(pgridID, ppoolID, pnodeID){
+    document.getElementById("fullScreenLoadingZone").style.display = "flex";
+
     return new Promise((resolve, reject) => {
         const name = fetch(`${config.baseAPIURL}/psystems/backend/data/pgrid${pgridID}/ppool${ppoolID}/pnode${pnodeID}`, {
             method: "GET",
@@ -120,9 +130,11 @@ export function getPNodeDashboardData(pgridID, ppoolID, pnodeID){
             {
                 resolve(LOGS.packetData);
             }
-            else{
+            else {
                 reject("Promise Rejected! HTTP Request Fault!");
             }
+
+            document.getElementById("fullScreenLoadingZone").style.display = "none";
         });
     });
 }

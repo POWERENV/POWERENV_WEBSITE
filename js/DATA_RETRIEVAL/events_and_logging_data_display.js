@@ -158,79 +158,87 @@ function assignGlobalApplicationEventsEventListeners() {
 }
 
 function displayGlobalEventsCadenceStatsGraph(eventCadenceStats, timeScaleUnit = "day") {
-    const eventCadenceCanvas = document.getElementById('eventCadenceViewCanvas').getContext('2d');
+    document.getElementById("noGlobalEventsTodayMessage").style.display = "block";
+    document.getElementById("eventCadenceViewCanvas").style.display = "none";
 
-    let DataSet = []
-    let TimestampLabels = []
-    const repeatCount = eventCadenceStats.length == 1 ? 2 : 1;
+    if(eventCadenceStats.length > 0) {
+        document.getElementById("noGlobalEventsTodayMessage").style.display = "none";
+        document.getElementById("eventCadenceViewCanvas").style.display = "block";
 
-    for(let k = 0; k < repeatCount; k++) {
-        for(let i = 0; i < eventCadenceStats.length; i++) {
-            let timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
+        const eventCadenceCanvas = document.getElementById('eventCadenceViewCanvas').getContext('2d');
 
-            switch(timeScaleUnit) {
-                case "day":
-                    timestampLabel = `${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0]}/${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[1]}/${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[0]}`;
-                    break;
-                case "hour":
-                    timestampLabel = `${eventCadenceStats[i].hourlyIntervalTimestamp.split("T")[1].split(":")[0]}h`;
-                    break;
-            }
+        let DataSet = []
+        let TimestampLabels = []
+        const repeatCount = eventCadenceStats.length == 1 ? 2 : 1;
 
-            TimestampLabels.push(timestampLabel);
+        for(let k = 0; k < repeatCount; k++) {
+            for(let i = 0; i < eventCadenceStats.length; i++) {
+                let timestampLabel = eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0];
 
-            DataSet.push(eventCadenceStats[i].eventCadence);
-        }
-    }
-
-    globalEventsCadenceStatsGraphInstance = new Chart(eventCadenceCanvas, {
-        type: 'line',
-        data: {
-            labels: TimestampLabels,
-            datasets: [{
-                label: 'EVENT CADENCE',
-                data: DataSet,
-                tension: 0.3,
-                fill: true,
-                backgroundColor: '#b3393965',
-                borderColor: '#c0362a',
-                borderRadius: 5,
-                hoverBackgroundColor: '#1f1f1f',
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: true,
-            plugins: {
-                legend: {
-                    display: false
+                switch(timeScaleUnit) {
+                    case "day":
+                        timestampLabel = `${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[2].split("T")[0]}/${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[1]}/${eventCadenceStats[i].hourlyIntervalTimestamp.split("-")[0]}`;
+                        break;
+                    case "hour":
+                        timestampLabel = `${eventCadenceStats[i].hourlyIntervalTimestamp.split("T")[1].split(":")[0]}h`;
+                        break;
                 }
+
+                TimestampLabels.push(timestampLabel);
+
+                DataSet.push(eventCadenceStats[i].eventCadence);
+            }
+        }
+
+        globalEventsCadenceStatsGraphInstance = new Chart(eventCadenceCanvas, {
+            type: 'line',
+            data: {
+                labels: TimestampLabels,
+                datasets: [{
+                    label: 'EVENT CADENCE',
+                    data: DataSet,
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: '#b3393965',
+                    borderColor: '#c0362a',
+                    borderRadius: 5,
+                    hoverBackgroundColor: '#1f1f1f',
+                }]
             },
-            scales: {
-                x: {
-                    ticks: {
-                        autoSkip: false,
-                        padding: 20
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: true,
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 },
-                y: {
-                    grid: {
-                        color: '#2b2b2b'
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: false,
+                            padding: 20
+                        }
                     },
-                    ticks: {
-                        padding: 20,
-                        stepSize: 5
-                    },
+                    y: {
+                        grid: {
+                            color: '#2b2b2b'
+                        },
+                        ticks: {
+                            padding: 20,
+                            stepSize: 5
+                        },
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                    axis: 'x'
                 }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false,
-                axis: 'x'
             }
-        }
-    });
+        });
+    }
 }
 
 async function changeGlobalEventsCadenceGraphInterval(interval) {
