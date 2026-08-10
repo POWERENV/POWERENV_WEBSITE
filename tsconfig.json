@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+
+    "target": "ES2022",
+    "module": "ESNext",
+    "types": [],
+    "rootDir": "./ts",               // Where your .ts files live
+    "outDir": "./js",                // Where the compiled .js files will go
+    "allowJs": true,                 // Allows you to mix .js and .ts files during migration
+    "moduleResolution": "Bundler",
+
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  },
+  
+  "include": [
+    "ts/**/*"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "**/fontawesome-free-7.0.0-web/**/*"
+  ]
+}
