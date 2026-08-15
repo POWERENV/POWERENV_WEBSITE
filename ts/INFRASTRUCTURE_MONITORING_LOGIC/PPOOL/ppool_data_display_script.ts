@@ -17,6 +17,7 @@ import * as dataRetrievalScript from "../data_retrieval_script.js"
 import * as pgridDataDisplayScript from  "../PGRID/pgrid_data_display_script.js"
 import * as pnodeDataDisplayScript from  "../PNODE/pnode_data_display_script.js"
 import * as ppoolDataEditScript from "./ppool_data_edit_script.js"
+import * as pnodeDataEditScript from "../PNODE/pnode_data_edit_script.js"
 import * as editorComponents from "../editor_components.js"
 import * as typeDefinitions from "../../types.js"
 
@@ -39,6 +40,10 @@ export async function displayPPoolDashboardData(pgridID : Number, ppoolID : Numb
     let dashboardData : typeDefinitions.PPoolDashboardData = await dataRetrievalScript.getPPoolDashboardData(pgridID, ppoolID) as typeDefinitions.PPoolDashboardData;
     await genericScript.switchCustomSection('ppool_mgmt.html', 'content', 'content');
     document.getElementById('content')!.scrollTop = 0;
+
+    document.getElementById("createPNodeButton")?.addEventListener("click", () => {
+        createNewPNode(dashboardData, e);
+    });
 
     const centeredSettingsModalBoxContent = `<div>
         <h2>General</h2>
@@ -330,6 +335,114 @@ function toggleSingleNBatchOperationsTableView(_clickedBTNID : string)
     }
     
     genericScript.toggle2SideBTN(['_singleOperationBTN', '_batchOperationBTN'], _clickedBTNID);
+}
+
+function createNewPNode(dashboardData : typeDefinitions.PPoolDashboardData, event : Event | null) {
+    const ppoolCreationWizzardSubmitAction = null;
+    const ppoolCreationWizzard = new editorComponents.sideConfigurationEditWizzard("PNode Creation Wizzard", ppoolCreationWizzardSubmitAction);
+
+    const pnodeSyncMachineDataBTNAction = new typeDefinitions.FunctionObject(async (args : Array<any>) => {
+        const pnodeData : typeDefinitions.MachineConnectionCredentialsData = {
+            COMPort: (document.getElementById("pnodeCOMPortField") as HTMLInputElement)!.value,
+            username: (document.getElementById("pnodeASMIUsernameField") as HTMLInputElement)!.value,
+            password: (document.getElementById("pnodeASMIPasswordField") as HTMLInputElement)!.value
+        };
+
+        if(pnodeData.COMPort == "" || pnodeData.username == "" || pnodeData.password == "") {
+            editorComponents.showErrorMessage("Connection property fields aren't fully filled in.");
+            return;
+        }
+
+        genericScript.showScreenLoadingPane();
+        let NewMachineSyncInfo : typeDefinitions.MachineConnectionResponseData = await pnodeDataEditScript.syncNewPNodeMachine(pnodeData) as typeDefinitions.MachineConnectionResponseData;
+        
+        console.log(NewMachineSyncInfo);
+
+        document.getElementById("pnodeSynchronizeMachineDataBTN")!.style.borderColor = "var(--success)";
+        document.getElementById("pnodeSynchronizeMachineDataBTN")!.style.color = "var(--success)";
+
+        console.log(NewMachineSyncInfo);
+        console.log(NewMachineSyncInfo.systemInfo);
+        console.log(NewMachineSyncInfo.systemInfo.serialNumber);
+
+        const newPNodeInfo : typeDefinitions.NewPNodeData = {
+            pnodeBasicInfo: {
+                pNodeID: 200,
+                nickName: (document.getElementById("pnodeNameField") as HTMLInputElement)!.value,
+                parentPPoolID: dashboardData.ppoolFullInfo.ppool_id,
+                readmeText: (document.getElementById("pnodeReadmeTextField") as HTMLInputElement)!.value,
+                serialCOMPort: pnodeData.COMPort,
+                systemMachineSerialNumber: NewMachineSyncInfo.systemInfo.serialNumber,
+                systemMachineTypeModel: NewMachineSyncInfo.systemInfo.machineTypeModel,
+                systemModelName: NewMachineSyncInfo.systemInfo.systemName,
+                systemPSeries: (document.getElementById("pnodePSeriesField") as HTMLInputElement)!.value
+            },
+            pnodeFSPInfo: {
+                fspasmiUsername: pnodeData.username,
+                fspasmiPasswordHash: pnodeData.password,
+                fspasmiVersion: NewMachineSyncInfo.systemInfo.asmiVersion,
+                fspid: 200,
+                fspasmiLocalTime: ""
+            },
+            pnodeOSUserInfoType: {
+                osid: 200,
+                osipAddress: (document.getElementById("pnodeOSIPAddressField") as HTMLInputElement)!.value,
+                osUsername: (document.getElementById("pnodeOSUsernameField") as HTMLInputElement)!.value,
+                osPasswordHash: (document.getElementById("pnodeOSPasswordField") as HTMLInputElement)!.value,
+                osFamily: (document.getElementById("pnodeOSFamilyDropDownBTN") as HTMLButtonElement)!.value,
+            }
+        }
+
+        console.log(newPNodeInfo);
+
+        const newPPoolCreationWizzardSubmitAction = async (e : Event, selfInstance : editorComponents.sideConfigurationEditWizzard) => {
+            const newPNodeInfo : typeDefinitions.NewPNodeData = {
+                pnodeBasicInfo: {
+                    pNodeID: 200,
+                    nickName: (document.getElementById("pnodeNameField") as HTMLInputElement)!.value,
+                    parentPPoolID: dashboardData.ppoolFullInfo.ppool_id,
+                    readmeText: (document.getElementById("pnodeReadmeTextField") as HTMLInputElement)!.value,
+                    serialCOMPort: pnodeData.COMPort,
+                    systemMachineSerialNumber: NewMachineSyncInfo.systemInfo.serialNumber,
+                    systemMachineTypeModel: NewMachineSyncInfo.systemInfo.machineTypeModel,
+                    systemModelName: NewMachineSyncInfo.systemInfo.systemName,
+                    systemPSeries: (document.getElementById("pnodePSeriesField") as HTMLInputElement)!.value
+                },
+                pnodeFSPInfo: {
+                    fspasmiUsername: pnodeData.username,
+                    fspasmiPasswordHash: pnodeData.password,
+                    fspasmiVersion: NewMachineSyncInfo.systemInfo.asmiVersion,
+                    fspid: 200,
+                    fspasmiLocalTime: ""
+                },
+                pnodeOSUserInfoType: {
+                    osid: 200,
+                    osipAddress: (document.getElementById("pnodeOSIPAddressField") as HTMLInputElement)!.value,
+                    osUsername: (document.getElementById("pnodeOSUsernameField") as HTMLInputElement)!.value,
+                    osPasswordHash: (document.getElementById("pnodeOSPasswordField") as HTMLInputElement)!.value,
+                    osFamily: (document.getElementById("pnodeOSFamilyDropDownBTN") as HTMLButtonElement)!.value,
+                }
+            }
+
+            await pnodeDataEditScript.CreateNewPNode(newPNodeInfo);
+            
+            displayPPoolDashboardData(dashboardData.ppoolFullInfo.ppool_parent_pgrid_id, dashboardData.ppoolFullInfo.ppool_id, event);
+        };
+
+        ppoolCreationWizzard.resetSubmitButtonClickELAction(newPPoolCreationWizzardSubmitAction);
+    }, []);
+
+    ppoolCreationWizzard.insertInputField("pnodeNameField", "PNode Nickname", "Sample PNode", "");
+    ppoolCreationWizzard.insertTextArea("pnodeReadmeTextField", "PNode Readme Text", "Sample PNode Readme", "", "200px");
+    ppoolCreationWizzard.insertInputField("pnodePSeriesField", "PNode PSeries", "POWER5", "");
+    ppoolCreationWizzard.insertInputField("pnodeCOMPortField", "PNode COM port", "COM1", "");
+    ppoolCreationWizzard.insertInputField("pnodeASMIUsernameField", "PNode ASMI Username", "admin", "");
+    ppoolCreationWizzard.insertInputField("pnodeASMIPasswordField", "PNode ASMI Password", "..........", "", true);
+    ppoolCreationWizzard.insertButton("pnodeSynchronizeMachineDataBTN", "Test connection", pnodeSyncMachineDataBTNAction);
+    ppoolCreationWizzard.insertDropdownField("pnodeOSFamilyDropDownBTN", "pnodeOSFamilyDropDown", "PNode Main OS Family", ["AIX", "LINUX"], "AIX");
+    ppoolCreationWizzard.insertInputField("pnodeOSUsernameField", "PNode Main OS Username", "root", "");
+    ppoolCreationWizzard.insertInputField("pnodeOSPasswordField", "PNode Main OS Password", "..........", "", true);
+    ppoolCreationWizzard.insertInputField("pnodeOSIPAddressField", "PNode Main OS IP Address", "192.168.0.200", "");
 }
 
 //#endregion PPOOLS

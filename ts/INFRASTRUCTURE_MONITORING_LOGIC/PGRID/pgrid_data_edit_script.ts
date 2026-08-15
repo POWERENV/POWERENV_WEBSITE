@@ -3,6 +3,7 @@
 //=========================================================================================
 
 import * as pnodeEditors from  "../editor_components.js"
+import * as genericScripting from "../../scripting.js"
 import * as config from "../../../../config.js"
 
 //=========================================================================================
@@ -40,12 +41,12 @@ export async function CreateNewPGrid(pgridName : string, pgridReadmeTXT : string
             {
                 resolve(LOGS.packetData);
             }
-            else{
+            else {
                 pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
 }
@@ -73,7 +74,7 @@ export async function DeletePGrid(pgrid_id : Number) {
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
 }

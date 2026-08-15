@@ -164,6 +164,14 @@ export function resetElementEventListeners(targetOBJID : string) {
     element.parentNode!.replaceChild(clone, element);
 }
 
+export function showScreenLoadingPane() {
+    document.getElementById("fullScreenLoadingZone")!.style.display = "flex";
+}
+
+export function hideScreenLoadingPane() {
+    document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+}
+
 //#endregion ModalBoxes
 
 export function performAction(name : string){

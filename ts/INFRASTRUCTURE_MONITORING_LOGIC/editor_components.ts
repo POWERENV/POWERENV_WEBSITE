@@ -242,6 +242,8 @@ export class sideConfigurationEditWizzard {
 
         if(changesSaveOperation != null) {
             document.getElementById("editBoxSaveBTN")!.style.display = 'block';
+            (document.getElementById("editBoxSaveBTN") as HTMLButtonElement)!.disabled = false;
+            document.getElementById("editBoxSaveBTN")!.style.cursor = "pointer";
             document.getElementById("editBoxSaveBTN")!.addEventListener("click", (e) => {
                 this.getFieldStructValues();
                 changesSaveOperation(e, this);
@@ -250,7 +252,8 @@ export class sideConfigurationEditWizzard {
                 closeEditBox();
             });
         } else {
-            document.getElementById("editBoxSaveBTN")!.style.display = 'none';
+            (document.getElementById("editBoxSaveBTN") as HTMLButtonElement)!.disabled = true;
+            document.getElementById("editBoxSaveBTN")!.style.cursor = "default";
         }
     }
 
@@ -261,13 +264,15 @@ export class sideConfigurationEditWizzard {
      * @param {String} inputFieldPlaceholder Text to be shown as a placeholder inside the input field.
      * @param {String} inputFieldStandardValue Text to be set as standard value for the input field, normally being the current assigned value (registered in the Data Base).
      */
-    insertInputField(inputFieldID : string, inputFieldLabel : string, inputFieldPlaceholder : string, inputFieldStandardValue : string) {
+    insertInputField(inputFieldID : string, inputFieldLabel : string, inputFieldPlaceholder : string, inputFieldStandardValue : string, isPassword : Boolean = false) {
         this.inputFieldIDs[this.inputFieldIDs.length] = inputFieldID;
+        const inputType = isPassword ? "password" : "text";
+
         document.getElementById("editBoxForm")!.innerHTML += `
-            <div class = "editBoxInputGroup">
-                <label>${inputFieldLabel}</label>
-                <input type="text" class="editBoxTextInput" id="${inputFieldID}" placeholder="${inputFieldPlaceholder}" value="${inputFieldStandardValue}" />
-            </div>`;
+        <div class = "editBoxInputGroup">
+            <label>${inputFieldLabel}</label>
+            <input type="${inputType}" class="editBoxTextInput" id="${inputFieldID}" placeholder="${inputFieldPlaceholder}" value="${inputFieldStandardValue}" />
+        </div>`;
     }
 
     /**
@@ -335,6 +340,46 @@ export class sideConfigurationEditWizzard {
                 });
             }
         });
+    }
+
+    /**
+     * This method appends a button element to the editor wizzard form.
+     * @param {String} buttonID ID string to be assigned to the button, making it accessible in the DOM model.
+     * @param {String} buttonLabel Text to be shown as a label for the button, describing the property to be edited.
+     * @param {typeDefinitions.FunctionObject} onClickAction Function object that executes on button click event triggered.
+     */
+    insertButton(buttonID : string, buttonLabel : string, onClickAction : typeDefinitions.FunctionObject) {
+        document.getElementById("editBoxForm")!.innerHTML += `
+        <div class = "editBoxInputGroup">
+            <button type="button" id="${buttonID}" class="lightBTN">${buttonLabel}</button>
+        </div>`;
+
+        requestAnimationFrame(() => {
+            document.getElementById(buttonID)!.addEventListener("click", () => {
+                onClickAction.function(onClickAction.args);
+            });
+        });
+    }
+
+    resetSubmitButtonClickELAction(changesSaveOperation : ((e : Event, selfInstance : sideConfigurationEditWizzard) => void) | null) {
+        genericScript.resetElementEventListeners("editBoxSaveBTN");
+
+        if(changesSaveOperation != null){
+            (document.getElementById("editBoxSaveBTN") as HTMLButtonElement)!.disabled = false;
+            document.getElementById("editBoxSaveBTN")!.style.cursor = "pointer";
+
+            document.getElementById("editBoxSaveBTN")!.addEventListener("click", (e) => {
+                this.getFieldStructValues();
+                changesSaveOperation(e, this);
+                document.getElementById("fullScreenLoadingZone")!.style.display = "flex";
+                genericScript.resetElementEventListeners("editBoxSaveBTN");
+                closeEditBox();
+            });
+        }
+        else {
+            (document.getElementById("editBoxSaveBTN") as HTMLButtonElement)!.disabled = true;
+            document.getElementById("editBoxSaveBTN")!.style.cursor = "default";
+        }
     }
 }
 

@@ -10,6 +10,7 @@
 
 import * as ppoolDataDisplayScript from  "./ppool_data_display_script.js"
 import * as editorComponents from  "../editor_components.js"
+import * as genericScripting from "../../scripting.js"
 import * as config from "../../../../config.js"
 
 //=========================================================================================
@@ -43,7 +44,7 @@ export function PPoolUpdateReadmeText(ppoolID : Number, pgridID : Number, newRea
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
 }
@@ -85,7 +86,7 @@ export async function CreateNewPPool(ppoolName : string, ppoolTag : string, ppoo
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
 }
@@ -113,7 +114,7 @@ export async function DeletePPool(ppool_id : Number) {
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
 }

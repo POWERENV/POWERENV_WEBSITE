@@ -113,6 +113,63 @@ export interface PNodeDashboardData {
     statusMessage : string
 }
 
+export interface NewPNodeBasicInfo {
+    pNodeID : Number;
+    nickName : string;
+    systemModelName : string;
+    systemMachineTypeModel : string;
+    systemMachineSerialNumber : string;
+    systemPSeries : string;
+    parentPPoolID : Number;
+    readmeText : string;
+    serialCOMPort : string;
+}
+
+export interface NewPNodeOSUserInfo {
+    osid : Number;
+    osUsername : string;
+    osPasswordHash : string;
+    osipAddress : string;
+    osFamily : string;
+}
+
+export interface NewPNodeData {
+    pnodeBasicInfo : NewPNodeBasicInfo;
+    pnodeFSPInfo : PNodeFSPInfo;
+    pnodeOSUserInfoType : NewPNodeOSUserInfo;
+}
+
+export interface MachineConnectionCredentialsData {
+    COMPort : string
+    username : string
+    password : string
+}
+
+export interface PowerEnvInternalsMachineInfo {
+    machineTypeModel : string
+    serialNumber : string
+    systemName : string
+    asmiVersion : string
+}
+
+export interface PowerEnvInternalsNetworkInfo {
+    macAddress : string
+    ipaddress : string
+    ipaddressType : string
+    hostname : string
+    domainName : string
+    subnetMask : string
+    defaultGateway : string
+    ip1DNSSERVER : string
+    ip2DNSSERVER : string
+    ip3DNSSERVER : string
+}
+
+export interface MachineConnectionResponseData {
+    systemInfo : PowerEnvInternalsMachineInfo,
+    networkInfo : PowerEnvInternalsNetworkInfo
+}
+
 export interface ASMICommandResponse {
     commandResult : string
 }

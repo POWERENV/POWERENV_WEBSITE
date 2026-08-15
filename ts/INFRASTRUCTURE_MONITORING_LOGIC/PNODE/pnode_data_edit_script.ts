@@ -4,45 +4,13 @@
 
 import * as pnodeDataDisplayScript from  "./pnode_data_display_script.js"
 import * as pnodeEditors from  "../editor_components.js"
+import * as genericScripting from "../../scripting.js"
+import * as typeDefinitions from "../../types.js"
 import * as config from "../../../../config.js"
 
 //=========================================================================================
 //=========================================================================================
 //=========================================================================================
-
-class pnodeBasicInfo {
-    //pNodeID : Number
-    nickName = "string"
-    systemModelName = "string"
-    systemMachineTypeModel = "string"
-    systemMachineSerialNumber = "string"
-    systemPSeries = "string"
-    parentPPoolID = 0
-    readmeText = "string"
-    serialCOMPort = "string"
-}
-
-class pnodeData {
-    pnodeBasicInfo = {
-        
-    }
-
-    pnodeFSPInfo = {
-        fspid: 0,
-        fspasmiUsername: "string",
-        fspasmiPasswordHash: "string",
-        fspasmiVersion: "string",
-        fspasmiLocalTime: "string"
-    }
-
-    pnodeOSUserInfoType = {
-        osid: 0,
-        osUsername: "string",
-        osPasswordHash: "string",
-        osipAddress: "string",
-        osFamily: "string"
-    }
-}
 
 export function PNodeUpdateReadmeText(pnodeID : Number, ppoolID : Number, pgridID : Number, newReadmeTXT : String) {
     return new Promise((resolve, reject) => {
@@ -69,47 +37,19 @@ export function PNodeUpdateReadmeText(pnodeID : Number, ppoolID : Number, pgridI
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone")!.style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
 }
 
-/*export async function CreateNewPNode(pnodeData) {
-    const requestBody = {
-        pnodeBasicInfo: {
-            pNodeID: 0,
-            nickName: "string",
-            systemModelName: "string",
-            systemMachineTypeModel: "string",
-            systemMachineSerialNumber: "string",
-            systemPSeries: "string",
-            parentPPoolID: 0,
-            readmeText: "string",
-            serialCOMPort: "string"
-        },
-        pnodeFSPInfo: {
-            fspid: 0,
-            fspasmiUsername: "string",
-            fspasmiPasswordHash: "string",
-            fspasmiVersion: "string",
-            fspasmiLocalTime: "string"
-        },
-        pnodeOSUserInfoType: {
-            osid: 0,
-            osUsername: "string",
-            osPasswordHash: "string",
-            osipAddress: "string",
-            osFamily: "string"
-        }
-    };
-
+export async function syncNewPNodeMachine(pnodeData : typeDefinitions.MachineConnectionCredentialsData) {
     return new Promise((resolve, reject) => {
-        const name = fetch(`${config.baseAPIURL}/psystems/backend/data/createNewPPool`, {
+        const name = fetch(`${config.baseAPIURL}/psystems/backend/data/syncNewPNodeMachine`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify(pnodeData)
         }).then(res => {
             return res.text();
         } ).then(data => {
@@ -117,16 +57,45 @@ export function PNodeUpdateReadmeText(pnodeID : Number, ppoolID : Number, pgridI
         } ).then(json => {
             var LOGS = json;
 
-            if(LOGS.statusMessage == "New PPool successfully created!")
+            if(LOGS.statusMessage == "Machine Data Synchronized!")
             {
                 resolve(LOGS.packetData);
             }
             else{
-                editorComponents.showErrorMessage(LOGS.statusMessage);
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
                 reject(LOGS.statusMessage);
             }
 
-            document.getElementById("fullScreenLoadingZone").style.display = "none";
+            genericScripting.hideScreenLoadingPane();
         });
     });
-}*/
+}
+
+export async function CreateNewPNode(pnodeData : typeDefinitions.NewPNodeData) {
+    return new Promise((resolve, reject) => {
+        const name = fetch(`${config.baseAPIURL}/psystems/backend/data/createNewPNode`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pnodeData)
+        }).then(res => {
+            return res.text();
+        } ).then(data => {
+            return JSON.parse(data);
+        } ).then(json => {
+            var LOGS = json;
+
+            if(LOGS.statusMessage == "New PNode successfully created!")
+            {
+                resolve(LOGS.packetData);
+            }
+            else{
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
+                reject(LOGS.statusMessage);
+            }
+
+            genericScripting.hideScreenLoadingPane();
+        });
+    });
+}
