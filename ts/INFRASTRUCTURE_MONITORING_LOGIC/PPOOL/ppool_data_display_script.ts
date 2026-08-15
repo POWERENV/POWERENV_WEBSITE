@@ -355,15 +355,9 @@ function createNewPNode(dashboardData : typeDefinitions.PPoolDashboardData, even
 
         genericScript.showScreenLoadingPane();
         let NewMachineSyncInfo : typeDefinitions.MachineConnectionResponseData = await pnodeDataEditScript.syncNewPNodeMachine(pnodeData) as typeDefinitions.MachineConnectionResponseData;
-        
-        console.log(NewMachineSyncInfo);
 
         document.getElementById("pnodeSynchronizeMachineDataBTN")!.style.borderColor = "var(--success)";
         document.getElementById("pnodeSynchronizeMachineDataBTN")!.style.color = "var(--success)";
-
-        console.log(NewMachineSyncInfo);
-        console.log(NewMachineSyncInfo.systemInfo);
-        console.log(NewMachineSyncInfo.systemInfo.serialNumber);
 
         const newPNodeInfo : typeDefinitions.NewPNodeData = {
             pnodeBasicInfo: {
@@ -389,11 +383,9 @@ function createNewPNode(dashboardData : typeDefinitions.PPoolDashboardData, even
                 osipAddress: (document.getElementById("pnodeOSIPAddressField") as HTMLInputElement)!.value,
                 osUsername: (document.getElementById("pnodeOSUsernameField") as HTMLInputElement)!.value,
                 osPasswordHash: (document.getElementById("pnodeOSPasswordField") as HTMLInputElement)!.value,
-                osFamily: (document.getElementById("pnodeOSFamilyDropDownBTN") as HTMLButtonElement)!.value,
+                osFamily: (document.getElementById("pnodeOSFamilyDropDownBTN") as HTMLButtonElement)!.innerText,
             }
         }
-
-        console.log(newPNodeInfo);
 
         const newPPoolCreationWizzardSubmitAction = async (e : Event, selfInstance : editorComponents.sideConfigurationEditWizzard) => {
             const newPNodeInfo : typeDefinitions.NewPNodeData = {
@@ -420,7 +412,7 @@ function createNewPNode(dashboardData : typeDefinitions.PPoolDashboardData, even
                     osipAddress: (document.getElementById("pnodeOSIPAddressField") as HTMLInputElement)!.value,
                     osUsername: (document.getElementById("pnodeOSUsernameField") as HTMLInputElement)!.value,
                     osPasswordHash: (document.getElementById("pnodeOSPasswordField") as HTMLInputElement)!.value,
-                    osFamily: (document.getElementById("pnodeOSFamilyDropDownBTN") as HTMLButtonElement)!.value,
+                    osFamily: (document.getElementById("pnodeOSFamilyDropDownBTN") as HTMLButtonElement)!.innerText,
                 }
             }
 

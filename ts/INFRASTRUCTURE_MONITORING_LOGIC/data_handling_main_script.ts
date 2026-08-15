@@ -33,6 +33,14 @@ export function displayPGridTreeStructureInfo(dashboardData : typeDefinitions.PG
     tree.tag = "grid";
     tree.state = "opened"
 
+    if(dashboardData.ppoolsInfoList.length == 0) {
+        document.getElementById("grid-tree")!.innerHTML += `<div class="nav-item" id="treePPool-0">
+            <div style="margin-left: 10px;">
+                <span>Empty list</span>
+            </div>
+        </div>`;
+    }
+
     for(let i = 0; i < dashboardData.ppoolsInfoList.length; i++){
         document.getElementById("grid-tree")!.innerHTML += `<div class="nav-item" id="treePPool-${i}">
             <i id="treePPool-${i}-Chevron" class="fa-solid fa-chevron-right" style="margin-left: 10px;"></i>
@@ -52,6 +60,21 @@ export function displayPGridTreeStructureInfo(dashboardData : typeDefinitions.PG
         });
 
         let treePool = new typeDefinitions.navigationTreeNode(`treePPool-${i}`, "pool", "closed", []);
+
+        if(dashboardData.ppoolsInfoList[i]!.pnodesList.length == 0) {
+            document.getElementById("grid-tree")!.innerHTML += `<div class="nav-empty-item" id="treePPool-${i}-PNode0" style="display: none;">
+                <div style="margin-left: 30px;">
+                    <span>Empty list</span>
+                </div>
+            </div>`;
+
+            treePool.children[0] = new typeDefinitions.navigationTreeNode(
+                `treePPool-${i}-PNode0`,
+                "node",
+                "closed",
+                []
+            );
+        }
         
         for(let j = 0; j < dashboardData.ppoolsInfoList[i]!.pnodesList.length; j++){
             document.getElementById("grid-tree")!.innerHTML += `<div class="nav-item" id="treePPool-${i}-PNode${j}" style="display: none;">
@@ -67,16 +90,31 @@ export function displayPGridTreeStructureInfo(dashboardData : typeDefinitions.PG
                     toggleTreeBreadcrumb(`treePPool-${i}-PNode${j}`, tree);
                 });
                 document.getElementById(`treePPool-${i}-PNode${j}`)!.addEventListener('click', (e) => {
-                    pnodeDataDisplayScript.displayPNodesDashboardData(Number(dashboardData.pgridFullInfo.pgrid_id.substring(3)), dashboardData.ppoolsInfoList[i]!.ppoolID, dashboardData.ppoolsInfoList[i]!.pnodesList[j]!.pnodeID);
+                    pnodeDataDisplayScript.displayPNodesDashboardData(dashboardData.ppoolsInfoList[i]!.pnodesList[j]!.pnodeID, dashboardData.ppoolsInfoList[i]!.ppoolID, Number(dashboardData.pgridFullInfo.pgrid_id.substring(3)));
                 });
             });
 
-            treePool.children[j] = new typeDefinitions.navigationTreeNode(
+            let treeNode = new typeDefinitions.navigationTreeNode(
                 `treePPool-${i}-PNode${j}`,
                 "node",
                 "closed",
                 []
             );
+
+            document.getElementById("grid-tree")!.innerHTML += `<div class="nav-empty-item" id="treePPool-${i}-PNode${j}-LPAR0" style="display: none;">
+                <div style="margin-left: 50px;">
+                    <span>Empty list</span>
+                </div>
+            </div>`;
+
+            treeNode.children[0] = new typeDefinitions.navigationTreeNode(
+                `treePPool-${i}-PNode${j}-LPAR0`,
+                "lpar",
+                "closed",
+                []
+            );
+
+            treePool.children[j] = treeNode;
         }
 
         tree.children[i] = treePool;
