@@ -113,7 +113,6 @@ export async function logout() {
         var LOGS = json;
 
         if (LOGS.statusMessage == "Logged out successfully!") {
-          console.log("sdgfasdf");
           resolve(LOGS.statusMessage);
           window.location.href = "login_page.html";
         } else {

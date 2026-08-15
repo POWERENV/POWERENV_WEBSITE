@@ -61,6 +61,33 @@ export async function displayPGridDashboardData(pgridID : Number, e : Event | nu
         document.getElementById('content')!.scrollTop = 0;
     }
 
+    displayPPoolSettingsMenu(dashboardData);
+
+    displayPGridMainInfo(dashboardData, e);
+
+    document.getElementById("_hardware_link")!.classList.add('active');
+
+    displayPGridAccessPoliciesInfo(dashboardData);
+    displayPGridAccessAuditsInfo(dashboardData);
+    displayPGridLoginAuditsInfo(dashboardData);
+    displayPGridErrorLogsInfo(dashboardData);
+    displayPGridAttentionLedMarkedPNodesInfo(dashboardData);
+    displayPGridPPoolsListInfo(dashboardData);
+    if(generateWholeContent == true) mainScript.displayPGridTreeStructureInfo(dashboardData);
+    mainScript.updateActiveTreeNode(dashboardData.pgridFullInfo.pgrid_name);
+
+    document.getElementById("pgridCreatePPoolBTN")!.addEventListener("click", () => {
+        createNewPPool(dashboardData, e);
+    });
+}
+
+//=========================================================================================
+/**
+ * Sets up PGrid settings centered modal menu.
+ * @param {Object} dashboardData The data containing the PGrid information to display.
+ */
+//=========================================================================================
+function displayPPoolSettingsMenu(dashboardData : typeDefinitions.PGridDashboardData) {
     const centeredSettingsModalBoxContent = `<div>
         <h2>General</h2>
         <div class="centeredSettingsModalBoxSectionContent">
@@ -92,23 +119,6 @@ export async function displayPGridDashboardData(pgridID : Number, e : Event | nu
             PGridSettingsModalBox.hideSettingsBox();
             hardwareDataDisplay.openHardwareSection(event);
         });
-    });
-
-    displayPGridMainInfo(dashboardData, e);
-
-    document.getElementById("_hardware_link")!.classList.add('active');
-
-    displayPGridAccessPoliciesInfo(dashboardData);
-    displayPGridAccessAuditsInfo(dashboardData);
-    displayPGridLoginAuditsInfo(dashboardData);
-    displayPGridErrorLogsInfo(dashboardData);
-    displayPGridAttentionLedMarkedPNodesInfo(dashboardData);
-    displayPGridPPoolsListInfo(dashboardData);
-    if(generateWholeContent == true) mainScript.displayPGridTreeStructureInfo(dashboardData);
-    mainScript.updateActiveTreeNode(dashboardData.pgridFullInfo.pgrid_name);
-
-    document.getElementById("pgridCreatePPoolBTN")!.addEventListener("click", () => {
-        createNewPPool(dashboardData, e);
     });
 }
 
@@ -239,7 +249,7 @@ function displayPGridPPoolsListInfo(dashboardData : typeDefinitions.PGridDashboa
 
         requestAnimationFrame((e) => {
             document.getElementById(`PPool-${i}`)!.addEventListener('click', (e) => {
-                ppoolDataDisplayScript.displayPPoolDashboardData(Number(dashboardData.pgridFullInfo.pgrid_id.substring(3)), dashboardData.ppoolsInfoList[i]!.ppoolID, e);
+                ppoolDataDisplayScript.displayPPoolDashboardData(Number(dashboardData.pgridFullInfo.pgrid_id.substring(3)), dashboardData.ppoolsInfoList[i]!.ppoolID, e, false);
             });
         });
     }

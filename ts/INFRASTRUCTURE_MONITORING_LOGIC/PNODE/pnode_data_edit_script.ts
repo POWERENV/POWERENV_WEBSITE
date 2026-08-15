@@ -99,3 +99,31 @@ export async function CreateNewPNode(pnodeData : typeDefinitions.NewPNodeData) {
         });
     });
 }
+
+export async function DeletePNode(pnodeID : Number) {
+    return new Promise((resolve, reject) => {
+        const name = fetch(`${config.baseAPIURL}/psystems/backend/data/deletePNode_${pnodeID}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            return res.text();
+        } ).then(data => {
+            return JSON.parse(data);
+        } ).then(json => {
+            var LOGS = json;
+
+            if(LOGS.statusMessage == "PNode successfully deleted!")
+            {
+                resolve(LOGS.packetData);
+            }
+            else{
+                pnodeEditors.showErrorMessage(LOGS.statusMessage);
+                reject(LOGS.statusMessage);
+            }
+
+            genericScripting.hideScreenLoadingPane();
+        });
+    });
+}

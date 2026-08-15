@@ -37,7 +37,7 @@ export function PPoolUpdateReadmeText(ppoolID : Number, pgridID : Number, newRea
             if(LOGS.statusMessage == "PPool Readme successfully received!")
             {
                 resolve(LOGS.packetData);
-                ppoolDataDisplayScript.displayPPoolDashboardData(pgridID, ppoolID, null);
+                ppoolDataDisplayScript.displayPPoolDashboardData(pgridID, ppoolID, null, true);
             }
             else{
                 editorComponents.showErrorMessage(LOGS.statusMessage);

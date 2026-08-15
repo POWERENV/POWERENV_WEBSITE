@@ -10,7 +10,6 @@ import * as pnodeEditors from "../editor_components.js"
 import * as pnodeDataEditScript from "./pnode_data_edit_script.js"
 import * as ppoolDataDisplayScript from  "../PPOOL/ppool_data_display_script.js"
 import * as fspCommunicationScript from  "../fsp_communication_script.js"
-import * as osCommunicationScript from  "../os_communication_script.js"
 import * as typeDefinitions from "../../types.js"
 
 //=========================================================================================
@@ -33,10 +32,12 @@ export async function displayPNodesDashboardData(_pnodeID : Number, _ppoolID : N
     let dashboardData = await dataRetrievalScript.getPNodeDashboardData(_pgridID, _ppoolID, _pnodeID) as typeDefinitions.PNodeDashboardData;
     await genericScript.switchCustomSection('pnode_mgmt.html', 'content', 'content');
 
+    displayPNodeSettingsMenu(dashboardData, _pgridID , _ppoolID);
+
     mainScript.updateActiveTreeNode(dashboardData.pnode_full_info.pnode_nickname);
 
     document.getElementById("_backToPoolBTN")!.addEventListener("click", async (e) => {
-        await ppoolDataDisplayScript.displayPPoolDashboardData(_pgridID, _ppoolID, e);
+        await ppoolDataDisplayScript.displayPPoolDashboardData(_pgridID, _ppoolID, e, true);
     });
 
     document.getElementById("reloadSettingsBTN")!.addEventListener("click", async (e) => {
@@ -63,6 +64,48 @@ export async function displayPNodesDashboardData(_pnodeID : Number, _ppoolID : N
     displayPNodesOperationHistory(dashboardData);
     displayPNodesErrorLogs(dashboardData);
     pnodeEventsScript.setUpPNodePowerActionsEventListeners(dashboardData);
+}
+
+//=========================================================================================
+/**
+ * Sets up PNode settings centered modal menu.
+ * @param {Object} dashboardData The data containing the PNode information to display.
+ * @param {String} _pgridID The ID of the PGrid to which the PNode belongs.
+ */
+//=========================================================================================
+function displayPNodeSettingsMenu(dashboardData : typeDefinitions.PNodeDashboardData, pgridID : Number , ppoolID : Number) {
+    const centeredSettingsModalBoxContent = `<div>
+        <h2>General</h2>
+        <div class="centeredSettingsModalBoxSectionContent">
+            <div class="centeredSettingsModalBoxSectionItem">
+                <h3>PNode Nickname:</h3>
+                <input type="text" value="${dashboardData.pnode_full_info.pnode_nickname}" spellcheck="false" />
+            </div>
+            <div class="centeredSettingsModalBoxSectionItem">
+                <h3 style="height: 100px;">PNode Readme Text:</h3>
+                <textarea spellcheck="false">${dashboardData.pnode_full_info.pnode_readme_text}</textarea>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 300px;">
+        <h2 style="color: var(--accent);">Danger Zone</h2>
+        <div class="centeredSettingsModalBoxSectionContent">
+            <div class="centeredSettingsModalBoxSectionItem" style="width: 20%;">
+                <button id="pnodeDeleteBTN">DELETE PNODE</button>
+            </div>
+        </div>
+    </div>`;
+
+    document.getElementById("editPNodeSettingsBTN")!.addEventListener("click", () => {
+        const PNodeSettingsModalBox = new pnodeEditors.centeredSettingsModalBox("Edit PNode Settings", centeredSettingsModalBoxContent, () => {});
+
+        document.getElementById("pnodeDeleteBTN")!.addEventListener("click", async (event : Event) => {
+            await pnodeDataEditScript.DeletePNode(dashboardData.pnode_full_info.pnode_id);
+            PNodeSettingsModalBox.hideSettingsBox();
+            await ppoolDataDisplayScript.displayPPoolDashboardData(pgridID, ppoolID, event, true);
+        });
+    });
 }
 
 //=========================================================================================

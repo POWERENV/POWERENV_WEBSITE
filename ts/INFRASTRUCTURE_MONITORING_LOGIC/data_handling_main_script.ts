@@ -12,7 +12,7 @@ var tree = new typeDefinitions.navigationTreeNode("", "", "", []);
 
 export function displayPGridTreeStructureInfo(dashboardData : typeDefinitions.PGridDashboardData)
 {
-    document.getElementById("grid-tree")!.innerHTML += `<div class="nav-item" id="treePGridObj" state="open">
+    document.getElementById("grid-tree")!.innerHTML = `<div class="nav-item" id="treePGridObj" state="open">
         <i id="treePGridObj-Chevron" class="fa-solid fa-chevron-down"></i>
         <div>
             <span>${dashboardData.pgridFullInfo.pgrid_name}</span>
@@ -55,7 +55,7 @@ export function displayPGridTreeStructureInfo(dashboardData : typeDefinitions.PG
                 toggleTreeBreadcrumb(`treePPool-${i}`, tree);
             });
             document.getElementById(`treePPool-${i}`)!.getElementsByTagName('div')[0]!.addEventListener('click', (e) => {
-                ppoolDataDisplayScript.displayPPoolDashboardData(Number(dashboardData.pgridFullInfo.pgrid_id.substring(3)), dashboardData.ppoolsInfoList[i]!.ppoolID, e);
+                ppoolDataDisplayScript.displayPPoolDashboardData(Number(dashboardData.pgridFullInfo.pgrid_id.substring(3)), dashboardData.ppoolsInfoList[i]!.ppoolID, e, false);
             });
         });
 
