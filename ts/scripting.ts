@@ -2,6 +2,7 @@ import * as config from "../../config.js"
 import * as userAuth from "./USER_LOGIC/user_auth.js"
 import * as userDataRetrieval from "./USER_LOGIC/user_data_retrieval_script.js"
 import * as typeDefinitions from "./types.js"
+import * as hardwareDataDisplay from './INFRASTRUCTURE_MONITORING_LOGIC/hardware_data_display.js'
 
 //#region dynamicContentManagement
 
@@ -105,6 +106,14 @@ export function switchSection(page : string, e : Event | null | undefined) {
                 else {
                     navItems[i]!.classList.remove('active');
                 }
+            }
+
+            if(page == "overview.html") {
+                requestAnimationFrame(() => {
+                    document.getElementById("jumpToHardwarePage")!.addEventListener("click", (e) => {
+                        hardwareDataDisplay.openHardwareSection(e);
+                    });
+                });
             }
 
             resolve("SUCCESS");

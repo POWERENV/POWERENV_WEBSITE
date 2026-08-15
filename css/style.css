@@ -28,6 +28,29 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+#overviewPageBuildingProgressOverlay {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 50;
+    width: calc(100vw - 200px);
+    height: 100%;
+    padding: 0px;
+    background-color: #2b2b2b77;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+#overviewPageBuildingProgressOverlay h1 {
+    font-size: 250%;
+    padding: 0px;
+    margin: 0px;
+    color: var(--accent);
+}
+
 #usernameSpan, #inboxSpan {
     color: white;
     font-size: 150%;
@@ -534,11 +557,8 @@ body {
 }
 
 .nav-item.active {
-    /*background: #2c2c2c;*/
     color: #fff;
     border-left: 5px solid var(--accent1);
-    /*border-color: rgba(255,255,255,0.03);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6)*/
 }
 
 .nav-item.active i {
@@ -563,7 +583,7 @@ body {
 .content {
     flex: 1;
     padding: 22px;
-    overflow: auto
+    overflow: auto;
 }
 
 .grid {

@@ -1,4 +1,3 @@
-import * as pnodeDataDisplayScript from './INFRASTRUCTURE_MONITORING_LOGIC/PNODE/pnode_data_display_script.js'
 import * as eventsAndLoggingDataDisplay from './INFRASTRUCTURE_MONITORING_LOGIC/events_and_logging_data_display.js'
 import * as hardwareDataDisplay from './INFRASTRUCTURE_MONITORING_LOGIC/hardware_data_display.js'
 import * as genericScript from "./scripting.js";
