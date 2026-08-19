@@ -131,7 +131,8 @@ export async function whoami() {
                 'Content-Type': 'application/json'
             }
           }).then(res => {
-            return res.text();
+            const message = res.status === 503 ? JSON.stringify("POWERENV backend is temporarily unavailable.") : res.text();
+            return message;
           } ).then(data => {
             return JSON.parse(data);
           } ).catch(error => {
@@ -148,8 +149,15 @@ export async function whoami() {
                 resolve(LOGS);
             }
             else {
-                reject(LOGS.statusMessage);
+              reject(LOGS.statusMessage);
+
+              if(json == "POWERENV backend is temporarily unavailable.") {
+                const errorMessage = `CODE 503: POWERENV's backend API unavailable.`;
+                pnodeEditors.showErrorMessage(errorMessage);
+              }
+              else {
                 window.location.href = "login_page.html";
+              }
             }
           });
     });

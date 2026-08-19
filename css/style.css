@@ -39,9 +39,9 @@ body {
     width: calc(100vw - 200px);
     height: 100%;
     padding: 0px;
-    background-color: #2b2b2b77;
+    background-image: radial-gradient(#181818b6, #1818181f);
     text-align: center;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
 }
 
 #overviewPageBuildingProgressOverlay h1 {
